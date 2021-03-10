@@ -3,7 +3,9 @@ package com.doan.customer.entity.main;
 import com.doan.customer.dto.main.CustomerDTO;
 import com.doan.customer.validation.anotation.CustomerPhone;
 import com.doan.customer.entity.base.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,6 +15,8 @@ import java.util.List;
 @Table(name = "customers")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer extends BaseEntity {
 
     @Column(nullable = false, length = 100)

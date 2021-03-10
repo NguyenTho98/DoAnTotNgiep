@@ -1,5 +1,7 @@
 package com.doan.customer.model;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -7,6 +9,8 @@ import java.util.Arrays;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerFilter {
 
     final byte[] payStatus = {0,1};

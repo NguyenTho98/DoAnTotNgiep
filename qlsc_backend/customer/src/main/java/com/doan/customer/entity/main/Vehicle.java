@@ -1,7 +1,9 @@
 package com.doan.customer.entity.main;
 
 import com.doan.customer.entity.base.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @Table(name = "vehicles")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Vehicle extends BaseEntity {
 
     private String color;

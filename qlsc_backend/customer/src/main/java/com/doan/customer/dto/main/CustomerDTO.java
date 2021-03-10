@@ -1,13 +1,17 @@
 package com.doan.customer.dto.main;
 
 import com.doan.customer.dto.base.BaseDTO;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerDTO extends BaseDTO {
 
     private String name;

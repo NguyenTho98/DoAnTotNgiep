@@ -1,0 +1,6 @@
+bundle/
+node_modules/
+.vscode/
+.idea/
+dist/
+debug.log

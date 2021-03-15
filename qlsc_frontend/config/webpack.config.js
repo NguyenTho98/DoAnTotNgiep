@@ -26,7 +26,7 @@ const config = {
     new CopyWebpackPlugin(
       {
         patterns: [
-          { from: path.join(SRC_DIRECTORY, 'assets'), to: path.join(ROOT_DIRECTORY, 'build') }
+          { from: path.join(SRC_DIRECTORY, '/src'), to: path.join(ROOT_DIRECTORY, 'build'), noErrorOnMissing: true }
         ]
       }
     )

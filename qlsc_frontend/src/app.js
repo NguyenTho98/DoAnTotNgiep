@@ -1,20 +1,20 @@
 import React, { Fragment } from 'react'
-import { Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
+import SideBar from './components/sideBar/SideBar'
+import TopBar from './components/topBar/TopBar'
 
-import Navigation from './components/Navigation'
-import Home from './routes/Home'
-import About from './routes/About'
-import Sample from './routes/Sample'
 
 export const App = () => (
   <Fragment>
     <Router history={createBrowserHistory()}>
-      <Navigation />
+      <TopBar />
+      <SideBar />
       <Switch>
-        <Route exact path="/" component={Home}/>
+        {/* <Route exact path="/" component={Home}/>
         <Route path="/about" component={About}/>
-        <Route path="/sample" component={Sample}/>
+        <Route path="/sample" component={Sample}/> */}
+        {/* <Route path="/manage-feed" exact render={() => <Staff />} /> */}
       </Switch>
     </Router>
   </Fragment>

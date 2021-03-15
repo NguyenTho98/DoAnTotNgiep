@@ -8,7 +8,11 @@ import './submenu.scss'
 function SubMenu (props) {
   // eslint-disable-next-line react/prop-types
   const url = props.history.location.pathname
-  const { onSetInit, init } = props
+  const {
+    onSetInit,
+    init,
+    showMenu
+  } = props
 
   return (
     <React.Fragment>
@@ -17,17 +21,17 @@ function SubMenu (props) {
           return (
             <ul className='nav menu-top' key={key}>
               <li className={`${url === item.url ? 'item active' : 'item'}`}>
-                <a onClick={() => onSetInit(item.id, '')} className="link">
+                <Link to={`${item.submenu.length === 0 ? item.url : '#'}`} onClick={() => onSetInit(item.id, '')} className="link">
                   {item.icon}
-                  <span>{item.title}</span>
-                </a>
+                  <span>{ !showMenu ? item.title : ''}</span>
+                </Link>
                 {
-                  item.submenu.length > 0 && init.menu === item.id ? (
+                  item.submenu.length > 0 && !showMenu && init.menu === item.id ? (
                     <ul className="sub-menu">
                       {
                         item.submenu.map((a, index) => {
                           return (
-                            <Link to={`${a.url}`} className="sub-item" key={index}>
+                            <Link to={`${a.url}`} className={`${url === a.url ? 'sub-item active' : 'sub-item'}`} key={index}>
                               {a.title}
                             </Link>
                           )

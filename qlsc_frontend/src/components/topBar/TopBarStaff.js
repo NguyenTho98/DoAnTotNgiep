@@ -9,7 +9,23 @@ function TopBarStaff (props) {
 
   // eslint-disable-next-line react/prop-types
   const url = props.location ? props.location.pathname : ''
-  if (url.includes('staff-detail')) {
+  if (url.includes('staff/create')) {
+    return (
+      <div className="wrapper-manage-staff-topbar">
+        <h1>
+          <a onClick={() => onRedirect()} style={{ cursor: 'pointer' }}>
+            <span>
+              Danh sách nhân viên
+            </span>
+          </a>
+        </h1>
+        <div className="current">
+          <span>Thêm mới nhân viên</span>
+        </div>
+      </div>
+    )
+  }
+  if (url.includes('staff/detail')) {
     return (
       <div className="wrapper-manage-staff-topbar">
         <h1>

@@ -5,34 +5,42 @@ import { Link, withRouter } from 'react-router-dom'
 import * as Icons from 'common/icons'
 import './sideBar.scss'
 import SubMenu from './submenu/SubMenu'
+import { changeShowMenuTopBar } from '../../actions/globalUiActions'
 function SideBar (props) {
   // eslint-disable-next-line react/prop-types
   const url = props.history.location.pathname
-
-  const [showMenu, setShowMenu] = useState(false)
+  const { showMenu, changeShowMenuTopBar } = props
   const [init, setInit] = useState({
     menu: '',
     submenu: ''
   })
 
   const onClickMoreIcon = () => {
-    setShowMenu(!showMenu)
+    changeShowMenuTopBar(!showMenu)
   }
 
   const onSetInit = (a, b) => {
-    setInit({ ...init, menu: a, submenu: b })
+    if (a === init.menu) {
+      setInit({ ...init, menu: '', submenu: b })
+    } else {
+      setInit({ ...init, menu: a, submenu: b })
+    }
   }
   return (
     <div className={`aside ${showMenu ? 'col-left' : ''}`}>
       <div className="ekko-menu-top-header">
-        <div className="logo">
-            My Ekko
-        </div>
+        {
+          !showMenu ? (
+            <div className="logo">
+              My Ekko
+            </div>
+          ) : ''
+        }
         <a className="more-icons" onClick={() => { onClickMoreIcon() }}>
           <Icons.moreIcon />
         </a>
       </div>
-      <SubMenu onSetInit={onSetInit} init={init}></SubMenu>
+      <SubMenu onSetInit={onSetInit} init={init} showMenu={showMenu}></SubMenu>
       <ul className='nav menu-bottom'>
         <li className={url === '/setting/manage-page' ? 'active' : ''}>
           <Link to='/setting/manage-page'>
@@ -102,5 +110,20 @@ function SideBar (props) {
     </div>
   )
 }
-
-export default withRouter(connect(null, null)(SideBar))
+SideBar.defaultProps = {
+  showMenu: '',
+  changeShowMenuTopBar: () => {}
+}
+const mapStateToProps = (state) => {
+  const {
+    globalUI: { showMenuTopBar }
+  } = state
+  const showMenu = showMenuTopBar
+  return {
+    showMenu
+  }
+}
+const mapDispatchToProps = (dispatch) => ({
+  changeShowMenuTopBar: () => dispatch(changeShowMenuTopBar())
+})
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SideBar))

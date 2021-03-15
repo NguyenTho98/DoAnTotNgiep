@@ -9,7 +9,23 @@ function TopBarMaintenancecard (props) {
 
   // eslint-disable-next-line react/prop-types
   const url = props.location ? props.location.pathname : ''
-  if (url.includes('maintenancecard-detail')) {
+  if (url.includes('/maintenancecard/create')) {
+    return (
+      <div className="wrapper-maintenancecard-topbar">
+        <h1>
+          <a onClick={() => onRedirect()} style={{ cursor: 'pointer' }}>
+            <span>
+              Danh sách phiếu sửa chữa
+            </span>
+          </a>
+        </h1>
+        <div className="current">
+          <span>Thêm mới phiếu sửa chữa</span>
+        </div>
+      </div>
+    )
+  }
+  if (url.includes('/maintenancecard/detail')) {
     return (
       <div className="wrapper-maintenancecard-topbar">
         <h1>

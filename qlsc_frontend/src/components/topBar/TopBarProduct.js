@@ -9,7 +9,23 @@ function TopBarProduct (props) {
 
   // eslint-disable-next-line react/prop-types
   const url = props.location ? props.location.pathname : ''
-  if (url.includes('staff-detail')) {
+  if (url.includes('product/create')) {
+    return (
+      <div className="wrapper-product-topbar">
+        <h1>
+          <a onClick={() => onRedirect()} style={{ cursor: 'pointer' }}>
+            <span>
+              Danh sách sản phẩm
+            </span>
+          </a>
+        </h1>
+        <div className="current">
+          <span>Thêm mới sản phẩm</span>
+        </div>
+      </div>
+    )
+  }
+  if (url.includes('product/detail')) {
     return (
       <div className="wrapper-product-topbar">
         <h1>

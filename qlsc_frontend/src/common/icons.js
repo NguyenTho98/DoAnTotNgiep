@@ -2,7 +2,7 @@ import React from 'react'
 
 export const moreIcon = () => {
   return (
-    <svg width='30' height='30' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+    <svg width='35' height='35' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <path d='M11.75 12.5C12.1642 12.5 12.5 12.1642 12.5 11.75C12.5 11.3358 12.1642 11 11.75 11C11.3358 11 11 11.3358 11 11.75C11 12.1642 11.3358 12.5 11.75 12.5Z' fill='#ffffff' stroke='#ffffff' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
       <path d='M11.75 6.5C12.1642 6.5 12.5 6.16421 12.5 5.75C12.5 5.33579 12.1642 5 11.75 5C11.3358 5 11 5.33579 11 5.75C11 6.16421 11.3358 6.5 11.75 6.5Z' fill='#fff' stroke='#ffffff' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
       <path d='M11.75 18.5C12.1642 18.5 12.5 18.1642 12.5 17.75C12.5 17.3358 12.1642 17 11.75 17C11.3358 17 11 17.3358 11 17.75C11 18.1642 11.3358 18.5 11.75 18.5Z' fill='#ffffff' stroke='#ffffff' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />

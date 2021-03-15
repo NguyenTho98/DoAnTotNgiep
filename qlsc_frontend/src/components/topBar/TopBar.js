@@ -13,6 +13,7 @@ import './topBar.scss'
 function PagePanel (props) {
   // eslint-disable-next-line react/prop-types
   const url = props.history.location.pathname
+  const { showMenu } = props
   const [isShowPopup, setIsShowPopup] = useState(false)
   const popupAvatar = useRef()
   // const styleTopBar = { width: 'calc(100% - 200px)' }
@@ -30,7 +31,7 @@ function PagePanel (props) {
   }
 
   return (
-    <div className='top-bar d-flex justify-content-between align-items-center top-bar-body'>
+    <div className={`top-bar d-flex justify-content-between align-items-center top-bar-body ${showMenu ? 'top-bar-active' : ''} `}>
       <div
         className='top-bar_list d-flex align-items-center'
         // style={styleTopBar}
@@ -96,5 +97,13 @@ function PagePanel (props) {
     </div>
   )
 }
-
-export default withRouter(connect(null, null)(PagePanel))
+const mapStateToProps = (state) => {
+  const {
+    globalUI: { showMenuTopBar }
+  } = state
+  const showMenu = showMenuTopBar
+  return {
+    showMenu
+  }
+}
+export default withRouter(connect(mapStateToProps, null)(PagePanel))

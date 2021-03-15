@@ -1,48 +1,48 @@
-import React from 'react'
-import classname from 'classname'
+/* eslint-disable react/display-name */
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
+import * as Icons from 'common/icons'
 import './sideBar.scss'
+import SubMenu from './submenu/SubMenu'
 function SideBar (props) {
+  // eslint-disable-next-line react/prop-types
   const url = props.history.location.pathname
-  return (
-    <div className={classname('aside')}>
-      <ul className='nav menu-top'>
 
-        <li className={url === '/maintenancecard' ? 'active' : ''}>
-          <Link to='/maintenancecard'>
-            <span>Phiếu sửa chữa</span>
-          </Link>
-        </li>
-        <li className={url === '/customer' ? 'active' : ''}>
-          <Link to='/customer'>
-            <span>Khách hàng</span>
-          </Link>
-        </li>
-        <li className={url === '/product' ? 'active' : ''}>
-          <Link to='/product'>
-            <span>Sản phẩm</span>
-          </Link>
-        </li>
-        <li className={url === '/staff' ? 'active' : ''}>
-          <Link to='/staff'>
-            <span>Nhân viên</span>
-          </Link>
-        </li>
-        <li className={url === '/report' ? 'active' : ''}>
-          <Link to='/report-v2'>
-            <span>Báo cáo(mới)</span>
-          </Link>
-        </li>
-      </ul>
+  const [showMenu, setShowMenu] = useState(false)
+  const [init, setInit] = useState({
+    menu: '',
+    submenu: ''
+  })
+
+  const onClickMoreIcon = () => {
+    setShowMenu(!showMenu)
+  }
+
+  const onSetInit = (a, b) => {
+    setInit({ ...init, menu: a, submenu: b })
+  }
+  return (
+    <div className={`aside ${showMenu ? 'col-left' : ''}`}>
+      <div className="ekko-menu-top-header">
+        <div className="logo">
+            My Ekko
+        </div>
+        <a className="more-icons" onClick={() => { onClickMoreIcon() }}>
+          <Icons.moreIcon />
+        </a>
+      </div>
+      <SubMenu onSetInit={onSetInit} init={init}></SubMenu>
       <ul className='nav menu-bottom'>
         <li className={url === '/setting/manage-page' ? 'active' : ''}>
           <Link to='/setting/manage-page'>
+            <Icons.SettingIcon />
             <span>Cấu hình</span>
           </Link>
         </li>
         <li className={url === '/newfeatures' ? 'active' : ''}>
           <Link to='/newfeatures'>
+            <Icons.UpdateIcon />
             <span>Cập nhật mới</span>
           </Link>
         </li>

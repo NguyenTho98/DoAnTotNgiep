@@ -1,0 +1,34 @@
+.menu-top{
+    .item{
+        cursor: pointer;
+        .link {
+            cursor: pointer;
+            &:hover{
+                color: #fff;
+                background-color: #2a3a51;
+                fill: #fff;
+                text-decoration: none;
+            }
+        }
+        &:hover .link, svg{
+            color: #fff !important;
+        }
+        .sub-menu{
+            padding-left: 36px;
+            background-color: #182537;
+            .sub-item {
+                background-color: #182537;
+                &:hover{
+                    text-decoration: none !important;
+                    list-style: none;
+                }
+            }
+        }
+    }
+    .active {
+        .link{
+            background: linear-gradient( 90deg,#08f 0,#4698fe);
+        }
+    }
+        
+}

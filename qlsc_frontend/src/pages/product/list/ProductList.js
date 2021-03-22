@@ -1,194 +1,32 @@
-import React from 'react'
-import './productList.scss'
-import { toggleModalAction } from 'components/modal/modalActions';
-import { connect } from 'react-redux';
+import React from "react";
+import "./productList.scss";
+import { toggleModalAction } from "components/modal/modalActions";
+import { connect } from "react-redux";
+import TableBase from "../../../components/table/components/TableBase/TableBase";
 
-function ProductList (props) {
+function ProductList(props) {
   return (
-    <div id="wrapper-product-list">
+    <div className="wrapper-table" id="wrapper-product-list">
       <div className="content-list">
-        <button className="btn btn-primary" onClick={()=>{props.toggleModalAction('createProductModal',{})}}>aaaaaaaaaaaa</button>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
-        <div>xin chào</div>
+        <TableBase />
       </div>
     </div>
-  )
+  );
 }
 
 const mapStateToProps = (state) => {
-  const { modal: { createProductModal } } = state;
+  const {
+    modal: { createProductModal },
+  } = state;
   return {
     createProductModal,
   };
 };
 const mapDispatchToProps = (dispatch) => ({
-  toggleModalAction: (modalName, data) => dispatch(toggleModalAction(modalName, data)),
+  toggleModalAction: (modalName, data) =>
+    dispatch(toggleModalAction(modalName, data)),
 });
 
-export default React.memo(connect(mapStateToProps, mapDispatchToProps)(ProductList));
+export default React.memo(
+  connect(mapStateToProps, mapDispatchToProps)(ProductList)
+);

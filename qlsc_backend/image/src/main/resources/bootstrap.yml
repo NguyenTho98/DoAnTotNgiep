@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: image
+  cloud:
+    config:
+      uri: http://localhost:8761

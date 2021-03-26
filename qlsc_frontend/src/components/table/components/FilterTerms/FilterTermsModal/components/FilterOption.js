@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import * as Icons from "../../../../Icons/Icons";
 
 function FilterOption(props) {
+
   const {
     selectedFilter,
     selectedOption,
@@ -10,44 +11,52 @@ function FilterOption(props) {
     changeOption,
   } = props;
 
-  const renderFilter = () => {
-    if (selectedFilter[0] === "select") {
-      selectedFilter.map((option, index) => {
-        console.log("index", index);
-        return (
-          <a
-            className="dropdown-item"
-            key={index}
-            onClick={() => selectOption(option)}
-          >
-            {getOptionName(option)}
-          </a>
-        );
-      });
-    } else {
-      selectedFilter.push(selectedOption);
-      selectedFilter.map((option, index) => {
-        return (
-          <a
-            className="dropdown-item"
-            key={index}
-            onClick={() => changeOption(option, selectedOption)}
-          >
-            {getOptionName(option)}
-          </a>
-        );
-      });
-    }
-  };
+  const [filter, setFilter] = useState(selectedFilter.length ? selectedFilter : []);
 
+  useEffect(() => {
+    setFilter(prevState => {
+      prevState !== selectedFilter ? selectedFilter : prevState
+    })
+  }, [selectedFilter]);
+
+  console.log('selectedOption', selectedOption);
   return (
     <div className="filter-option">
-      {renderFilter()}
-      <button type="button" className="dropdown-toggle dropdown-button">
+      <button
+        type="button"
+        className="dropdown-toggle dropdown-button"
+        data-toggle="dropdown"
+      >
         {getOptionName(selectedOption)}
         <Icons.Arrow />
       </button>
-      <div className="dropdown-menu-test">{renderFilter()}</div>
+      <div className="dropdown-menu">
+        {selectedFilter && selectedFilter.length ?
+        (selectedFilter[0] === "select") ? 
+        selectedFilter.map((option, index) => 
+            <a
+              className="dropdown-item"
+              key={index}
+              onClick={() => selectOption(option)}
+            >
+              {getOptionName(option)}
+            </a>
+        ) :
+        (
+          selectedFilter.push(selectedOption),
+          selectedFilter.map((option, index) => 
+              <a
+                className="dropdown-item"
+                key={index}
+                onClick={() => changeOption(option, selectedOption)}
+              >
+                {getOptionName(option)}
+              </a>
+            )
+        ) 
+          : null
+        }
+      </div>
     </div>
   );
 }

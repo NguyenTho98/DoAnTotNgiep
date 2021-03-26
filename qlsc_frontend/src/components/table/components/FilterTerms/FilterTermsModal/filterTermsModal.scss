@@ -69,8 +69,8 @@
           cursor: pointer;
           .dropdown-item {
             cursor: pointer;
-            padding-left: 10px;
             color: #333333;
+            padding: 9px;
             &:hover {
               background: #0084ff;
               color: white;
@@ -86,10 +86,44 @@
           font-size: 14px;
           outline: none;
           box-shadow: none;
-          background: #fcfcfd;
+          background: #f8f8f8;
           border-radius: 5px;
           color: #2d2b2b;
           border: thin solid #e9ebed;
+        }
+        .active-status {
+          .btn-active {
+            margin-right: 10px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            color: #2d2b2b;
+            border: thin solid #e9ebed;
+            font-size: 13px;
+            padding: 10px 10px;
+            min-width: 115px;
+            outline: none;
+            cursor: pointer;
+            &:hover {
+              background: #0088ff !important;
+              color: white !important;
+            }
+          }
+          .btn-unActive {
+            margin-right: 10px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            color: #2d2b2b;
+            border: thin solid #e9ebed;
+            font-size: 13px;
+            padding: 10px 12px;
+            min-width: 158px;
+            outline: none;
+            cursor: pointer;
+            &:hover {
+              background: #0088ff !important;
+              color: white !important;
+            }
+          }
         }
       }
 

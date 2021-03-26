@@ -1,21 +1,42 @@
 import React from 'react';
 import FilterOption from './FilterOption';
 import Options from '../components/Options';
+import * as Icons from '../../../../Icons/Icons';
 
 function FilterRow(props) {
-  const { option, getOptionName, changeOption, selectOption } = props;
+
+  const {
+    time,
+    filterPhone,
+    filterAddress,
+    selectedFilter,
+    option,
+    getOptionName,
+    changeOption,
+    selectOption,
+    filterAction
+  } = props;
+
   const listOption = props.getUnSelectedOption();
+
   return (
     <div className="filter-line" style={{ display: 'flex' }}>
-      <FilterOption 
+      <FilterOption
       selectedFilter={listOption}
-      selectOption={option}
+      selectedOption={option}
       getOptionName={getOptionName}
       changeOption={changeOption}
       />
-      <Options option={option} />
+      <Options
+        time={time}
+        option={option}
+        filterPhone={filterPhone}
+        filterAddress={filterAddress}
+        selectedFilter={selectedFilter}
+        filterAction={filterAction}
+      />
       <div className="filter-bin" onClick={() => selectOption(option)}>
-        <Icon.Bin />
+         <Icons.Bin />
       </div>
     </div>
   );

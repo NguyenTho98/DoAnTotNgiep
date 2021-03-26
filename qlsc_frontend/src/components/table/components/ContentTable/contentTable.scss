@@ -1,0 +1,43 @@
+#wrapper-content-table {
+    margin: 15px 0;
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    .filter-null {
+        display: block;
+        text-align: center;
+        margin: 60px;
+    
+        .filter-null-icon {
+          display: block;
+          text-align: center;
+          margin-top: 20px;
+          .filter-null-icon {
+            display: block;
+            padding-top: 50px;
+            padding-bottom: 30px;
+          }
+        }
+        .filter-null-text-one {
+          display: block;
+          font-size: 20px;
+          font-weight: 400;
+          color: inherit;
+        }
+        .filter-null-text-two {
+          display: block;
+          font-size: 14px;
+          font-weight: 400;
+          color: #637381;
+          padding-top: 10px;
+          padding-bottom: 50px;
+        }
+        .filter-null-text-three {
+          display: block;
+          font-size: 18px;
+          margin-top: 15px;
+          font-weight: 600;
+          color: inherit;
+        }
+      }
+}

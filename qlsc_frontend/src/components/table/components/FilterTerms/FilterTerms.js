@@ -3,11 +3,16 @@ import * as Icons from "../../Icons/Icons";
 import "./filterTerms.scss";
 
 function FilterTerms(props) {
+
+  const { setShowFilter } = props;
+
   return (
     <div id="filter-wrapper">
       <div id="filter-option-wrapper">
-        <button type="button" id="filter-button">
-          Lọc bình luận
+        <button type="button" id="filter-button"
+        onClick={() => setShowFilter()}
+        >
+          Lọc khách hàng
           <Icons.ArrowDown />
         </button>
         <div id="filter-search">
@@ -16,8 +21,8 @@ function FilterTerms(props) {
           </div>
           <input
             id="filter-search-input"
-            placeholder="Tìm kiếm bình luận"
-            value={'test'}
+            placeholder="Tìm kiếm khách hàng"
+            value={''}
           />
         </div>
       </div>

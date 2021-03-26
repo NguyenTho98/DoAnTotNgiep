@@ -4,6 +4,7 @@ import com.sapo.qlsc.dto.MessageDTO;
 import com.sapo.qlsc.exception.commonException.NotFoundException;
 import com.sapo.qlsc.model.MessageModel;
 import com.sapo.qlsc.service.MessageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:8686")
 @RequestMapping("/admin/")
+@RequiredArgsConstructor
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
     @GetMapping("/messages")
     public ResponseEntity getAllMessage(@RequestParam("size") int size,

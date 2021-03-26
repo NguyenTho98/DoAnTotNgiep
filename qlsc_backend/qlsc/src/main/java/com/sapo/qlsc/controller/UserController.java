@@ -13,6 +13,7 @@ import com.sapo.qlsc.repository.UserRepositoryCustom;
 import com.sapo.qlsc.service.MaintenanceCardService;
 import com.sapo.qlsc.service.UserService;
 import com.sapo.qlsc.ulti.PasswordPoJo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,20 +30,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8686")
 public class UserController {
 
 
-    private UserService userService;
-    private MaintenanceCardService maintenanceCardService;
-    private UserRepositoryCustom userRepositoryCustom;
-
-    @Autowired
-    public UserController(UserService userService ,MaintenanceCardService maintenanceCardService,UserRepositoryCustom userRepositoryCustom) {
-        this.userService = userService;
-        this.maintenanceCardService = maintenanceCardService;
-        this.userRepositoryCustom = userRepositoryCustom;
-    }
+    private final UserService userService;
+    private final MaintenanceCardService maintenanceCardService;
+    private final UserRepositoryCustom userRepositoryCustom;
 
     @GetMapping("/admin/users")
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,

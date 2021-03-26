@@ -7,6 +7,7 @@ import com.sapo.qlsc.model.SearchCustomer;
 import com.sapo.qlsc.notification.MessageBox;
 import com.sapo.qlsc.service.CustomerService;
 import com.sapo.qlsc.service.MaintenanceCardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@RequiredArgsConstructor
+@CrossOrigin("http://localhost:8686")
 @RequestMapping("/admin/")
 public class CustomerController {
 
@@ -24,10 +26,6 @@ public class CustomerController {
 
     private final MaintenanceCardService maintenanceCardService;
 
-    public CustomerController(CustomerService customerService, MaintenanceCardService maintenanceCardService) {
-        this.customerService = customerService;
-        this.maintenanceCardService = maintenanceCardService;
-    }
 
     @PostMapping("/customers")
     public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerDTO customerDTO) throws ParseException, DataTooLongException {

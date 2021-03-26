@@ -1,5 +1,10 @@
 package com.sapo.qlsc.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class DistrictDTO {
 
     public String name;
@@ -7,29 +12,4 @@ public class DistrictDTO {
     public String code;
 
     public ProvinceDTO province;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public ProvinceDTO getProvince() {
-        return province;
-    }
-
-    public void setProvince(ProvinceDTO province) {
-        this.province = province;
-    }
-
 }

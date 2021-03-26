@@ -4,6 +4,7 @@ import com.sapo.qlsc.dto.BusinessInformationDTO;
 import com.sapo.qlsc.dto.StatisticRepairmanDTO;
 import com.sapo.qlsc.dto.TotalMoneyDTO;
 import com.sapo.qlsc.service.BusinessInformationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +15,12 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@RequiredArgsConstructor
+@CrossOrigin("http://localhost:8686")
 @RequestMapping("/admin/")
 public class BusinessInformationController {
 
     private final BusinessInformationService businessInformationService;
-
-    public BusinessInformationController(BusinessInformationService businessInformationService) {
-        this.businessInformationService = businessInformationService;
-    }
 
     @GetMapping("/totals")
     public ResponseEntity<BusinessInformationDTO> getTotals(

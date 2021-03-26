@@ -9,7 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class PaymentHistoryDTO extends BaseDTO{
 
     private MaintenanceCardDTO maintenanceCard;
@@ -18,30 +22,4 @@ public class PaymentHistoryDTO extends BaseDTO{
 
     private BigDecimal money;
 
-    public MaintenanceCardDTO getMaintenanceCard() {
-        return maintenanceCard;
-    }
-
-    public void setMaintenanceCard(MaintenanceCardDTO maintenanceCard) {
-        this.maintenanceCard = maintenanceCard;
-    }
-
-    public PaymentMethodDTO getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethodDTO paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public BigDecimal getMoney() {
-        return money;
-    }
-
-    public void setMoney(BigDecimal money) {
-        this.money = money;
-    }
-
-    public PaymentHistoryDTO() {
-    }
 }

@@ -13,6 +13,7 @@ import com.sapo.qlsc.model.MaintenanceCardCustomer;
 import com.sapo.qlsc.model.MaintenanceCardFilter;
 import com.sapo.qlsc.service.MaintenanceCardDetailService;
 import com.sapo.qlsc.service.MaintenanceCardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,15 +31,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:8686")
 @RequestMapping("/admin/")
+@RequiredArgsConstructor
 public class MaintenanceCardController {
 
-    @Autowired
-    private MaintenanceCardService maintenanceCardService;
-
-    @Autowired
-    private MaintenanceCardDetailService maintenanceCardDetailService;
+    private final MaintenanceCardService maintenanceCardService;
+    private final MaintenanceCardDetailService maintenanceCardDetailService;
     // Kiem tra quyen: NV dieu phoi
     @PostMapping("maintenanceCards")
     public ResponseEntity<MaintenanceCardDTO> insertMaintenanceCard(@RequestBody MaintenanceCardDTO maintenanceCardDTO) throws NotEnoughProductException, CodeExistedException, JsonProcessingException {

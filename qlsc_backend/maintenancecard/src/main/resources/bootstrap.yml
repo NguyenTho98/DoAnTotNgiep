@@ -3,4 +3,4 @@ spring:
     name: maintenancecard
   cloud:
     config:
-      uri: http://localhost:8761
+      uri: http://localhost:8090

@@ -2,6 +2,7 @@ package com.sapo.qlsc.converter;
 
 import com.sapo.qlsc.dto.*;
 import com.sapo.qlsc.entity.*;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class CustomerConverter {
 //    private final MaintenanceCardConverter maintenanceCardConverter;
 //    private final MaintenanceCardConvert maintenanceCardConvert;
@@ -24,12 +26,9 @@ public class CustomerConverter {
 //    }
 //    }
 
-    @Autowired
-    private MaintenanceCardConverter maintenanceCardConverter;
-    @Autowired
-    private MaintenanceCardConvert maintenanceCardConvert;
-    @Autowired
-    private WardConverter wardConverter;
+    private final MaintenanceCardConverter maintenanceCardConverter;
+    private final MaintenanceCardConvert maintenanceCardConvert;
+    private final WardConverter wardConverter;
 
     public CustomerDTO convertToDTO(Customer customer, String check){
         CustomerDTO customerDTO = new CustomerDTO();

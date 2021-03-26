@@ -9,6 +9,7 @@ import com.sapo.qlsc.exception.productException.ProductNotFoundException;
 import com.sapo.qlsc.model.ProductRequest;
 import com.sapo.qlsc.service.ProductService;
 import com.sapo.qlsc.upload.Image;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,12 +29,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("admin")
 @CrossOrigin
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private ProductService productService;
 
-    @Autowired
-    private ProductConverter productConverter;
+    private final ProductService productService;
+
+    private final ProductConverter productConverter;
 
     @GetMapping("products")
     public ResponseEntity<Page<ProductDTO>> getAll(@RequestParam(value = "search", required = false) Optional<String> search, Pageable pageable) {

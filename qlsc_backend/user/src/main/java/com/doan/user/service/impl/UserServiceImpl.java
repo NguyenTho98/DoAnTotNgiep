@@ -9,6 +9,7 @@ import com.doan.user.exception.CodeExistedException;
 import com.doan.user.exception.commonException.NotFoundException;
 import com.doan.user.exception.userException.DuplicateEmailException;
 import com.doan.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,16 +26,11 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private UserConverter userConverter;
+    private final UserRepository userRepository;
+    private final UserConverter userConverter;
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter) {
-        this.userRepository = userRepository;
-        this.userConverter = userConverter;
-    }
 
     @Override
     public Map<String, Object> getListUser(int page, int size, String sortBy, String descending, String search) {

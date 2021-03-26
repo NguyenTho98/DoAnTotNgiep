@@ -6,6 +6,7 @@ import com.doan.user.dto.UserDTO;
 import com.doan.user.exception.CodeExistedException;
 import com.doan.user.exception.commonException.NotFoundException;
 import com.doan.user.exception.userException.DuplicateEmailException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 //@CrossOrigin(origins = "*")
 public class UserController {
 
 
-    private UserService userService;
-
-    @Autowired
-    public UserController(UserService userService ) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @GetMapping("/admin/users")
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,

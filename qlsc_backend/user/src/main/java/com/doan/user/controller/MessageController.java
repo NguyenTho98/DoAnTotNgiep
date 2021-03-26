@@ -2,6 +2,7 @@ package com.doan.user.controller;
 
 import com.doan.user.exception.commonException.NotFoundException;
 import com.doan.user.service.MessageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/")
+@RequiredArgsConstructor
 public class MessageController {
-
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
     @GetMapping("/messages")
     public ResponseEntity getAllMessage(@RequestParam("size") int size,

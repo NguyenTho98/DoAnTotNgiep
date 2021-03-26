@@ -3,14 +3,15 @@ package com.doan.user.converter;
 import com.doan.user.dto.UserDTO;
 import com.doan.user.entity.User;
 import com.doan.user.service.MessageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class UserConverter {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
     public UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();

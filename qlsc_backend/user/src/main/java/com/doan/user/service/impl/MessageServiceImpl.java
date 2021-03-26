@@ -6,6 +6,7 @@ import com.doan.user.entity.Message;
 import com.doan.user.exception.commonException.NotFoundException;
 import com.doan.user.repository.MessageRepository;
 import com.doan.user.service.MessageService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,13 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
-    @Autowired
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
 
-    @Autowired
-    private MessageConverter messageConverter;
+    private final MessageConverter messageConverter;
 
     @Override
     public int countMessageByUserId(Long userId) {

@@ -1,6 +1,7 @@
 package com.doan.user.security;
 
 import com.doan.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,10 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("UserDetailsServiceImpl")
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
+	private final UserRepository userRepository;
 	private BCryptPasswordEncoder encoder;
 
 	@Override

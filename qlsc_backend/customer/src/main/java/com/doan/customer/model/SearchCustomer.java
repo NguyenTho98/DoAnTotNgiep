@@ -18,7 +18,7 @@ public class SearchCustomer {
     private String order;
 
     public SearchCustomer(){
-        this.size = 5;
+        this.size = 10;
         this.page = 1;
         this.search = "";
         this.nameField = "";
@@ -29,7 +29,7 @@ public class SearchCustomer {
     public SearchCustomer searchCustomer(){
         SearchCustomer searchCustomer = new SearchCustomer();
         searchCustomer.setPage(1);
-        searchCustomer.setSize(5);
+        searchCustomer.setSize(10);
         searchCustomer.setNameField("");
         searchCustomer.setOrder("");
         searchCustomer.setSearch("");

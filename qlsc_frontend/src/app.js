@@ -1,12 +1,17 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
-import { createBrowserHistory } from 'history'
-import { connect } from 'react-redux'
-import SideBar from './components/sideBar/SideBar'
-import TopBar from './components/topBar/TopBar'
-import ProductList from './pages/product/list/ProductList.js'
-import Modals from './components/modal/modal'
-import './styles/app.scss'
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, withRouter } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { connect } from 'react-redux';
+import SideBar from './components/sideBar/SideBar';
+import TopBar from './components/topBar/TopBar';
+import ProductList from './pages/product/list/ProductList.js';
+
+//customer
+import CustomerList from './pages/customer/components/CustomerList';
+import AddCustomer from './pages/customer/components/AddCustomer';
+
+import Modals from './components/modal/modal';
+import './styles/app.scss';
 
 function App (props) {
   const { showMenu } = props
@@ -20,6 +25,8 @@ function App (props) {
           <TopBar />
           <Switch>
             <Route exact path="/product" component={ProductList}/>
+            <Route exact path="/customer" component={CustomerList}/>
+            <Route exact path="/customer/create" component={AddCustomer}/>
           </Switch>
         </div>
       </Router>

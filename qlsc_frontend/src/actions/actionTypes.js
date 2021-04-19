@@ -1,2 +1,10 @@
 export const TEST = 'TEST'
 export const SHOW_MENU_TOPBAR = 'SHOW_MENU_TOPBAR'
+
+//customer
+export const RECEIVE_CUSTOMER = 'RECEIVE_CUSTOMER';
+export const GET_CUSTOMERS = 'GET_CUSTOMERS';
+
+//user
+export const RECEIVE_ACCESS_TOKEN = 'RECEIVE_ACCESS_TOKEN';
+export const RECEIVE_USER_ACCOUNT = 'RECEIVE_USER_ACCOUNT';

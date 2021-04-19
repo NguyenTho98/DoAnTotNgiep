@@ -44,8 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         if (StringUtils.isNotEmpty(customerDTO.getPhoneNumber())
-                && checkPhoneNumber(customerDTO.getPhoneNumber())
-                && customerDTO.getPhoneNumber().length() >= 10) {
+            && checkPhoneNumber(customerDTO.getPhoneNumber())
+            && customerDTO.getPhoneNumber().length() >= 10) {
             throw new DuplicateFieldException("Phone", Const.CUSTOMER);
         }
 
@@ -96,6 +96,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = customerPage.getContent();
 
         customers.forEach(customer -> customerDTOList.add(customerConverter.convertToDTO(customer)));
+        if (customers.isEmpty()) fakeDataCustomer();
 
         map.put("customers", customerDTOList);
         map.put("currentPage", customerPage.getNumber() + 1);
@@ -119,14 +120,14 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         if (StringUtils.isNotEmpty(customer.getCode())
-                && StringUtils.isNotEmpty(customerDTO.getCode())
-                && !customerDTO.getCode().equals(customer.getCode())) {
+            && StringUtils.isNotEmpty(customerDTO.getCode())
+            && !customerDTO.getCode().equals(customer.getCode())) {
             Customer existedCode = customerRepository.findOneByCode(customerDTO.getCode());
             if (existedCode != null) throw new DuplicateFieldException("Code", Const.CUSTOMER);
         }
 
         if (!customerDTO.getPhoneNumber().equals(customer.getPhoneNumber())
-                && checkPhoneNumber(customerDTO.getPhoneNumber())) {
+            && checkPhoneNumber(customerDTO.getPhoneNumber())) {
             throw new DuplicateFieldException("Phone", Const.CUSTOMER);
         }
 
@@ -216,6 +217,24 @@ public class CustomerServiceImpl implements CustomerService {
         } while (getMaxCode == null);
         codeNumber = Long.parseLong(getMaxCode) + 1;
         return codeNumber;
+    }
+
+    public void fakeDataCustomer() {
+        List<String> first = Arrays.asList("Bùi Đức ", "Nguyễn Văn ", "Nguyễn Xuân ");
+        List<String> last = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "M");
+        List<String> email = Arrays.asList("fake@gmail.com", "hanoi@gmail.com", "ninhbinh@gmail.com");
+        for (int i = 0; i < 1000; i++) {
+            Customer customer = new Customer();
+            String code = "kh" + i;
+            customer.setCode(code);
+            customer.setPhoneNumber("0347481199");
+            customer.setName(first.get(new Random().nextInt(first.size())) + last.get(new Random().nextInt(first.size())));
+            customer.setEmail(email.get(new Random().nextInt(first.size())));
+            customer.setStatus(new Byte("1"));
+            customer.setCreatedDate(new Date());
+            customer.setModifiedDate(new Date());
+            customerRepository.save(customer);
+        }
     }
 
 }

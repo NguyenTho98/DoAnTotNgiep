@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin("http://localhost:8686")
 @RequestMapping("/admin/")
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PostMapping("/customers")
+    @PostMapping("customers")
     public ResponseEntity<CustomerDTO> addCustomer(
             @RequestBody CustomerDTO customerDTO)
             throws ParseException, DataTooLongException {
@@ -27,21 +28,21 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @GetMapping("/customers/{id}")
+    @GetMapping("customers/{id}")
     public ResponseEntity<Object> getCustomerById(
             @PathVariable("id") Long idCustomer) {
         CustomerDTO customerDTO = customerService.getById(idCustomer);
         return ResponseEntity.ok(customerDTO);
     }
 
-    @GetMapping("/customers")
+    @GetMapping("customers")
     public ResponseEntity<Object> searchCustomer(
             @ModelAttribute("searchCustomer") SearchCustomer searchCustomer) {
         Map<String, Object> allCustomer = customerService.searchCustomer(searchCustomer);
         return ResponseEntity.ok(allCustomer);
     }
 
-    @PutMapping("/customers/{idCustomer}")
+    @PutMapping("customers/{idCustomer}")
     public ResponseEntity<Object> updateCustomer(
             @RequestBody CustomerDTO customerDTO,
             @PathVariable("idCustomer") Long idCustomer) {
@@ -49,14 +50,14 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @DeleteMapping("/customers/{idCustomer}")
+    @DeleteMapping("customers/{idCustomer}")
     public ResponseEntity<Object> deleteCustomer(
             @PathVariable("idCustomer") Long idCustomer) {
         customerService.deleteCustomer(idCustomer);
         return ResponseEntity.ok("Success");
     }
 
-    @DeleteMapping("/customers/updateStatus")
+    @DeleteMapping("customers/updateStatus")
     public ResponseEntity<Object> updateMultipleStatusCustomer(
             @RequestParam(name = "ids", required = false, defaultValue = "") List<Long> ids) {
         customerService.updateMultipleStatusCustomer(ids);

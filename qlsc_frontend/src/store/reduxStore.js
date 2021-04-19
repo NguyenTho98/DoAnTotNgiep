@@ -1,10 +1,12 @@
-import { applyMiddleware, compose, createStore } from 'redux'
-import { createLogger } from 'redux-logger'
-import thunk from 'redux-thunk'
-import reducers from 'reducers'
+import { applyMiddleware, compose, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
+import reducers from 'reducers';
+import fetchMiddleware from 'utils/fetchMiddleware';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const middleWare = composeEnhancers(applyMiddleware(
+  fetchMiddleware(fetch),
   thunk,
   createLogger({
     predicate: () => {

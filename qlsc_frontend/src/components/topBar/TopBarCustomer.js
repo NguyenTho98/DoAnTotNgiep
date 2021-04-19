@@ -6,19 +6,10 @@ function TopbarCustomer (props) {
   const onRedirect = () => {
     // pushstate(props.history, '/manage-staff')
   }
-
-  // eslint-disable-next-line react/prop-types
   const url = props.location ? props.location.pathname : ''
   if (url.includes('customer/create')) {
     return (
       <div className="wrapper-customer-topbar">
-        <h1>
-          <a onClick={() => onRedirect()} style={{ cursor: 'pointer' }}>
-            <span>
-              Danh sách khách hàng
-            </span>
-          </a>
-        </h1>
         <div className="current">
           <span>Thêm mới khách hàng</span>
         </div>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import './login.scss';
 import logo from '../../images/logo_sapo.svg';
 import fb from '../../images/facebook-8-1-2020.svg';
-import google from '../../images/gp-btn.svg';
+import google from '../../imagesimport/gp-btn.svg';
 function LoginPage(props) {
   const [sateUser, setSateUser] = useState({
     email: "",

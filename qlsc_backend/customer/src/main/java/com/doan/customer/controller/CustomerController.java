@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/admin/")
+@RequestMapping("admin")
 @RequiredArgsConstructor
 public class CustomerController {
 

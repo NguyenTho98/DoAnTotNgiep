@@ -1,0 +1,56 @@
+.delivery-collation-order-info {
+  background: #FFFFFF;
+  border: 1px solid #D3D3D3;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 15px;
+  margin-top: 10px;
+  .title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #212b35;
+  }
+  .delivery-collation-order-list-wrapper {
+    .delivery-collation-order-row {
+      input {
+        min-width: 100px;
+        max-width: 300px;
+        width: 60%;
+        text-align: right;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+      }
+    }
+    .delivery-total {
+      .total-item {
+        margin-top: 14px;
+      }
+      .hr-line {
+        border-color: #c4c4c4;
+      }
+      .dlv-button {
+        padding: 8px;
+        border: 1.5px solid #0088FF;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+          background-color: #0084ff;
+          color: white !important;
+            svg{
+              path{
+                fill: white !important;
+              }
+          }
+          .separate{
+            rect{
+              fill: white;
+            }
+          }
+        }
+        .separate {
+          margin: 0 5px;
+        }
+      }
+    }
+  }
+}

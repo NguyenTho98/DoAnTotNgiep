@@ -24,6 +24,7 @@ import Modals from "./components/modal/modal";
 import "./styles/app.scss";
 import login from "./pages/login/login";
 import MainCardList from "./pages/maintenancecard/components/MainCardList/MainCardList";
+import MainCardCreate from "./pages/maintenancecard/components/MainCardCreate/MainCardCreate";
 
 
 function App (props) {
@@ -62,6 +63,7 @@ function App (props) {
               <Route exact path="/customer/:id/info" component={CustomerInfo}/>
               <Route exact path="/customer/:id/edit" component={EditCustomer}/>
               <Route exact path="/maintenance-card" component={MainCardList}/>
+              <Route exact path="/maintenance-card/create" component={MainCardCreate}/>
           </div>
         </Switch>
       </Router>

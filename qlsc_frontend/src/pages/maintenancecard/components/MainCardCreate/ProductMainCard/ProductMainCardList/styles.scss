@@ -10,17 +10,17 @@
   .delivery-collation-order-row {
     padding: 13px 10px;
     .order {
-      width: calc((100% - 25px) / 7);
+      width: calc((100% - 25px) / 6);
       min-width: 120px;
     }
     .track-code {
-      width: calc((100% - 25px) / 7);
+      width: calc((100% - 25px) / 6);
     }
     .tenant {
-      width: calc((100% - 25px) / 7);
+      width: calc((100% - 25px) / 6);
     }
     .item-service_provider_ship_fee {
-      width: calc((100% - 25px) / 7);
+      width: calc((100% - 25px) / 6);
       input{
         height: 38px;
         &:focus{
@@ -30,7 +30,7 @@
       }
     }
     .item-service_provider_cod_amount {
-      width: calc((100% - 25px) / 7);
+      width: calc((100% - 25px) / 6);
       input{
         height: 38px;
         &:focus{
@@ -40,10 +40,10 @@
       }
     }
     .sapo-record {
-      width: calc((100% - 25px) / 7);
+      width: calc((100% - 25px) / 6);
     }
     .real-record {
-      width: calc((100% - 25px) / 7);
+      width: calc((100% - 25px) / 6);
     }
     .remove {
       width: 25px;
@@ -77,27 +77,27 @@
     .delivery-collation-order-row {
       padding: 13px 10px;
       .order {
-        width: calc((100% - 25px) / 7);
+        width: calc((100% - 25px) / 6);
         min-width: 120px;
       }
       .track-code {
-        width: calc((100% - 25px) / 7);
+        width: calc((100% - 25px) / 6);
         
       }
       .tenant {
-        width: calc((100% - 25px) / 7);
+        width: calc((100% - 25px) / 6);
       }
       .sapo-revenue {
-        width: calc((100% - 25px) / 7);
+        width: calc((100% - 25px) / 6);
       }
       .real-revenue {
-        width: calc((100% - 25px) / 7);
+        width: calc((100% - 25px) / 6);
       }
       .sapo-record {
-        width: calc((100% - 25px) / 7);
+        width: calc((100% - 25px) / 6);
       }
       .real-record {
-        width: calc((100% - 25px) / 7);
+        width: calc((100% - 25px) / 6);
       }
       .remove {
         width: 25px;

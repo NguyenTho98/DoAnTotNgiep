@@ -1,0 +1,21 @@
+.common-input {
+  width: 100%;
+ 
+  input {
+    background: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    box-sizing: border-box;
+    border-radius: 3px;
+    outline: none;
+    width: 100%;
+    padding: 8.5px 80px 8.5px 40px;
+    &:focus {
+      outline: none;
+      border: 1px solid #0088FF;
+    }
+  }
+  .input-prefix-common {
+    left: 13px;
+    top: 9px;
+  }
+}

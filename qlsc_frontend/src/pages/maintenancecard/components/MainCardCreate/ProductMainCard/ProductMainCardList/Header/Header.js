@@ -12,13 +12,13 @@ function Header() {
       <div className="tenant">
         Số lượng
       </div>
-      <div className="d-flex align-items-center justify-content-end sapo-revenue">
+      <div className="d-flex align-items-center justify-content-end tenant">
         Bảo hành
       </div>
-      <div className="d-flex align-items-center justify-content-end real-revenue">
+      <div className="d-flex align-items-center justify-content-end tenant">
         Giá
       </div>
-      <div className="d-flex align-items-center justify-content-end sapo-record">
+      <div className="d-flex align-items-center justify-content-end tenant">
         Trạng thái
       </div>
     </div>

@@ -6,32 +6,15 @@ import Total from './Total/Total';
 import './styles.scss';
 import Search from './Search/Search';
 
-function DeliveryCollationOrderList(props) {
-  const {
-    totalAmount,
-    totalShipFee,
-    channelType,
-    setShowModal,
-    listOrderCollation,
-    locationId,
-    total,
-    store,
-  } = props;
+function ProductMainCardList(props) {
   return (
     <div className="delivery-collation-order-list-wrapper">
-      <Search locationId={locationId} store={store} />
+      <Search/>
       <Header />
       <List />
-      <Total
-        totalAmount={totalAmount}
-        totalShipFee={totalShipFee}
-        total={total}
-        channelType={channelType}
-        listOrderCollation={listOrderCollation}
-        setShowModal={(show) => setShowModal(show)}
-      />
+      <Total/>
     </div>
   );
 }
 
-export default DeliveryCollationOrderList;
+export default ProductMainCardList;

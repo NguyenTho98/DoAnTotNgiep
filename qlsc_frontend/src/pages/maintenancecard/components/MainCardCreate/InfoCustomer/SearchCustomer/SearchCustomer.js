@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 
 let timeOut;
-function Search(props) {
+function SearchCustomer(props) {
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState('');
   const [focus, setFocus] = useState(false);
@@ -155,4 +155,4 @@ function Search(props) {
 }
 
 
-export default connect(null, null)(Search);
+export default connect(null, null)(SearchCustomer);

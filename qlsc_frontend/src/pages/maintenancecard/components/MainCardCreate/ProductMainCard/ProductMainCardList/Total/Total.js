@@ -1,41 +1,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import { moneyFormat } from 'util/moneyFormat';
+import { moneyFormat } from 'utils/moneyFormat';
 
 function Total(props) {
-  const {
-    totalAmount,
-    totalShipFee,
-    channelType,
-    setShowModal,
-    listOrderCollation,
-    total
-  } = props;
 
-  const renderLabelStore = () => {
-    if (channelType === 1) {
-      return 'Shopee';
-    }
-    if (channelType === 2) {
-      return 'Lazada';
-    }
-    if (channelType === 4) {
-      return 'Tiki';
-    }
-    if (channelType === 3) {
-      return 'Sendo';
-    }
-  };
-  if (listOrderCollation.length === 0) return '';
+  // if (listOrderCollation.length === 0) return '';
   return (
     <div className="d-flex align-items-center justify-content-end delivery-total">
       <div style={{ width: 400 }}>
         <div className="d-flex align-items-center justify-content-between total-item">
           <div>
-            Tổng giá trị đơn hàng ( {listOrderCollation.length} đơn)
+            Tổng giá trị đơn hàng ( 1đơn)
           </div>
           <div>
-            {moneyFormat(totalAmount)}đ
+            100000 đ
           </div>
         </div>
         <div className="d-flex align-items-center justify-content-between total-item">
@@ -43,7 +21,7 @@ function Total(props) {
             Tổng phí phải chi
           </div>
           <div>
-            {moneyFormat(totalShipFee)}đ
+            100000 đ
           </div>
         </div>
         <div className="d-flex align-items-center justify-content-between total-item font-weight-bold">
@@ -51,11 +29,11 @@ function Total(props) {
             Tổng doanh thu sau đối soát
           </div>
           <div>
-            {moneyFormat(total) || 0}đ
+            100000 đ
           </div>
         </div>
         <hr className="hr-line" />
-        <div className="d-flex align-items-center justify-content-end" onClick={() => setShowModal(true)}>
+        <div className="d-flex align-items-center justify-content-end">
           <div className="d-flex align-items-center justify-content-between dlv-button">
             <div className="icon-button">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +48,7 @@ function Total(props) {
               </svg>
             </div>
             <span>
-            Đối soát với {renderLabelStore()}
+            Đối soát với
             </span>
           </div>
         </div>

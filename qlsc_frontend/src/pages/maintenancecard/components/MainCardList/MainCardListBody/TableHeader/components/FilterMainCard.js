@@ -3,10 +3,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import debounce from 'util/debounce';
-import '../styles/filterOrderCollation.scss';
+import debounce from 'utils/debounce';
+import '../styles/filterMainCard.scss';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
 import { default_option, default_status_work, default_status_work_detail, default_status_payment, default_status_payment_detail } from 'pages/maintenancecard/commons/mainCardConstants.js';
+import { showFilter } from '../../../../../actions/mainCard';
 
 function FilterMainCard(props) {
   const { showFilter } = props;
@@ -99,7 +100,7 @@ function FilterMainCard(props) {
           </div>
           <input
             id="filter-delivery-collations-search-input"
-            placeholder="Tìm kiếm phiếu sữa chưa theo mã phiếu sữa chữa"
+            placeholder="Tìm kiếm phiếu sữa chữa theo mã phiếu sữa chữa"
             value={filterText}
             onChange={(e) => onChangeText(e)}
           />
@@ -128,7 +129,7 @@ function FilterMainCard(props) {
 FilterMainCard.defaultProps = {
 };
 const mapStateToProps = state => {
-  const { mainCard: { filterInfo, ui: { fetching } } } = state;
+  const { mainCards: { filterInfo, ui: { fetching } } } = state;
   return {
     filterInfo,
     fetching,

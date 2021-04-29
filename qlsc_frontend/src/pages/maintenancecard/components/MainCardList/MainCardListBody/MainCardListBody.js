@@ -1,16 +1,17 @@
 import React from 'react';
 import './styles.scss';
+import Wrapper from './TableBody/components/Wrapper/Wrapper';
+import TableHeader from './TableHeader/TableHeader';
 
 function MainCardListBody() {
   return (
     <div className="main-card-list-body">
-      {/* <OrderCollationTableHeader />
+      <TableHeader />
       <div className="dashboard-body-content">
         <div className="content-container">
-          <OrderCollationWrapper />
+          <Wrapper />
         </div>
-      </div> */}
-        xin chào
+      </div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import modal from './../components/modal/modalReducer';
 import customer from './customer/customer';
 import locations from './locations/locations';
 import auth from './auth';
+import mainCards from './maintenancecard';
 
 export default combineReducers({
   auth,
@@ -13,4 +14,5 @@ export default combineReducers({
   modal,
   customer,
   locations,
+  mainCards,
 })

@@ -1,3 +1,226 @@
-/* start file main.scss */
-@import "bootstrap";
-@import "reset";
+@import "~bootstrap/scss/bootstrap";
+@import "reset.scss";
+@import "checkbox.scss";
+html,
+body {
+    height: 100%;
+    margin: 0;
+    #app {
+      height: 100%;
+      #market-place-wrapper {
+        overflow: auto;
+        height: 100%;
+        font-size: 14px;
+        font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        background: #F2F4F8;
+        position: relative;
+        #market-place-curtain {
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            background: white;
+            opacity: 0.2;
+            z-index: 1;
+        }
+      }
+    }
+  .hyper-link {
+    color: #0088FF!important;
+    cursor: pointer;
+  }
+  .bold-text {
+    font-weight: 500;
+  }
+  .italic-text {
+    font-style: italic;
+  }
+  .btn-primary-customized {
+    background: #FFF;
+    color: rgb(0, 132, 255);
+    box-shadow: none;
+    font-size: 14px;
+    border: 1px solid #0088FF;
+    box-sizing: border-box;
+    border-radius: 4px;
+    &:hover {
+      color: rgb(0, 132, 255);
+      background: #FFF;
+    }
+    .spinner-border {
+      margin-right: 5px!important;
+      border-color: #0088FF!important;
+      border-right-color: transparent!important;
+    }
+  }
+
+  a:not([href]) {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  ///* button*/
+  //.btn-primary {
+  //  font-weight: 600;
+  //  font-size: 14px;
+  //}
+  //.btn-danger {
+  //  font-weight: 600;
+  //  font-size: 14px;
+  //  background: #E3404A!important;
+  //}
+
+  .danger-red{
+       background: #E3404A!important;
+  }
+
+  /* other */
+  .header-list {
+    color: #2A2C2E;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .margin-right20 {
+    margin-right: 20px;
+  }
+  .margin-left-auto {
+    margin-left: auto;
+  }
+  .rotate {
+    transform: rotate(90deg);
+  }
+  /* modals */
+  .modal-title {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+    color: #333333;
+    margin-top: 2px;
+  }
+  .modal-body {
+    font-size: 14px;
+    line-height: 19px;
+    color: #333333;
+    .content {
+      margin-bottom: 10px;
+    }
+  }
+  .disabled {
+    cursor: not-allowed;
+  }
+  .text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .text-ellipsis-line-clamp-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    height: inherit;
+  }
+
+  .text-ellipsis-line-clamp-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    height: inherit;
+  }
+  #___reactour {
+    .mask {
+      opacity: 0.7;
+    }
+  }
+}
+
+.tip {
+  background: #FEF9EB;
+  border: 1px solid rgba(242, 201, 76, 0.6);
+  box-sizing: border-box;
+  border-radius: 4px;
+  .header {
+    font-weight: 500;
+  }
+  .tip-prefix-list {
+    .tip-prefix {
+      font-weight: 500;
+      margin-right: 15px;
+      &:last-child {
+        margin-right: unset;
+      }
+    }
+  }
+}
+.tip-wrapper {
+  padding: 14px;
+}
+.variant-tip {
+  margin: 10px 0;
+  .content-tip {
+    width: calc(100% - 80px);
+  }
+  .post-image {
+    min-width: 60px;
+  }
+}
+.tip-specify {
+  .btn {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .tip-action {
+    margin-top: 5px;
+    .search-key-word {
+      font-size: 14px;
+      svg {
+        margin-right: 10px;
+      }
+      margin-right: 10px;
+      background: #FFF;
+      border: 1px solid #0088FF;
+      color: #0088FF;
+    }
+    .hash-tag {
+      margin-right: 10px;
+      font-size: 20px;
+      line-height: 14px;
+    }
+  }
+}
+
+.font-weight-bold {
+  font-weight: 500!important;
+}
+.btn-font-size{
+  font-size: 14px;
+}
+.icon-text-center{
+  display: flex;
+  align-items: center;
+}
+.disable-button{
+cursor: not-allowed !important;
+}
+
+.rotate-180 {
+  -ms-transform: rotate(180deg); /* IE 9 */
+  transform: rotate(180deg);
+}
+
+.default-color {
+  color: #212b35!important;
+}
+
+button {
+  &:disabled {
+    cursor: not-allowed !important;
+  }
+}
+.btn {
+  font-size: 14px;
+}

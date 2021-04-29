@@ -5,9 +5,13 @@ import { useHistory } from 'react-router';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
 import './styles.scss';
 import { connect } from 'react-redux';
+import pushstate from '../../../../../utils/pushstate';
 
 function MainCardListHeader(props) {
   const history = useHistory();
+  const onClick = () => {
+    pushstate(history, `/maintenance-card/create`);
+  };
   return (
     <div className="tilte-action">
       <div className="d-flex list-header">
@@ -18,7 +22,7 @@ function MainCardListHeader(props) {
           <button
             className="d-flex align-items-center justify-content-between btn btn-create"
             type="button"
-            // onClick={onClick}
+            onClick={onClick}
           >
             <span
               className="d-flex align-items-center justify-content-center"

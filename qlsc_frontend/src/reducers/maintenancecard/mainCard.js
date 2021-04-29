@@ -1,4 +1,4 @@
-import * as actionTypes from '../../common/actionTypes';
+import * as actionTypes from 'actions/actionTypes';
 
 const initState = {
   items: {},
@@ -11,7 +11,7 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case actionTypes.GET_ORDER_COLLATIONS: {
+    case actionTypes.GET_MAIN_CARD: {
       return {
         ...state,
         items: action.data.items,
@@ -19,7 +19,7 @@ export default (state = initState, action) => {
         page: action.data.page,
       };
     }
-    case actionTypes.SELECTED_ORDER_COLLATION_IDS: {
+    case actionTypes.SELECTED_MAIN_CARD_IDS: {
       const tmp = filterOrderCollation(action.ids, state.items);
       return {
         ...state,
@@ -28,19 +28,19 @@ export default (state = initState, action) => {
         checkCreate: tmp.check,
       };
     }
-    case actionTypes.UPDATE_ORDER_COLLATION: {
+    case actionTypes.UPDATE_MAIN_CARD: {
       return {
         ...state,
         listOrderCollation: action.list,
       };
     }
-    case actionTypes.ADD_ITEM_ORDER_COLLATION: {
+    case actionTypes.ADD_ITEM_MAIN_CARD: {
       return {
         ...state,
         listOrderCollation: addOrderCollation(state.listOrderCollation, action.item),
       };
     }
-    case actionTypes.ADD_ITEM_ORDER_COLLATION_IMPORT_FILE: {
+    case actionTypes.ADD_ITEM_MAIN_CARD_IMPORT_FILE: {
       return {
         ...state,
         listOrderCollation: state.listOrderCollation.concat(action.list),

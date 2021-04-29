@@ -1,9 +1,9 @@
-import * as actionTypes from '../../common/actionTypes';
+import * as actionTypes from 'actions/actionTypes';
 
 const initState = {
+  slectedFilter: [],
   showFilter: false,
   filterText: '',
-  slectedFilter: [],
   statusWork: '',
   statusPayment: '',
   endDate: '',
@@ -12,7 +12,7 @@ const initState = {
 
 const filterInfo = (state = initState, action) => {
   switch (action.type) {
-    case actionTypes.SHOW_DELIVERY_COLLATIONS_FILTER:
+    case actionTypes.SHOW_MAIN_CARD_FILTER:
       return {
         ...state,
         showFilter: action.show,

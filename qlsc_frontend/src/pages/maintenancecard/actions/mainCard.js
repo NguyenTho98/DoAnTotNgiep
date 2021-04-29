@@ -1,29 +1,19 @@
 /* eslint-disable use-isnan */
-import * as actionTypes from 'common/actionTypes';
-import { normalize, schema } from 'normalizr';
-import callApi from 'common/callApi';
+import * as actionTypes from 'actions/actionTypes';
+// import callApi from 'common/callApi';
 
-export const orderCollationsSchema = new schema.Entity('items');
-const tenant = JSON.parse(sessionStorage.getItem('tenant')) || {};
+
+
 export const showFilter = (show) => ({
-  type: actionTypes.SHOW_DELIVERY_COLLATIONS_FILTER,
+  type: actionTypes.SHOW_MAIN_CARD_FILTER,
   show,
 });
 
 export const changeFilter = (filterInfo) => ({
-  type: actionTypes.CHANGE_DELIVERY_COLLATIONS_FILTER_INFO,
+  type: actionTypes.CHANGE_MAIN_CARD_FILTER_INFO,
   filterInfo,
 });
 
-export const changeShowByStore = (show) => ({
-  type: actionTypes.SHOW_DELIVERY_COLLATIONS_FILTER_BY_STORE,
-  show,
-});
-
-export const changeShowTable = (show) => ({
-  type: actionTypes.SHOW_COLLATIONS_TABLE,
-  show,
-});
 
 export const resetFilter = () => (dispatch) => {
   const filterInfo = {
@@ -36,35 +26,35 @@ export const resetFilter = () => (dispatch) => {
     selectedFilter: [],
     status: ''
   };
-  dispatch(fetchOrderCollation(filterInfo));
+  dispatch(fetchMainCard(filterInfo));
 };
 
-export const getOrderCollationsIds = (itemIds) => (dispatch) => {
+export const getMainCardsIds = (itemIds) => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_ORDER_COLLATIONS_IDS,
+    type: actionTypes.GET_MAIN_CARD_IDS,
     itemIds,
   });
 };
 
 export const updateFetchingDeliveryCollation = (bool) => ({
-  type: actionTypes.UPDATE_DELIVERY_COLLATIONS_FETCHING,
+  type: actionTypes.UPDATE_MAIN_CARD_FETCHING,
   bool,
 });
 
 export const updateIsEmpty = (bool) => ({
-  type: actionTypes.UPDATE_DELIVERY_COLLATIONS_IS_EMPTY,
+  type: actionTypes.UPDATE_MAIN_CARD_IS_EMPTY,
   bool,
 });
 
-export const fetchOrderCollation = (_filterInfo, page) => (dispatch, getState) => {
+export const fetchMainCard = (_filterInfo, page) => (dispatch, getState) => {
   const { deliveryCollation: { filterInfo } } = getState();
   const filter = _filterInfo || filterInfo;
   dispatch(updateFetchingDeliveryCollation(true));
-  dispatch(filterOrderCollation(filter, page))
+  dispatch(filterMainCard(filter, page))
     .then((json) => {
       if (json && json.channel_order_collation && json.metadata) {
         const { channel_order_collation } = json;
-        const normalized = normalize(channel_order_collation, [orderCollationsSchema]);
+        const normalized = normalize(channel_order_collation, [MainCardsSchema]);
 
         const data = normalized.entities;
         const itemIds = normalized.result;
@@ -77,31 +67,31 @@ export const fetchOrderCollation = (_filterInfo, page) => (dispatch, getState) =
         } else {
           dispatch(updateIsEmpty(false));
         }
-        dispatch(getOrderCollations(data));
-        dispatch(getOrderCollationsIds(itemIds));
+        dispatch(getMainCards(data));
+        dispatch(getMainCardsIds(itemIds));
         dispatch(updateFetchingDeliveryCollation(false));
       } else {
-        dispatch(getOrderCollations([]));
-        dispatch(getOrderCollationsIds([]));
+        dispatch(getMainCards([]));
+        dispatch(getMainCardsIds([]));
         dispatch(updateFetchingDeliveryCollation(false));
         dispatch(updateIsEmpty(true));
       }
     });
 };
 
-export const filterOrderCollation = (filterInfo, page) => (dispatch) => {
+export const filterMainCard = (filterInfo, page) => (dispatch) => {
   dispatch({
-    type: actionTypes.CHANGE_DELIVERY_COLLATIONS_FILTER_INFO,
+    type: actionTypes.CHANGE_MAIN_CARD_FILTER_INFO,
     filterInfo
   });
   dispatch(showFilter(false));
-  return dispatch(fetchFilterOrderCollation(filterInfo, page))
+  return dispatch(fetchFilterMainCard(filterInfo, page))
     .then((json) => {
       return json;
     });
 };
 
-export const fetchFilterOrderCollation = (filterInfo, page = 1) => () => {
+export const fetchFilterMainCard = (filterInfo, page = 1) => () => {
   let filterField = '';
   if (filterInfo.selectedStore && filterInfo.selectedStore.length > 0) {
     filterField = `${filterField}&ids=${filterInfo.selectedStore}`;
@@ -136,42 +126,42 @@ export const fetchFilterOrderCollation = (filterInfo, page = 1) => () => {
   });
 };
 
-export const getOrderCollations = (data) => (dispatch) => {
+export const getMainCards = (data) => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_ORDER_COLLATIONS,
+    type: actionTypes.GET_MAIN_CARD,
     data,
   });
 };
 
-export const selectedOrderCollationIds = (ids) => (dispatch) => {
+export const selectedMainCardIds = (ids) => (dispatch) => {
   dispatch({
     type: actionTypes.SELECTED_ORDER_COLLATION_IDS,
     ids,
   });
 };
 
-export const updateOrderCollation = (list) => (dispatch) => {
+export const updateMainCard = (list) => (dispatch) => {
   dispatch({
     type: actionTypes.UPDATE_ORDER_COLLATION,
     list,
   });
 };
 
-export const addItemOrderCollationImportFile = (list) => (dispatch) => {
+export const addItemMainCardImportFile = (list) => (dispatch) => {
   dispatch({
     type: actionTypes.ADD_ITEM_ORDER_COLLATION_IMPORT_FILE,
     list,
   });
 };
 
-export const addItemOrderCollation = (item) => (dispatch) => {
+export const addItemMainCard = (item) => (dispatch) => {
   dispatch({
     type: actionTypes.ADD_ITEM_ORDER_COLLATION,
     item,
   });
 };
 
-export const showModalOrderCollation = (show) => (dispatch) => {
+export const showModalMainCard = (show) => (dispatch) => {
   dispatch({
     type: actionTypes.SHOW_MODAL_ORDER_COLLATION,
     show,

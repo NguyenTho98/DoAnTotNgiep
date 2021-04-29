@@ -2,17 +2,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect, useRef } from 'react';
-import { default_option, default_status, default_status_detail } from 'components/sapo/deliveryCollation/commons/filterDeliveryCollationConstants';
 import vi from 'date-fns/locale/vi';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { connect } from 'react-redux';
-import * as Icons from 'components/sapo/deliveryCollation/commons/Icons';
-import '../styles/filterOrderCollationModal.scss';
-import { fetchOrderCollation, showFilter } from '../../../../../actions/deliveryCollation';
+import * as Icons from 'pages/maintenancecard/commons/Icons';
+import { default_option, default_status_work, default_status_work_detail, default_status_payment, default_status_payment_detail } from 'pages/maintenancecard/commons/mainCardConstants.js';
+import '../styles/filterMainCardModal.scss';
+// import { fetchOrderCollation, showFilter } from '../../../../../actions/mainCard';
 
 registerLocale('vi', vi);
-const tenant = JSON.parse(sessionStorage.getItem('tenant'));
-
 function FilterOrderCollationsModal(props) {
   const { filterInfo, showFilter } = props;
   const [listOption, setListOption] = useState([]);
@@ -148,25 +146,30 @@ function FilterOrderCollationsModal(props) {
     for (let i = 0; i <= listOption.length; i++) {
       const option = listOption[i];
       if (
-        option === 'status'
+        option === 'statusWork'
       ) {
         selectedFilter.push(option);
       }
       if (
-        option === 'location'
+        option === 'statusPayment'
+      ) {
+        selectedFilter.push(option);
+      }
+      if (
+        option === 'datetime'
       ) {
         selectedFilter.push(option);
       }
     }
-    const afilterInfo = {
+    const afterInfo = {
       selectedFilter,
-      selectedLocation,
       filterText: props.filterInfo.filterText,
-      selectedStore: props.filterInfo.selectedStore,
-      channelType: props.filterInfo.channelType,
-      status,
+      statusWork,
+      statusPaymentl,
+      endDate,
+      startDate,
     };
-    props.fetchOrderCollation(afilterInfo);
+    // props.fetchOrderCollation(afterInfo);
   };
 
   const showDropdownSource = () => {
@@ -230,105 +233,134 @@ function FilterOrderCollationsModal(props) {
     );
   };
 
-  const getFilterByBranchText = (listBranch) => {
-    if (listBranch.length === 1) {
-      return listBranch[0].label;
-    }
-    if (selectedLocation.length === 1) {
-      for (let i = 0; i < listBranch.length; i++) {
-        if (listBranch[i].id === selectedLocation[0]) {
-          return listBranch[i].label;
-        }
-      }
-      return '1 chi nhánh';
-    }
-    if (selectedLocation.length === listBranch.length) {
-      return `Tất cả chi nhánh (${listBranch.length})`;
-    }
-    if (selectedLocation.length === 0) {
-      return 'Chọn chi nhánh';
-    }
-    return `${selectedLocation.length} chi nhánh`;
-  };
+  // const getFilterByBranchText = (listBranch) => {
+  //   if (listBranch.length === 1) {
+  //     return listBranch[0].label;
+  //   }
+  //   if (selectedLocation.length === 1) {
+  //     for (let i = 0; i < listBranch.length; i++) {
+  //       if (listBranch[i].id === selectedLocation[0]) {
+  //         return listBranch[i].label;
+  //       }
+  //     }
+  //     return '1 chi nhánh';
+  //   }
+  //   if (selectedLocation.length === listBranch.length) {
+  //     return `Tất cả chi nhánh (${listBranch.length})`;
+  //   }
+  //   if (selectedLocation.length === 0) {
+  //     return 'Chọn chi nhánh';
+  //   }
+  //   return `${selectedLocation.length} chi nhánh`;
+  // };
 
-  const selectBranch = (id) => {
-    setSelectedLocation(() => (
-      selectedLocation.includes(id)
-        ? selectedLocation.filter((item) => item !== id)
-        : selectedLocation.concat(id)
-    ));
-  };
+  // const selectBranch = (id) => {
+  //   setSelectedLocation(() => (
+  //     selectedLocation.includes(id)
+  //       ? selectedLocation.filter((item) => item !== id)
+  //       : selectedLocation.concat(id)
+  //   ));
+  // };
 
 
-  const selectStatus = (a) => {
+  const selectStatusWork = (a) => {
     const tmp = a + 1;
-    if (status === tmp) {
-      setStatus('');
+    if (statusWork === tmp) {
+      setStatusWork('');
     } else {
-      setStatus(tmp);
+      setStatusWork(tmp);
+    }
+  };
+
+  const selectStatusPayment = (a) => {
+    const tmp = a + 1;
+    if (statusPayment === tmp) {
+      setStatusPayment('');
+    } else {
+      setStatusPayment(tmp);
     }
   };
 
   const renderShowOption = (option) => {
-    if (option === 'location') {
-      const { locations } = props;
-      const arrLocations = Object.values(locations);
-      const listStoreElm = arrLocations.map((store, index) => {
-        return (
-          <div
-            className="dropdown-item dropdown-item-delivery-collations-filter item-store"
-            key={index}
-            onClick={() => selectBranch(store.id)}
-          >
-            <div className="fpbsm-store-option-checkbox">
-              <input
-                type="checkbox"
-                className="styledCheckbox"
-                checked={selectedLocation.includes(store.id)}
-              />
-              <span className="styledCheckbox_span">
-                <Icons.CheckMarkThick />
-              </span>
-            </div>
-            <div className="dropdown-item-delivery-collations-filter">
-              {store.label}
-            </div>
-          </div>
-        );
-      });
-      return (
-        <div className="filter-delivery-collations-detail">
-          <button
-            type="button"
-            className="dropdown-toggle button-fillter-delivery-collations-dropdown"
-            id="button-source-dropdown"
-            onClick={() => showDropdownSource()}
-          >
-            {getFilterByBranchText(arrLocations)}
-            <Icons.Arrow />
-          </button>
-          <div
-            className={`dropdown-menu dropdown-item-delivery-collations-filter ${
-              showDropdownBranch ? 'show' : null
-            }`}
-            id="dropdown-delivery-collations-source"
-          >
-            {listStoreElm}
-          </div>
-        </div>
-      );
-    }
+    // if (option === 'location') {
+    //   const { locations } = props;
+    //   const arrLocations = Object.values(locations);
+    //   const listStoreElm = arrLocations.map((store, index) => {
+    //     return (
+    //       <div
+    //         className="dropdown-item dropdown-item-delivery-collations-filter item-store"
+    //         key={index}
+    //         onClick={() => selectBranch(store.id)}
+    //       >
+    //         <div className="fpbsm-store-option-checkbox">
+    //           <input
+    //             type="checkbox"
+    //             className="styledCheckbox"
+    //             checked={selectedLocation.includes(store.id)}
+    //           />
+    //           <span className="styledCheckbox_span">
+    //             <Icons.CheckMarkThick />
+    //           </span>
+    //         </div>
+    //         <div className="dropdown-item-delivery-collations-filter">
+    //           {store.label}
+    //         </div>
+    //       </div>
+    //     );
+    //   });
+    //   return (
+    //     <div className="filter-delivery-collations-detail">
+    //       <button
+    //         type="button"
+    //         className="dropdown-toggle button-fillter-delivery-collations-dropdown"
+    //         id="button-source-dropdown"
+    //         onClick={() => showDropdownSource()}
+    //       >
+    //         {getFilterByBranchText(arrLocations)}
+    //         <Icons.Arrow />
+    //       </button>
+    //       <div
+    //         className={`dropdown-menu dropdown-item-delivery-collations-filter ${
+    //           showDropdownBranch ? 'show' : null
+    //         }`}
+    //         id="dropdown-delivery-collations-source"
+    //       >
+    //         {listStoreElm}
+    //       </div>
+    //     </div>
+    //   );
+    // }
 
-    if (option === 'status') {
-      const list_button = default_status.map((a, index) => {
+    if (option === 'statusWork') {
+      const list_button_work = default_status_work.map((a, index) => {
         return (
           <button
             key={index}
             className={`filter-delivery-collations-button ${status === index + 1 ? 'active' : null}`}
-            onClick={() => selectStatus(index)}
+            onClick={() => selectStatusPayment(index)}
             type="button"
           >
-            {default_status_detail[index]}
+            {default_status_work_detail[index]}
+          </button>
+        );
+      });
+      return (
+        <div className="filter-delivery-collations-detail">
+          {list_button_work}
+        </div>
+      );
+    }
+
+    if (option === 'statusPayment') {
+      const list_button = default_status_payment.map((a, index) => {
+        return (
+          <button
+            key={index}
+            className={`filter-delivery-collations-button ${status === index + 1 ? 'active' : null}`}
+            onClick={() => selectStatusWork(index)}
+            type="button"
+          >
+            {default_status_payment_detail[index]}
           </button>
         );
       });
@@ -392,11 +424,10 @@ function FilterOrderCollationsModal(props) {
   );
 }
 FilterOrderCollationsModal.defaultProps = {
-  locations: [],
 };
 const mapStateToProps = (state) => {
   const {
-    mainCard: { filterInfo },
+    mainCards: { filterInfo },
   } = state;
   return {
     filterInfo,
@@ -404,7 +435,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  showFilter: (show) => dispatch(showFilter(show)),
+  // showFilter: (show) => dispatch(showFilter(show)),
   // fetchOrderCollation: (filter, page) => dispatch(fetchOrderCollation(filter, page))
 });
 

@@ -17,7 +17,7 @@ export const menuLink = [
     submenu: [
       {
         id: 0,
-        url: '/maintenancecard/create',
+        url: '/maintenance-card/create',
         title: 'Thêm mới phiếu sửa chữa'
       },
       {

@@ -18,25 +18,25 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
 
- 	@Qualifier("UserDetailsServiceImpl")
-	@Autowired
-	private UserDetailsService userService;
+    @Qualifier("UserDetailsServiceImpl")
+    @Autowired
+    private UserDetailsService userService;
 
-	@Autowired
-	private JwtConfig jwtConfig;
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-		    .csrf().disable()
-	            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	        .and()
-	            .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-	        .and()
-		    .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig))
-				.addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
-		.authorizeRequests()
-		    .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
+    @Autowired
+    private JwtConfig jwtConfig;
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+            .and()
+            .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig))
+            .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+            .authorizeRequests()
+            .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
 //				.antMatchers("/admin/products/image/**").permitAll()
 //				.antMatchers("/admin/provinces/**").hasAnyRole("3","1")
 //				.antMatchers("/admin/wards/**").hasAnyRole("3","1")
@@ -58,16 +58,16 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/admin/**").hasAnyRole("2","1","3")
 //				.antMatchers(HttpMethod.POST,"/admin/**").hasAnyRole("1")
 //				.antMatchers("/admin/**").hasAnyRole("ADMIN")
-		    .anyRequest().permitAll();
-	}
+            .anyRequest().permitAll();
+    }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-	}
-	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,23 +12,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
-    @Column(name = "code", nullable = false,length = 11,unique = true)
+    @Column(name = "code", nullable = false, length = 11, unique = true)
     private String code;
     @NotBlank
     @NotNull
-    @Column(name = "email", nullable = false,length = 100,unique = true)
+    @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
     @NotBlank
     @NotNull
-    @Column(name = "password", nullable = false,length = 255)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
     @NotNull
-    @Column(name = "full_name", nullable = false,length = 100)
+    @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
     @NotBlank
-    @Column(name = "phone_number", nullable = false,length = 10)
+    @Column(name = "phone_number", nullable = false, length = 10)
     private String phoneNumber;
 
     @Column(name = "address", columnDefinition = "text(5000)")
@@ -36,13 +37,13 @@ public class User extends BaseEntity{
     @Column(name = "status", nullable = false, columnDefinition = "tinyint default 0")
     private byte status;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Message> messages;
 
     @Column(name = "role")
     private byte role;
 
-    @Column(name="total_maintenance_card")
+    @Column(name = "total_maintenance_card")
     private int totalMaintenanceCard;
 
 }

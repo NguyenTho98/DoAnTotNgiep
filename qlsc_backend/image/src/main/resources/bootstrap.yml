@@ -3,4 +3,9 @@ spring:
     name: image
   cloud:
     config:
-      uri: http://localhost:8761
+      uri: http://localhost:8090
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka

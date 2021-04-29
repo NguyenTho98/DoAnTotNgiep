@@ -11,34 +11,35 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableWebSecurity 	// Enable security config. This annotation denotes config for spring security.
+@EnableWebSecurity    // Enable security config. This annotation denotes config for spring security.
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
-	@Autowired
-	private JwtConfig jwtConfig;
 
-	@Override
-  	protected void configure(HttpSecurity http) throws Exception {
-    	http.cors().and()
-		.csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-		    .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-		.and()
-		   .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+    @Autowired
+    private JwtConfig jwtConfig;
 
-		.authorizeRequests()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and()
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
+            .and()
+            .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+
+            .authorizeRequests()
 //		   .antMatchers("/admin/**").hasAnyRole("ADMIN")
-		   .anyRequest().permitAll();
-	}
+            .anyRequest().permitAll();
+    }
 
-	@Bean
-  	public JwtConfig jwtConfig() {
-    	   return new JwtConfig();
-  	}
+    @Bean
+    public JwtConfig jwtConfig() {
+        return new JwtConfig();
+    }
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

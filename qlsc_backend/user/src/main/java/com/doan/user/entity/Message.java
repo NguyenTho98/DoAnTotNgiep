@@ -1,6 +1,7 @@
 package com.doan.user.entity;
 
 import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 

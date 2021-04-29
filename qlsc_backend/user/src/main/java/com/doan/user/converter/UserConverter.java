@@ -31,36 +31,4 @@ public class UserConverter {
         return userDTO;
     }
 
-    public User convertToEntity(UserDTO userDTO) {
-        User user = new User();
-        user.setCode(userDTO.getCode());
-        user.setEmail(userDTO.getEmail());
-        user.setFullName(userDTO.getFullName());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setPassword(userDTO.getPassword());
-        user.setStatus(userDTO.getStatus());
-        user.setCreatedDate(userDTO.getCreatedDate());
-        user.setModifiedDate(userDTO.getModifiedDate());
-        user.setId(userDTO.getId());
-        user.setAddress(userDTO.getAddress());
-        user.setRole(userDTO.getRole());
-        return user;
-    }
-
-    public UserDTO convertToUserDTOGetAllDependencies(User user) {
-        UserDTO DTO = new UserDTO();
-        DTO.setId(user.getId());
-        DTO.setCode(user.getCode());
-        DTO.setEmail(user.getEmail());
-        DTO.setFullName(user.getFullName());
-        DTO.setPhoneNumber(user.getPhoneNumber());
-//        DTO.setPassword(user.getPassword());
-        DTO.setStatus(user.getStatus());
-        DTO.setCreatedDate(user.getCreatedDate());
-        DTO.setModifiedDate(user.getModifiedDate());
-        DTO.setAddress(user.getAddress());
-        DTO.setRole(user.getRole());
-//        DTO.setRepairmanWarrantyCards(maintenanceCardConverter.convertToMaintenanceCardDTOList(user.getRepairmanMaintenanceCards()));
-        return DTO;
-    }
 }

@@ -22,7 +22,7 @@ export const menuLink = [
       },
       {
         id: 1,
-        url: '/maintenancecard',
+        url: '/maintenance-card',
         title: 'Danh sách phiếu sửa chữa'
       }
     ]

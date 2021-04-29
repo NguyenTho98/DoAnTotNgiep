@@ -37,7 +37,7 @@ function PagePanel (props) {
         className='top-bar_list d-flex align-items-center'
         // style={styleTopBar}
       >
-        {url && url.includes('/maintenancecard') ? <TopBarMaintenancecard /> : null}
+        {url && url.includes('/maintenance-card') ? <TopBarMaintenancecard /> : null}
         {url && url.includes('/dashboard') ? <TopBarDashboard /> : null}
         {url && url.includes('/customer') ? <TopBarCustomer /> : null}
         {url && url.includes('/product') ? <TopBarProduct /> : null}

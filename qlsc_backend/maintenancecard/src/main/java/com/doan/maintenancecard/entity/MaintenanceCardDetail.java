@@ -3,6 +3,7 @@ package com.doan.maintenancecard.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "maintenance_card_details")
-public class MaintenanceCardDetail extends BaseEntity{
+public class MaintenanceCardDetail extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "maintenance_card_id")
@@ -19,10 +20,10 @@ public class MaintenanceCardDetail extends BaseEntity{
     @JoinColumn(name = "product_id")
     private long productId;
 
-    @Column(name = "product_name", nullable = false,length = 100)
+    @Column(name = "product_name", nullable = false, length = 100)
     private String productName;
 
-    @Column(name = "product_code", nullable = false,length = 11)
+    @Column(name = "product_code", nullable = false, length = 11)
     private String productCode;
 
     @Column(name = "product_image", length = 255)
@@ -49,7 +50,7 @@ public class MaintenanceCardDetail extends BaseEntity{
     @Column(name = "is_delete")
     private byte isDelete;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "maintenanceCardDetail",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "maintenanceCardDetail", fetch = FetchType.LAZY)
     private List<MaintenanceCardDetailStatusHistory> maintenanceCardDetailStatusHistories;
 
 }

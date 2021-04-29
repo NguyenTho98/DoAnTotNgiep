@@ -17,20 +17,18 @@ import java.util.List;
 @Service("UserDetailsServiceImpl")
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-	private final UserRepository userRepository;
-	private BCryptPasswordEncoder encoder;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		com.doan.user.entity.User user =  userRepository.checkExistEmail(username);
-		if(user != null){
-				List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-		                	.commaSeparatedStringToAuthorityList("ROLE_" + user.getRole());
+    private final UserRepository userRepository;
 
-				return new User(user.getEmail(), user.getPassword(), grantedAuthorities);
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        com.doan.user.entity.User user = userRepository.checkExistEmail(username);
+        if (user != null) {
+            List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_" + user.getRole());
+            return new User(user.getEmail(), user.getPassword(), grantedAuthorities);
+        }
 
-		}
-
-		throw new UsernameNotFoundException("Username: " + username + " not found");
-	}
+        throw new UsernameNotFoundException("Username: " + username + " not found");
+    }
 }

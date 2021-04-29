@@ -1,6 +1,6 @@
 package com.doan.maintenancecard.exception;
 
-public class NotANumberException extends Exception{
+public class NotANumberException extends Exception {
     private String message;
 
     public NotANumberException(String message) {

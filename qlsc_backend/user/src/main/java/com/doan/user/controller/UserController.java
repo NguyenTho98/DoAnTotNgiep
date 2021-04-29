@@ -22,13 +22,13 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*")
+@RequestMapping("admin")
+@CrossOrigin(origins = "*")
 public class UserController {
-
 
     private final UserService userService;
 
-    @GetMapping("/admin/users")
+    @GetMapping("users")
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
                                                            @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize,
                                                            @RequestParam(value = "sortBy", defaultValue = "modifiedDate") String sortBy,
@@ -39,7 +39,7 @@ public class UserController {
         return new ResponseEntity(allUser, HttpStatus.OK);
     }
 
-    @GetMapping("/admin/users/maintenanceCard")
+    @GetMapping("users/maintenanceCard")
     public ResponseEntity getTotalMaintenanceCardByRepairman(@RequestParam(defaultValue = "1", required = false) int page,
                                                              @RequestParam(defaultValue = "5", required = false) int size,
                                                              @RequestParam(defaultValue = "", required = false) String key) {
@@ -47,24 +47,24 @@ public class UserController {
         return new ResponseEntity(allUser, HttpStatus.OK);
     }
 
-    @GetMapping("/admin/users/{id}")
+    @GetMapping("users/{id}")
     public ResponseEntity<?> getInfoUser(@PathVariable("id") Long id) throws NotFoundException {
         UserDTO userDTO = userService.getUserById(id);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/admin/users")
-    public ResponseEntity<UserDTO> insertUser(@RequestBody UserDTO userDTO)throws DuplicateEmailException, CodeExistedException, ConstraintViolationException {
+    @PostMapping("users")
+    public ResponseEntity<UserDTO> insertUser(@RequestBody UserDTO userDTO) throws DuplicateEmailException, CodeExistedException {
         return new ResponseEntity<>(userService.insertUser(userDTO), HttpStatus.OK);
-        }
+    }
 
-    @PutMapping("/admin/users/{id}")
+    @PutMapping("users/{id}")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable("id") Long id) throws NotFoundException, CodeExistedException {
         userDTO = userService.updateUser(userDTO, id);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("/admin/users/delete")
+    @DeleteMapping("users/delete")
     public ResponseEntity<String> deleteUsers(@RequestParam("listID") List<Long> listID) throws Exception {
         boolean isDelete = userService.deleteUserById(listID);
         if (isDelete) {
@@ -73,33 +73,21 @@ public class UserController {
         return new ResponseEntity<>("Delete Failed", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/admin/users/changePassword")
-    public ResponseEntity<UserDTO> ChangePassword(@RequestBody PasswordPoJo passwordPoJo) throws NotFoundException {
+    @PutMapping("users/changePassword")
+    public ResponseEntity<UserDTO> changePassword(@RequestBody PasswordPoJo passwordPoJo) throws NotFoundException {
         return new ResponseEntity<>(userService.changePassword(passwordPoJo), HttpStatus.OK);
     }
 
-
-//    @GetMapping("/admin/users/maintenanceCards/{userid}")
-//    public ResponseEntity<Map<String,Object>> getMaintenanceCardByUserId(@RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
-//                                                                         @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize,
-//                                                                         @RequestParam(value = "sortBy", defaultValue = "") String sortBy,
-//                                                                         @RequestParam(value = "descending", defaultValue = "false") boolean descending,
-//                                                                         @RequestParam(value = "code", defaultValue = "") String code,
-//                                                                         @PathVariable(value = "userid",required = true)Long userid,
-//                                                                         @RequestParam(value = "payStatus",required = false,defaultValue = "0,1") byte[] payStatus,
-//                                                                         @RequestParam(value = "workStatus",required = false,defaultValue = "0,1,2") byte[] workStatus
-//    ) throws NotFoundException{
-//
-//
-//
-//        Map<String,Object> map =maintenanceCardService.getMaintenanceCardByRepairMan(pageNum,pageSize,sortBy,descending,userid,code,payStatus,workStatus);
-//        return new ResponseEntity<>(map, HttpStatus.OK);
-//    }
-    @GetMapping("/admin/checkUser")
+    @GetMapping("checkUser")
     public ResponseEntity<UserDTO> getInformationUser() throws NotFoundException {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         UserDTO userDTO = userService.checkUserNameUser(authentication.getName());
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("test")
+    public String testApi() {
+        return "Success";
     }
 }

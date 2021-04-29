@@ -1,6 +1,6 @@
 package com.doan.maintenancecard.exception.productException;
 
-public class InvalidImageTypeException extends Exception{
+public class InvalidImageTypeException extends Exception {
     private String message;
 
     public InvalidImageTypeException(String message) {

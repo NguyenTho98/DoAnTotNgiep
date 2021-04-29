@@ -1,16 +1,13 @@
 package com.doan.product.converter;
 
-
 import com.doan.product.dto.ProductDTO;
 import com.doan.product.entity.Product;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductConverter {
-    private final ModelMapper modelmapper = new ModelMapper();
+
     public ProductDTO convertToDTO(Product product) {
-//        return modelmapper.map(product, ProductDTO.class);
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
@@ -27,7 +24,4 @@ public class ProductConverter {
         return productDTO;
     }
 
-    public Product convertToEntity(ProductDTO productDTO) {
-        return modelmapper.map(productDTO, Product.class);
-    }
 }

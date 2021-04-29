@@ -9,7 +9,6 @@ import lombok.Setter;
 public class PaymentMethodDTO extends BaseDTO{
 
     private String name;
-
     private List<PaymentHistoryDTO> paymentHistories;
 
 }

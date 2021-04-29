@@ -1,6 +1,6 @@
 package com.doan.maintenancecard.exception;
 
-public class CodeExistedException extends Exception{
+public class CodeExistedException extends Exception {
     private String message;
 
     public CodeExistedException(String message) {

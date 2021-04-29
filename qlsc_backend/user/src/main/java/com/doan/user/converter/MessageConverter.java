@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageConverter {
 
-    public MessageDTO convertToDTO(Message message){
+    public MessageDTO convertToDTO(Message message) {
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setContent(message.getContent());
         messageDTO.setStatus(message.getStatus());

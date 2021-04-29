@@ -10,13 +10,13 @@ import java.util.Optional;
 @Setter
 public class ProductRequest {
 
-    private Optional<MultipartFile> image;
+    private MultipartFile image;
     private String name;
-    private Optional<String> quantity;
-    private Optional<String> unit;
-    private Optional<String> pricePerUnit;
-    private Optional<String> code;
+    private int quantity;
+    private String unit;
+    private String pricePerUnit;
+    private String code;
     private String description;
     private String type;
-    private Optional<String> status;
+    private byte status;
 }

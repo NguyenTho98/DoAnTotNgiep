@@ -13,11 +13,11 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 @RestController
-@RequestMapping("/admin/")
+@RequestMapping("admin")
 public class QRCodeController {
 
     @GetMapping("hmac/{id}")
-    public String initHmac(@PathVariable String id){
+    public String initHmac(@PathVariable String id) {
         try {
             var hmacSHA256 = Mac.getInstance("HmacSHA256");
             var secretKey = new SecretKeySpec("qlsc".getBytes(), "HmacSHA256");

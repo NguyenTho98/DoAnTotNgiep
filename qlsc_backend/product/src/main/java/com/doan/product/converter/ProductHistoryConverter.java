@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductHistoryConverter {
 
-    public ProductHistoryDTO convertToDTO(ProductHistory productHistory){
+    public ProductHistoryDTO convertToDTO(ProductHistory productHistory) {
         ProductHistoryDTO productHistoryDTO = new ProductHistoryDTO();
         productHistoryDTO.setAmountChargeInUnit(productHistory.getAmountChargeInUnit());
         productHistoryDTO.setName(productHistory.getName());

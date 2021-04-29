@@ -11,33 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface ProductService {
-    public Page<ProductDTO> getAll(String search, Pageable pageable);
 
-    public Page<ProductDTO> getAllAccessories(String search, Pageable pageable);
-
-    public Page<ProductDTO> getAllServices(String search, Pageable pageable);
-
-    public ProductDTO save(ProductRequest productRequest) throws Exception;
-
-    public ProductDTO update(ProductRequest productRequest, Long id) throws Exception;
-
-    public String createNewCode() throws NotANumberException;
-
-    public byte[] getImageByte(HttpServletResponse response, String imageName) throws IOException;
-
-    public ProductDTO getOneById(Long id) throws ProductNotFoundException;
-
-    public void deleteById(Long id) throws ProductNotFoundException;
-
-    public boolean isCodeExist(String code);
-
-    public boolean isCodeExistToUpdate(String code, Long id);
-
-    public ProductDTO getOneByIdAndType(Long id, Byte type) throws ProductNotFoundException;
-
-    public boolean isNameExist(String name);
-
-    public boolean isNameExistToUpdate(String name, Long id);
-
-    public void multiDelete(Long[] idArray);
+    Page<ProductDTO> getAll(String search, Pageable pageable);
+    Page<ProductDTO> getAllAccessories(String search, Pageable pageable);
+    Page<ProductDTO> getAllServices(String search, Pageable pageable);
+    ProductDTO save(ProductRequest productRequest) throws Exception;
+    ProductDTO update(ProductRequest productRequest, Long id) throws Exception;
+    String createNewCode() throws NotANumberException;
+    byte[] getImageByte(HttpServletResponse response, String imageName) throws IOException;
+    ProductDTO getOneById(Long id) throws ProductNotFoundException;
+    void deleteById(Long id) throws ProductNotFoundException;
+    boolean isCodeExist(String code);
+    boolean isCodeExistToUpdate(String code, Long id);
+    ProductDTO getOneByIdAndType(Long id, Byte type) throws ProductNotFoundException;
+    boolean isNameExist(String name);
+    boolean isNameExistToUpdate(String name, Long id);
+    void multiDelete(Long[] idArray);
 }

@@ -23,7 +23,6 @@ import java.util.Map;
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
-
     private final MessageConverter messageConverter;
 
     @Override
@@ -34,32 +33,31 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Map<String, Object> getListMessage(String email, int page, int size) {
         Pageable paging = PageRequest.of(page - 1, size, Sort.by("created_date").descending());
-        List<Message> messages = messageRepository.getMessagesByEmail(email,paging);
+        List<Message> messages = messageRepository.getMessagesByEmail(email, paging);
         List<MessageDTO> messageDTOS = new ArrayList<>();
-        for (Message message: messages) {
+        for (Message message : messages) {
             messageDTOS.add(messageConverter.convertToDTO(message));
         }
-        int totalItems =  messageRepository.countMessagesByEmail(email);
-        int totalPages =0;
-        if(totalItems%size==0){
-            totalPages = totalItems/size;
-        }
-        else {
-            totalPages = totalItems/size+1;
+        int totalItems = messageRepository.countMessagesByEmail(email);
+        int totalPages = 0;
+        if (totalItems % size == 0) {
+            totalPages = totalItems / size;
+        } else {
+            totalPages = totalItems / size + 1;
         }
         HashMap<String, Object> map = new HashMap<>();
         map.put("messages", messageDTOS);
         map.put("currentPage", page);
-        map.put("totalItems",totalItems);
+        map.put("totalItems", totalItems);
 
-        map.put("totalPages",totalPages);
+        map.put("totalPages", totalPages);
         return map;
     }
 
     @Override
     public void readMessage(int id, String email) throws NotFoundException {
-        Message message = messageRepository.getMessageByEmailAndId(email,id);
-        if(message == null){
+        Message message = messageRepository.getMessageByEmailAndId(email, id);
+        if (message == null) {
             throw new NotFoundException("Not found message");
         }
         message.setStatus((byte) 0);

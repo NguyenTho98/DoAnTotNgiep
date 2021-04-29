@@ -21,30 +21,26 @@ import java.util.Date;
 public class ProductConsumer {
 
     private final ProductRepository productRepository;
-
     private final ProductHistoryRepository productHistoryRepository;
 
-    @KafkaListener(topics = {"lhw3k9sy-product"},groupId = "Group_id_1")
+    //    @KafkaListener(topics = {"lhw3k9sy-product"},groupId = "Group_id_1")
     public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) throws JsonProcessingException {
-        System.out.println(message);
         ProductModel productModel = new ObjectMapper().readValue(message, ProductModel.class);
         try {
             Product product = productRepository.findById(Long.parseLong(key)).orElse(null);
-            if(product != null){
+            if (product != null) {
                 product.setQuantity(product.getQuantity() - productModel.getAmountChargeInUnit());
                 productRepository.save(product);
                 Date now = new Date();
                 ProductHistory productHistory = new ProductHistory();
                 productHistory.setAmountChargeInUnit(productModel.getAmountChargeInUnit());
                 productHistory.setName(product.getName());
-                if(productModel.getStatus() == 0){
-                    productHistory.setNote("Tạo đơn "+ productModel.getCode().toUpperCase());
-                }
-                else if(productModel.getStatus() == 1){
-                    productHistory.setNote("Thêm vào đơn "+ productModel.getCode().toUpperCase());
-                }
-                else if(productModel.getStatus() == 2){
-                    productHistory.setNote("Xóa khỏi đơn"+ productModel.getCode().toUpperCase());
+                if (productModel.getStatus() == 0) {
+                    productHistory.setNote("Tạo đơn " + productModel.getCode().toUpperCase());
+                } else if (productModel.getStatus() == 1) {
+                    productHistory.setNote("Thêm vào đơn " + productModel.getCode().toUpperCase());
+                } else if (productModel.getStatus() == 2) {
+                    productHistory.setNote("Xóa khỏi đơn" + productModel.getCode().toUpperCase());
                 }
 //                productHistory.setNote("Hoàn thành đơn "+ productModel.getCode().toUpperCase());
                 productHistory.setProductId(product.getId());
@@ -53,8 +49,7 @@ public class ProductConsumer {
                 productHistory.setModifiedDate(now);
                 productHistoryRepository.save(productHistory);
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -12,8 +12,8 @@ import java.util.Arrays;
 @ToString
 public class MaintenanceCardFilter {
 
-    final byte[] PAY_STATUS = {0,1};
-    final byte[] WORK_STATUS = {0,1,2};
+    final byte[] PAY_STATUS = {0, 1};
+    final byte[] WORK_STATUS = {0, 1, 2};
     private int page;
     private int size;
     private String search;
@@ -24,7 +24,7 @@ public class MaintenanceCardFilter {
 
 
     public MaintenanceCardFilter() {
-        this.size = 5;
+        this.size = 10;
         this.page = 1;
         this.search = "";
         this.nameField = "";

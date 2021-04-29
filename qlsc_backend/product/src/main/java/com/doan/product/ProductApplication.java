@@ -22,29 +22,29 @@ import reactor.netty.http.client.HttpClient;
 @EnableHystrixDashboard
 public class ProductApplication {
 
-	private final int timeOut = 3000;
+    private final int timeOut = 3000;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProductApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProductApplication.class, args);
+    }
 
-	@Bean
-	@LoadBalanced
-	public WebClient getBuilder(){
+    @Bean
+    @LoadBalanced
+    public WebClient getBuilder() {
 
-		HttpClient httpClient = HttpClient.create()
-				.tcpConfiguration(client ->
-						client.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, timeOut)
-								.doOnConnected(conn -> conn
-										.addHandlerLast(new ReadTimeoutHandler(1000))
-								));
+        HttpClient httpClient = HttpClient.create()
+            .tcpConfiguration(client ->
+                client.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, timeOut)
+                    .doOnConnected(conn -> conn
+                        .addHandlerLast(new ReadTimeoutHandler(1000))
+                    ));
 
-		ClientHttpConnector connector = new ReactorClientHttpConnector(httpClient);
-		return WebClient.builder()
-				.baseUrl("http://localhost:8762")
-				.clientConnector(connector)
-				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.build();
-	}
+        ClientHttpConnector connector = new ReactorClientHttpConnector(httpClient);
+        return WebClient.builder()
+            .baseUrl("http://localhost:8762")
+            .clientConnector(connector)
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .build();
+    }
 
 }

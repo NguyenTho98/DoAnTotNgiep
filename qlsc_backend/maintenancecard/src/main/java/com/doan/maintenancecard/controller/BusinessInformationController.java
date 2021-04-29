@@ -26,8 +26,8 @@ public class BusinessInformationController {
 
     @GetMapping("/totals")
     public ResponseEntity<BusinessInformationDTO> getTotals(
-            @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
-            @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) throws ParseException {
+        @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
+        @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) throws ParseException {
         BusinessInformationDTO businessInformationDTO = new BusinessInformationDTO();
         businessInformationDTO.setTotalMaintenanceCard(businessInformationService.getTotalMaintenanceCard());
         businessInformationDTO.setTotalMaintenanceCardSuccess(businessInformationService.getTotalMaintenanceCardSuccess());
@@ -41,30 +41,35 @@ public class BusinessInformationController {
 
     @GetMapping("/totalDayMoneys")
     public ResponseEntity<List<TotalMoneyDTO>> getTotalDayMoney(
-            @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
-            @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) {
+        @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
+        @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) {
         List<TotalMoneyDTO> moneyDTOList = businessInformationService.getAllTotalMoney(startDate, endDate);
         return new ResponseEntity<>(moneyDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/topServices")
     public ResponseEntity<List<StatisticRepairmanDTO>> getTopService(
-            @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
-            @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) throws ParseException {
-        Date sDate=new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
-        Date eDate=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+        @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
+        @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) throws ParseException {
+        Date sDate = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
+        Date eDate = new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
         List<StatisticRepairmanDTO> statisticRepairmanDTOS = businessInformationService.getTopService(sDate, eDate);
         return new ResponseEntity<>(statisticRepairmanDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/topRepairMans")
     public ResponseEntity<List<StatisticRepairmanDTO>> getTopRepairman(
-            @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
-            @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) throws ParseException {
-        Date sDate=new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
-        Date eDate=new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
+        @RequestParam(name = "startDate", required = true, defaultValue = "") String startDate,
+        @RequestParam(name = "endDate", required = true, defaultValue = "") String endDate) throws ParseException {
+        Date sDate = new SimpleDateFormat("dd/MM/yyyy").parse(startDate);
+        Date eDate = new SimpleDateFormat("dd/MM/yyyy").parse(endDate);
         List<StatisticRepairmanDTO> statisticRepairmanDTOS = businessInformationService.getTopRepairman(sDate, eDate);
         return new ResponseEntity<>(statisticRepairmanDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("test")
+    public String testApi() {
+        return "Success";
     }
 
 }

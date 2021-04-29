@@ -63,4 +63,9 @@ public class CustomerController {
         return ResponseEntity.ok("Success");
     }
 
+    @GetMapping("test")
+    public String testApi() {
+        return "Success";
+    }
+
 }

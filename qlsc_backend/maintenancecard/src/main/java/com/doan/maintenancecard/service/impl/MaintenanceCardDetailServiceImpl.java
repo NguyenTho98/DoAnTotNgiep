@@ -26,31 +26,29 @@ import java.util.Date;
 public class MaintenanceCardDetailServiceImpl implements MaintenanceCardDetailService {
 
     private final MaintenanceCardDetailRepository maintenanceCardDetailRepository;
-    private final MaintenanceCardDetailConverter maintenanceCardDetailConverter;
     private final MaintenanceCardConverter maintenanceCardConverter;
-    private final KafkaTemplate<String,String> kafkaTemplate;
-
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public MaintenanceCardDTO updateStatusMaintenanceCardDetail(Long id, String email) throws NotFoundException, NotFoundRepairmanException, JsonProcessingException {
         Date now = new Date();
         MaintenanceCardDetail maintenanceCardDetail = maintenanceCardDetailRepository.findById(id).orElse(null);
         MaintenanceCard maintenanceCard = maintenanceCardDetail.getMaintenanceCard();
-        if(maintenanceCard.getRepairmanEmail() == null || maintenanceCard.getRepairmanEmail() == email){
+        if (maintenanceCard.getRepairmanEmail() == null || maintenanceCard.getRepairmanEmail() == email) {
             throw new NotFoundException("Not found maintenance card detail");
         }
         byte status = 1;
         boolean check = true;
-        if(maintenanceCardDetail != null && maintenanceCard.getRepairmanEmail() != null){
-            if(maintenanceCardDetail.getStatus() <2 && maintenanceCardDetail.getProductType() == 2){
-                maintenanceCardDetail.setStatus((byte) (maintenanceCardDetail.getStatus()+1));
+        if (maintenanceCardDetail != null && maintenanceCard.getRepairmanEmail() != null) {
+            if (maintenanceCardDetail.getStatus() < 2 && maintenanceCardDetail.getProductType() == 2) {
+                maintenanceCardDetail.setStatus((byte) (maintenanceCardDetail.getStatus() + 1));
                 MaintenanceCardDetailStatusHistory maintenanceCardDetailStatusHistory = new MaintenanceCardDetailStatusHistory();
                 maintenanceCardDetailStatusHistory.setCreatedDate(now);
                 maintenanceCardDetailStatusHistory.setModifiedDate(now);
                 maintenanceCardDetailStatusHistory.setMaintenanceCardDetail(maintenanceCardDetail);
                 maintenanceCardDetailStatusHistory.setStatus((byte) (maintenanceCardDetail.getStatus()));
                 maintenanceCardDetail.getMaintenanceCardDetailStatusHistories().add(maintenanceCardDetailStatusHistory);
-                if(maintenanceCardDetail.getProductType() == 2) {
+                if (maintenanceCardDetail.getProductType() == 2) {
                     if (maintenanceCardDetail.getStatus() == 1 || maintenanceCardDetail.getStatus() == 2) {
                         status = 1;
                     }
@@ -59,9 +57,9 @@ public class MaintenanceCardDetailServiceImpl implements MaintenanceCardDetailSe
                     }
                 }
             }
-            for(MaintenanceCardDetail maintenanceCardDetail1 : maintenanceCard.getMaintenanceCardDetails()){
-                if(maintenanceCardDetail1.getId() != maintenanceCardDetail.getId()){
-                    if(maintenanceCardDetail1.getProductType() == 2) {
+            for (MaintenanceCardDetail maintenanceCardDetail1 : maintenanceCard.getMaintenanceCardDetails()) {
+                if (maintenanceCardDetail1.getId() != maintenanceCardDetail.getId()) {
+                    if (maintenanceCardDetail1.getProductType() == 2) {
                         if (maintenanceCardDetail1.getStatus() == 1 || maintenanceCardDetail1.getStatus() == 2) {
                             status = 1;
                         }
@@ -71,37 +69,33 @@ public class MaintenanceCardDetailServiceImpl implements MaintenanceCardDetailSe
                     }
                 }
             }
-            if(check){
+            if (check) {
                 maintenanceCard.setWorkStatus((byte) 2);
-                ProducerRecord<String, String> record2 = new ProducerRecord<String, String>("lhw3k9sy-user", maintenanceCard.getRepairmanId()+"","-1" );
+                ProducerRecord<String, String> record2 = new ProducerRecord<String, String>("lhw3k9sy-user", maintenanceCard.getRepairmanId() + "", "-1");
                 kafkaTemplate.send(record2);
-            }
-            else{
+            } else {
                 maintenanceCard.setWorkStatus(status);
             }
             MaintenanceCardDetail maintenanceCardDetail1 = maintenanceCardDetailRepository.save(maintenanceCardDetail);
-            MaintenanceCard maintenanceCard1 =  maintenanceCardDetail1.getMaintenanceCard();
+            MaintenanceCard maintenanceCard1 = maintenanceCardDetail1.getMaintenanceCard();
             MessageModel messageModel = new MessageModel();
             messageModel.setMaintenanceCardCode(maintenanceCard1.getCode());
             messageModel.setAuthor(email);
             messageModel.setCoordinatorEmail(maintenanceCard1.getCoordinatorEmail());
             messageModel.setRepairmanEmail(maintenanceCard1.getRepairmanEmail());
-            if(maintenanceCard1.getWorkStatus() ==2 && maintenanceCard1.getPayStatus() == 0 ){
+            if (maintenanceCard1.getWorkStatus() == 2 && maintenanceCard1.getPayStatus() == 0) {
                 messageModel.setType(2);
-            }
-            else{
+            } else {
                 messageModel.setType(3);
             }
             ObjectMapper mapper = new ObjectMapper();
             String jsonString = mapper.writeValueAsString(messageModel);
-            ProducerRecord<String, String> record = new ProducerRecord<String, String>("lhw3k9sy-message", maintenanceCard1.getId()+"", jsonString);
+            ProducerRecord<String, String> record = new ProducerRecord<String, String>("lhw3k9sy-message", maintenanceCard1.getId() + "", jsonString);
             kafkaTemplate.send(record);
             return maintenanceCardConverter.convertAllToDTO(maintenanceCard1);
-        }
-        else if(maintenanceCard.getRepairmanId() != 0) {
+        } else if (maintenanceCard.getRepairmanId() != 0) {
             throw new NotFoundException("Not found maintenance card detail");
-        }
-        else{
+        } else {
             throw new NotFoundRepairmanException("");
         }
     }

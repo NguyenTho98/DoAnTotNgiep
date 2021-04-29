@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping("users")
-    public ResponseEntity<UserDTO> insertUser(@RequestBody UserDTO userDTO) throws DuplicateEmailException, CodeExistedException, ConstraintViolationException {
+    public ResponseEntity<UserDTO> insertUser(@RequestBody UserDTO userDTO) throws DuplicateEmailException, CodeExistedException {
         return new ResponseEntity<>(userService.insertUser(userDTO), HttpStatus.OK);
     }
 

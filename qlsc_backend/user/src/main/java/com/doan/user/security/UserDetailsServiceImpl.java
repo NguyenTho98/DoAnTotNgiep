@@ -19,7 +19,6 @@ import java.util.List;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private BCryptPasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) {

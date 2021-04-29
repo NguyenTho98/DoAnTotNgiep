@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO insertUser(UserDTO userDTO) throws DuplicateEmailException, CodeExistedException {
+    public UserDTO insertUser(UserDTO userDTO) throws CodeExistedException {
 
         User user = new User();
         user.setId(userDTO.getId());

@@ -17,8 +17,8 @@ public class ProductHistoryController {
     private final ProductHistoryService productHistoryService;
 
     @GetMapping("/history")
-    public Page<ProductHistoryDTO> getAll(int page,int size){
-        return productHistoryService.getAll(page,size);
+    public Page<ProductHistoryDTO> getAll(int page, int size) {
+        return productHistoryService.getAll(page, size);
     }
 
 }

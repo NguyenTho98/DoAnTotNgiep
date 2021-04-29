@@ -16,27 +16,18 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    public Page<Product> findAllByStatusNotAndNameContainingIgnoreCaseOrStatusNotAndCodeContainingIgnoreCaseOrderByModifiedDateDesc(byte status1, String searchByName, byte status2, String searchByCode, Pageable pageable);
-
-    public Page<Product> findAllByTypeAndStatusNotAndNameContainingIgnoreCaseOrTypeAndStatusNotAndCodeContainingIgnoreCaseOrderByModifiedDateDesc(byte type, byte status, String search, byte type2, byte status2, String search2, Pageable pageable);
-
+    Page<Product> findAllByStatusNotAndNameContainingIgnoreCaseOrStatusNotAndCodeContainingIgnoreCaseOrderByModifiedDateDesc(byte status1, String searchByName, byte status2, String searchByCode, Pageable pageable);
+    Page<Product> findAllByTypeAndStatusNotAndNameContainingIgnoreCaseOrTypeAndStatusNotAndCodeContainingIgnoreCaseOrderByModifiedDateDesc(byte type, byte status, String search, byte type2, byte status2, String search2, Pageable pageable);
     @Query(value = "SELECT MAX(CONVERT(SUBSTRING(code, 4), UNSIGNED INTEGER)) as maxcode FROM products WHERE code LIKE 'sp%' LIMIT 1", nativeQuery = true)
-    public List<String> getMaxCode();
-
-    public Optional<Product> findByImage(String imageName);
-
-    public Optional<String> findByCode(String code);
-
-    public Optional<Product> findByIdAndType(Long id, Byte type);
-
-    public Optional<String> findNameByName(String name);
-
-    public Optional<String> findNameByNameAndIdNot(String name, Long id);
-
-    public Optional<String> findCodeByCodeAndIdNot(String code, Long id);
-
+    List<String> getMaxCode();
+    Optional<Product> findByImage(String imageName);
+    Optional<String> findByCode(String code);
+    Optional<Product> findByIdAndType(Long id, Byte type);
+    Optional<String> findNameByName(String name);
+    Optional<String> findNameByNameAndIdNot(String name, Long id);
+    Optional<String> findCodeByCodeAndIdNot(String code, Long id);
     @Modifying
     @Transactional
     @Query("UPDATE Product SET status = 0 WHERE id IN :idArray")
-    public void multipleDelete(@Param("idArray") Long[] idArray);
+    void multipleDelete(@Param("idArray") Long[] idArray);
 }

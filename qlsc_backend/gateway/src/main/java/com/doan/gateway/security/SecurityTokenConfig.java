@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,8 +28,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .and()
             .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
-//		   .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
-//		   .antMatchers("/image" + "/admin/**").hasRole("3")
+		   .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
+		   .antMatchers("/image" + "/admin/**").hasRole("1")
             .anyRequest().permitAll();
     }
 

@@ -6,15 +6,13 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.Arrays;
-
 @Setter
 @Getter
 @ToString
 public class MaintenanceCardCustomer {
 
-    final byte[] PAY_STATUS = {0,1};
-    final byte[] WORK_STATUS = {0,1,2};
+    final byte[] PAY_STATUS = {0, 1};
+    final byte[] WORK_STATUS = {0, 1, 2};
     private int page;
     private int size;
     private String search;

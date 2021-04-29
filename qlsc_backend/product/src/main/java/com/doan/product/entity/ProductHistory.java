@@ -3,6 +3,7 @@ package com.doan.product.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "product_histories")
-public class ProductHistory extends BaseEntity{
+public class ProductHistory extends BaseEntity {
 
     @Column(name = "amount_charge_in_unit")
     private int amountChargeInUnit;

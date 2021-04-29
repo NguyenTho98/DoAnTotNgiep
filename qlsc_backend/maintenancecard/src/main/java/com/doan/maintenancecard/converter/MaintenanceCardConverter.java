@@ -13,7 +13,6 @@ import com.doan.maintenancecard.entity.MaintenanceCardDetail;
 import com.doan.maintenancecard.entity.MaintenanceCardDetailStatusHistory;
 import com.doan.maintenancecard.entity.PaymentHistory;
 import com.doan.maintenancecard.entity.PaymentMethod;
-import com.doan.maintenancecard.repository.MaintenanceCardDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +22,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class MaintenanceCardConverter {
-
-    private final MaintenanceCardDetailRepository maintenanceCardDetailRepository;
 
     public MaintenanceCardDTO convertToDTO(MaintenanceCard maintenanceCard) {
         MaintenanceCardDTO maintenanceCardDTO = new MaintenanceCardDTO();
@@ -36,7 +33,7 @@ public class MaintenanceCardConverter {
         customerDTO.setPhoneNumber(maintenanceCard.getCustomerPhone());
         maintenanceCardDTO.setCustomer(customerDTO);
         UserDTO repairman = new UserDTO();
-        if(maintenanceCard.getRepairmanId()!=0){
+        if (maintenanceCard.getRepairmanId() != 0) {
             repairman.setId(maintenanceCard.getRepairmanId());
             repairman.setFullName(maintenanceCard.getRepairmanName());
             repairman.setEmail(maintenanceCard.getRepairmanEmail());
@@ -60,10 +57,11 @@ public class MaintenanceCardConverter {
         maintenanceCardDTO.setExpectedReturnDate(maintenanceCard.getExpectedReturnDate());
         return maintenanceCardDTO;
     }
+
     public MaintenanceCard convertToEntity(MaintenanceCardDTO maintenanceCardDTO) {
         MaintenanceCard maintenanceCard = new MaintenanceCard();
         UserDTO repairman = maintenanceCardDTO.getRepairman();
-        if(repairman!= null && repairman.getId() != null){
+        if (repairman != null && repairman.getId() != null) {
             maintenanceCard.setRepairmanName(repairman.getFullName());
             maintenanceCard.setRepairmanId(repairman.getId());
             maintenanceCard.setRepairmanEmail(repairman.getEmail());
@@ -86,8 +84,7 @@ public class MaintenanceCardConverter {
         maintenanceCard.setDescription(maintenanceCardDTO.getDescription());
         maintenanceCard.setExpectedReturnDate(maintenanceCardDTO.getExpectedReturnDate());
         List<MaintenanceCardDetail> maintenanceCardDetails = new ArrayList<>();
-        System.out.println( maintenanceCardDTO.getMaintenanceCardDetails().size());
-        for(MaintenanceCardDetailDTO maintenanceCardDetailDTO : maintenanceCardDTO.getMaintenanceCardDetails()){
+        for (MaintenanceCardDetailDTO maintenanceCardDetailDTO : maintenanceCardDTO.getMaintenanceCardDetails()) {
             MaintenanceCardDetail maintenanceCardDetail = new MaintenanceCardDetail();
             ProductDTO productDTO = maintenanceCardDetailDTO.getProduct();
             maintenanceCardDetail.setProductCode(productDTO.getCode());
@@ -109,46 +106,13 @@ public class MaintenanceCardConverter {
         maintenanceCard.setId(maintenanceCardDTO.getId());
         return maintenanceCard;
     }
-    public List<MaintenanceCardDTO> convertToMaintenanceCardDTOList(List<MaintenanceCard> maintenanceCardList){
-        List<MaintenanceCardDTO> list = new ArrayList<>();
-        for (MaintenanceCard maintenanceCard: maintenanceCardList
-        ) {
-            list.add(convertToDTO(maintenanceCard));
-        }
 
-        return list;
-    }
-    public List<MaintenanceCardDTO> convertToCoordinatorWarrantyCardsDTO(List<MaintenanceCard> coordinatorWarrantyCardsList){
-        List<MaintenanceCardDTO> list = new ArrayList<>();
-        coordinatorWarrantyCardsList.forEach(maintenanceCard -> {
-            System.out.println(maintenanceCard);
-            list.add(convertToDTO(maintenanceCard));
-
-        });
-        return list;
-    }
-
-    public List<MaintenanceCard> convertToMaintenanceCardDTOListEntity(List<MaintenanceCardDTO> maintenanceCardList){
-        List<MaintenanceCard> list = new ArrayList<>();
-        maintenanceCardList.forEach(maintenanceCard ->{
-            System.out.println(maintenanceCard);
-            list.add(convertToEntity(maintenanceCard));
-        });
-        System.out.println("convertToMaintenanceCardDTOListEntity Size: "+list.size());
-        return list;
-    }
-    public List<MaintenanceCard> convertToCoordinatorWarrantyCardsDTOEntity(List<MaintenanceCardDTO> coordinatorWarrantyCardsList){
-        List<MaintenanceCard> list = new ArrayList<>();
-        coordinatorWarrantyCardsList.forEach(maintenanceCard -> list.add(convertToEntity(maintenanceCard)));
-        return list;
-    }
     public MaintenanceCardDTO convertAllToDTO(MaintenanceCard maintenanceCard) {
         MaintenanceCardDTO maintenanceCardDTO = convertToDTO(maintenanceCard);
         List<MaintenanceCardDetailDTO> maintenanceCardDetailDTOS = new ArrayList<>();
         List<MaintenanceCardDetailStatusHistoryDTO> maintenanceCardDetailStatusHistoryDTOS = new ArrayList<>();
-        System.out.println(maintenanceCard.getMaintenanceCardDetails().size());
-        for (MaintenanceCardDetail maintenanceCardDetail: maintenanceCard.getMaintenanceCardDetails()) {
-            if(maintenanceCardDetail.getIsDelete() == 0) {
+        for (MaintenanceCardDetail maintenanceCardDetail : maintenanceCard.getMaintenanceCardDetails()) {
+            if (maintenanceCardDetail.getIsDelete() == 0) {
                 MaintenanceCardDetailDTO maintenanceCardDetailDTO = new MaintenanceCardDetailDTO();
                 maintenanceCardDetailDTO.setPrice(maintenanceCardDetail.getPrice());
                 ProductDTO productDTO = new ProductDTO();
@@ -168,8 +132,8 @@ public class MaintenanceCardConverter {
                 maintenanceCardDetailDTOS.add(maintenanceCardDetailDTO);
             }
             List<MaintenanceCardDetailStatusHistory> maintenanceCardDetailStatusHistories = maintenanceCardDetail.getMaintenanceCardDetailStatusHistories();
-            if(maintenanceCardDetailStatusHistories != null){
-                for(MaintenanceCardDetailStatusHistory maintenanceCardDetailStatusHistory: maintenanceCardDetailStatusHistories){
+            if (maintenanceCardDetailStatusHistories != null) {
+                for (MaintenanceCardDetailStatusHistory maintenanceCardDetailStatusHistory : maintenanceCardDetailStatusHistories) {
                     MaintenanceCardDetailStatusHistoryDTO maintenanceCardDetailStatusHistoryDTO = new MaintenanceCardDetailStatusHistoryDTO();
                     maintenanceCardDetailStatusHistoryDTO.setName(maintenanceCardDetailStatusHistory.getMaintenanceCardDetail().getProductName());
                     maintenanceCardDetailStatusHistoryDTO.setStatus(maintenanceCardDetailStatusHistory.getStatus());
@@ -182,8 +146,8 @@ public class MaintenanceCardConverter {
         }
         maintenanceCardDTO.setMaintenanceCardDetailStatusHistories(maintenanceCardDetailStatusHistoryDTOS);
         List<PaymentHistoryDTO> paymentHistoryDTOS = new ArrayList<>();
-        if(maintenanceCard.getPaymentHistories() != null){
-            for(PaymentHistory paymentHistory : maintenanceCard.getPaymentHistories()){
+        if (maintenanceCard.getPaymentHistories() != null) {
+            for (PaymentHistory paymentHistory : maintenanceCard.getPaymentHistories()) {
                 PaymentHistoryDTO paymentHistoryDTO = new PaymentHistoryDTO();
                 paymentHistoryDTO.setMoney(paymentHistory.getMoney());
                 PaymentMethodDTO paymentMethodDTO = new PaymentMethodDTO();

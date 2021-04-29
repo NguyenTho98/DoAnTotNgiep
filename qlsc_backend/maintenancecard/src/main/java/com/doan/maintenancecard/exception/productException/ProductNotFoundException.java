@@ -1,6 +1,6 @@
 package com.doan.maintenancecard.exception.productException;
 
-public class ProductNotFoundException extends Exception{
+public class ProductNotFoundException extends Exception {
     private String message;
 
     public ProductNotFoundException(String message) {

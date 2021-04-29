@@ -50,9 +50,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
-
+    protected void successfulAuthentication(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        FilterChain chain,
+        Authentication auth) {
         Long now = System.currentTimeMillis();
         List<String> s = auth.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority).collect(Collectors.toList());

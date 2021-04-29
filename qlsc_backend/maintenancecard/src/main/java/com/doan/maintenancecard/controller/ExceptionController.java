@@ -20,58 +20,60 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionController {
 
     @ExceptionHandler
-    private ResponseEntity handleNotFoundException(ProductNotFoundException e) {
+    private ResponseEntity<?> handleNotFoundException(ProductNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleNotANumberException(NotANumberException e) {
+    private ResponseEntity<?> handleNotANumberException(NotANumberException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleCodeExistedException(CodeExistedException e) {
+    private ResponseEntity<?> handleCodeExistedException(CodeExistedException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleNotEnoughProductException(NotEnoughProductException e) {
+    private ResponseEntity<?> handleNotEnoughProductException(NotEnoughProductException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleNotFoundMaintenanceCardException(NotFoundException e) {
+    private ResponseEntity<?> handleNotFoundMaintenanceCardException(NotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleNotFoundRepairmanException(NotFoundRepairmanException e) {
-        if(e.getMessage() == ""){
+    private ResponseEntity<?> handleNotFoundRepairmanException(NotFoundRepairmanException e) {
+        if (e.getMessage().equals("")) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
         }
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler
-    private ResponseEntity handleEmailDuplicateException(DuplicateEmailException e) {
+    private ResponseEntity<?> handleEmailDuplicateException(DuplicateEmailException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
+
     @ExceptionHandler
-    private ResponseEntity handleInvalidImageTypeException(InvalidImageTypeException e) {
+    private ResponseEntity<?> handleInvalidImageTypeException(InvalidImageTypeException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleMoneyExceedException(MoneyExceedException e) {
-        return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    private ResponseEntity<?> handleMoneyExceedException(MoneyExceedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleNotUpdateException(NotUpdateException e) {
-        return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    private ResponseEntity<?> handleNotUpdateException(NotUpdateException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    private ResponseEntity handleDataTooLongException(DataTooLongException e) {
-        return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    private ResponseEntity<?> handleDataTooLongException(DataTooLongException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

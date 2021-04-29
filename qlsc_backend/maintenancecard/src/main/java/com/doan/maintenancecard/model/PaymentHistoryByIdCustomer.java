@@ -13,7 +13,7 @@ import java.util.Arrays;
 @ToString
 public class PaymentHistoryByIdCustomer {
 
-    final Long[] PAY_METHODS = {1L,2L};
+    final Long[] PAY_METHODS = {1L, 2L};
     private int page;
     private int size;
 
@@ -24,7 +24,7 @@ public class PaymentHistoryByIdCustomer {
     private Long[] payMethods;
 
     public PaymentHistoryByIdCustomer() {
-        this.size = 5;
+        this.size = 10;
         this.page = 1;
         this.id = 0L;
         this.search = "";

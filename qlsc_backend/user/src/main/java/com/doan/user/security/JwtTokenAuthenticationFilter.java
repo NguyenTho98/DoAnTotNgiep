@@ -35,7 +35,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         token = header.replace(jwtConfig.getPrefix(), "");
-
         try {
             Claims claims = Jwts.parser()
                 .setSigningKey(jwtConfig.getSecret().getBytes())
@@ -53,7 +52,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 //String username = taiKhoanService.getTaiKhoanById(Integer.parseInt(id)).getTenDangNhap();
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                     username, null, authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
 

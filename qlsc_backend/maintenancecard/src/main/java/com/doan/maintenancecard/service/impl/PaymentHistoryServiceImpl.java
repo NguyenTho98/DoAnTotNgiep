@@ -35,26 +35,16 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
     private final MaintenanceCardRepository maintenanceCardRepository;
     private final MaintenanceCardConverter maintenanceCardConverter;
     private final PaymentHistoryConverter paymentHistoryConverter;
-    private final KafkaTemplate<String,String> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public MaintenanceCardDTO insertPaymentHistory(List<PaymentHistoryDTO> paymentHistoryDTOs) throws NotFoundException, MoneyExceedException {
-        Long total = Long.valueOf(0);
-//        Long maintenanceCardId = Long.valueOf(0);
-//        for (PaymentHistoryDTO paymentHistoryDTO : paymentHistoryDTOs) {
-//            if (maintenanceCardId == 0) {
-//                maintenanceCardId = paymentHistoryDTO.getMaintenanceCard().getId();
-//            }
-//            if (maintenanceCardId != paymentHistoryDTO.getMaintenanceCard().getId()) {
-//                maintenanceCardId = Long.valueOf(-1);
-//            }
-//        }
+        long total = 0L;
         Date now = new Date();
         MaintenanceCard maintenanceCard = maintenanceCardRepository.findById(paymentHistoryDTOs.get(0).getMaintenanceCard().getId()).orElse(null);
         if (maintenanceCard != null) {
             for (PaymentHistory paymentHistory1 : maintenanceCard.getPaymentHistories()) {
                 total += paymentHistory1.getMoney().longValue();
-                System.out.println(total);
             }
             for (PaymentHistoryDTO paymentHistoryDTO : paymentHistoryDTOs) {
                 PaymentHistory paymentHistory = paymentHistoryConverter.convertToEntity(paymentHistoryDTO);
@@ -70,13 +60,10 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
                 }
             }
 
-
-            System.out.println(total);
             byte status = 1;
             if (total == maintenanceCard.getPrice().longValue()) {
                 maintenanceCard.setPayStatus(status);
-            }
-            else if(total > maintenanceCard.getPrice().longValue()){
+            } else if (total > maintenanceCard.getPrice().longValue()) {
                 throw new MoneyExceedException();
             }
             try {
@@ -89,7 +76,7 @@ public class PaymentHistoryServiceImpl implements PaymentHistoryService {
                 messageModel.setRepairmanEmail(maintenanceCard1.getRepairmanEmail());
                 ObjectMapper mapper = new ObjectMapper();
                 String jsonString = mapper.writeValueAsString(messageModel);
-                ProducerRecord<String, String> record = new ProducerRecord<String, String>("lhw3k9sy-message", maintenanceCard1.getId()+"", jsonString);
+                ProducerRecord<String, String> record = new ProducerRecord<String, String>("lhw3k9sy-message", maintenanceCard1.getId() + "", jsonString);
                 kafkaTemplate.send(record);
                 return maintenanceCardConverter.convertAllToDTO(maintenanceCard1);
             } catch (Exception e) {

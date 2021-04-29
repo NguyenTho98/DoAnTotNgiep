@@ -2,6 +2,7 @@ package com.doan.maintenancecard.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,7 @@ public class PaymentHistory extends BaseEntity {
     @JoinColumn(name = "payment_method_id")
     private PaymentMethod paymentMethod;
 
-    @Column(name = "money",nullable = false)
+    @Column(name = "money", nullable = false)
     private BigDecimal money;
 
 }

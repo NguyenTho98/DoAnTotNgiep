@@ -8,6 +8,7 @@ import com.doan.product.service.ProductService;
 import com.doan.product.converter.ProductConverter;
 import com.doan.product.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,95 +25,108 @@ import java.util.Optional;
 @RestController
 @RequestMapping("admin")
 @RequiredArgsConstructor
-//@CrossOrigin
+@CrossOrigin
 public class ProductController {
+
     private final ProductService productService;
-    private final ProductConverter productConverter;
 
     @GetMapping("products")
-    public ResponseEntity<Page<ProductDTO>> getAll(@RequestParam(value = "search", required = false) Optional<String> search, Pageable pageable) {
+    public ResponseEntity<Page<ProductDTO>> getAll(@RequestParam(value = "search", required = false) String search, Pageable pageable) {
         Page<ProductDTO> productDTOs = productService.getAll("", pageable);
-        if (search.isPresent()) {
-            productDTOs = productService.getAll(search.get(), pageable);
+        if (StringUtils.isNotBlank(search)) {
+            productDTOs = productService.getAll(search, pageable);
         }
-        return new ResponseEntity<Page<ProductDTO>>(productDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
     }
 
     // Type 1
     @GetMapping("accessories")
-    public ResponseEntity<Page<ProductDTO>> getAllAccessories(@RequestParam(value = "search", required = false) Optional<String> search, Pageable pageable) {
+    public ResponseEntity<Page<ProductDTO>> getAllAccessories(@RequestParam(value = "search", required = false) String search, Pageable pageable) {
         Page<ProductDTO> productDTOs = productService.getAllAccessories("", pageable);
-        if (search.isPresent()) {
-            productDTOs = productService.getAllAccessories(search.get(), pageable);
+        if (StringUtils.isNotBlank(search)) {
+            productDTOs = productService.getAllAccessories(search, pageable);
         }
         return new ResponseEntity<>(productDTOs, HttpStatus.OK);
     }
 
     // Type 2
     @GetMapping("services")
-    public ResponseEntity<Page<ProductDTO>> getAllServices(@RequestParam(value = "search", required = false) Optional<String> search, Pageable pageable) {
+    public ResponseEntity<Page<ProductDTO>> getAllServices(@RequestParam(value = "search", required = false) String search, Pageable pageable) {
         Page<ProductDTO> productDTOs = productService.getAllServices("", pageable);
-        if (search.isPresent()) {
-            productDTOs = productService.getAllServices(search.get(), pageable);
+        if (StringUtils.isNotBlank(search)) {
+            productDTOs = productService.getAllServices(search, pageable);
         }
-        return new ResponseEntity<Page<ProductDTO>>(productDTOs, HttpStatus.OK);
+        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
     }
 
     @GetMapping("products/{id}")
-    public ResponseEntity<ProductDTO> getOne(@PathVariable("id") String pathId, @RequestParam(value = "type", required = false) Optional<String> typeOptional) throws ProductNotFoundException, ProductNotFoundException {
+    public ResponseEntity<ProductDTO> getOne(@PathVariable("id") String pathId, @RequestParam(value = "type", required = false) String type) throws ProductNotFoundException {
         Long id = Long.parseLong(pathId);
         ProductDTO productDTO = productService.getOneById(id);
-        if (typeOptional.isPresent()) {
-            Byte type = Byte.parseByte(typeOptional.get());
-            productDTO = productService.getOneByIdAndType(id, type);
+        if (StringUtils.isNotBlank(type)) {
+            Byte newType = Byte.parseByte(type);
+            productDTO = productService.getOneByIdAndType(id, newType);
         }
-        return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.OK);
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
     @PostMapping("products")
-    public ResponseEntity<ProductDTO> create(ProductRequest productRequest) throws Exception {
-        // Create the product
-        ProductDTO productDTO = productService.save(productRequest);
-        return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.CREATED);
+    public ResponseEntity<ProductDTO> create(ProductRequest productRequest) {
+        ProductDTO productDTO = null;
+        try {
+            productDTO = productService.save(productRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "products/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody
     ResponseEntity<byte[]> getImage(HttpServletResponse response, @PathVariable("imageName") String imageName) throws IOException {
         byte[] imageBytes = productService.getImageByte(response, imageName);
-        return new ResponseEntity<byte[]>(imageBytes, HttpStatus.OK);
+        return new ResponseEntity<>(imageBytes, HttpStatus.OK);
     }
 
+    @SneakyThrows
     @PutMapping("products/{id}")
     public ResponseEntity<ProductDTO> update(ProductRequest productRequest,
-                                             @PathVariable("id") String pathId) throws Exception {
-
+                                             @PathVariable("id") String pathId) {
         // check if path id is numeric and check its existence
         if (!StringUtils.isNumeric(pathId)) {
-            throw new NotANumberException("Invalid product id: the id is not a number");
+            try {
+                throw new NotANumberException("Invalid product id: the id is not a number");
+            } catch (NotANumberException e) {
+                e.printStackTrace();
+            }
         }
         Long id = Long.parseLong(pathId);
         // Save product info
-        ProductDTO returnedProductDTO = productService.update(productRequest,id);
-        return new ResponseEntity<ProductDTO>(returnedProductDTO, HttpStatus.OK);
+        ProductDTO returnedProductDTO = productService.update(productRequest, id);
+        return new ResponseEntity<>(returnedProductDTO, HttpStatus.OK);
     }
 
+    @SneakyThrows
     @DeleteMapping("products/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") String pathId) throws Exception {
+    public ResponseEntity<String> delete(@PathVariable("id") String pathId) {
         // check if path id is numeric and check its existence
         if (!StringUtils.isNumeric(pathId)) {
             throw new NotANumberException("Invalid product id: the id is not a number");
         }
         Long id = Long.parseLong(pathId);
         productService.deleteById(id);
-        return new ResponseEntity<String>("Deleted product with id " + pathId, HttpStatus.OK);
+        return new ResponseEntity<>("Deleted product with id " + pathId, HttpStatus.OK);
     }
 
     // multiple delete
     @PutMapping("products")
     public ResponseEntity<String> multipleDelete(@RequestBody Long[] idArray) {
-        System.out.println(idArray);
         productService.multiDelete(idArray);
-        return new ResponseEntity<String>("Products are deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Products are deleted", HttpStatus.OK);
+    }
+
+    @GetMapping("test")
+    public String testApi() {
+        return "Success";
     }
 }

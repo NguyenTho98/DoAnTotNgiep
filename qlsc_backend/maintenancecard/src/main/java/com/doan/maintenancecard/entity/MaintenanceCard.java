@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +14,10 @@ import lombok.Setter;
 @Table(name = "maintenance_cards")
 public class MaintenanceCard extends BaseEntity {
 
-    @Column(name = "code", nullable = false,length = 11,unique = true)
+    @Column(name = "code", nullable = false, length = 11, unique = true)
     private String code;
 
-    @Column(name = "plates_number", nullable = false,length = 11)
+    @Column(name = "plates_number", nullable = false, length = 11)
     private String platesNumber;
 
     @JoinColumn(name = "customer_id")

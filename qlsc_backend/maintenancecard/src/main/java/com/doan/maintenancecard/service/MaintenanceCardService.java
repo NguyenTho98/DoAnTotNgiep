@@ -15,14 +15,22 @@ import java.util.Map;
 
 public interface MaintenanceCardService {
 
-     MaintenanceCardDTO insertMaintenanceCard(MaintenanceCardDTO maintenanceCardDTO) throws NotEnoughProductException, CodeExistedException, JsonProcessingException;
-     Map<String, Object> searchMaintenanceCard(MaintenanceCardFilter maintenanceCardFilter, String email, int role);
-     MaintenanceCardDTO getMaintenanceCardById(Long id,String email,int role) throws NotFoundException;
-     MaintenanceCardDTO updateMaintenanceCard(MaintenanceCardDTO maintenanceCardDTO,String email,int role) throws NotEnoughProductException, NotFoundException, CodeExistedException, NotUpdateException, UnknownException, JsonProcessingException;
-     Map<String, Object> getMaintenanceCardByIdCustomer(
-         MaintenanceCardCustomer maintenanceCardCustomer);
-     MaintenanceCardDTO updateAllStatusMaintenanceCard(Long id,String email,int role) throws NotFoundException, NotFoundRepairmanException, JsonProcessingException;
-     boolean deleteMaintenanceCard(Long id) throws NotFoundException, NotFoundRepairmanException, NotEnoughProductException, UnknownException, JsonProcessingException;
-     Map<String,Object> getMaintenanceCardByRepairMan(int PageNum, int PageSize, String sortBy, boolean descending,Long userId,String code,byte[] payStatus,byte[] workStatus);
-     MaintenanceCardDTO setReturnDate(long id);
+    MaintenanceCardDTO insertMaintenanceCard(MaintenanceCardDTO maintenanceCardDTO) throws NotEnoughProductException, CodeExistedException, JsonProcessingException;
+
+    Map<String, Object> searchMaintenanceCard(MaintenanceCardFilter maintenanceCardFilter, String email, int role);
+
+    MaintenanceCardDTO getMaintenanceCardById(Long id, String email, int role) throws NotFoundException;
+
+    MaintenanceCardDTO updateMaintenanceCard(MaintenanceCardDTO maintenanceCardDTO, String email, int role) throws NotEnoughProductException, NotFoundException, CodeExistedException, NotUpdateException, UnknownException, JsonProcessingException;
+
+    Map<String, Object> getMaintenanceCardByIdCustomer(
+        MaintenanceCardCustomer maintenanceCardCustomer);
+
+    MaintenanceCardDTO updateAllStatusMaintenanceCard(Long id, String email, int role) throws NotFoundException, NotFoundRepairmanException, JsonProcessingException;
+
+    boolean deleteMaintenanceCard(Long id) throws NotFoundException, NotFoundRepairmanException, NotEnoughProductException, UnknownException, JsonProcessingException;
+
+    Map<String, Object> getMaintenanceCardByRepairMan(int PageNum, int PageSize, String sortBy, boolean descending, Long userId, String code, byte[] payStatus, byte[] workStatus);
+
+    MaintenanceCardDTO setReturnDate(long id);
 }

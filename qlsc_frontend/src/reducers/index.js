@@ -1,18 +1,20 @@
 import { combineReducers } from 'redux';
-import product from './product/products';
+import products from './product';
 import globalUI from './globalUI';
 import modal from './../components/modal/modalReducer';
 import customer from './customer/customer';
 import locations from './locations/locations';
 import auth from './auth';
 import mainCards from './maintenancecard';
+import staffs from './staff';
 
 export default combineReducers({
   auth,
-  product,
+  products,
   globalUI,
   modal,
   customer,
   locations,
   mainCards,
+  staffs,
 })

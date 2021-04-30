@@ -7,7 +7,6 @@ import debounce from 'utils/debounce';
 import '../styles/filterMainCard.scss';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
 import { default_option, default_status_work, default_status_work_detail, default_status_payment, default_status_payment_detail } from 'pages/maintenancecard/commons/mainCardConstants.js';
-import { showFilter } from '../../../../../actions/mainCard';
 
 function FilterMainCard(props) {
   const { showFilter } = props;
@@ -100,7 +99,7 @@ function FilterMainCard(props) {
           </div>
           <input
             id="filter-delivery-collations-search-input"
-            placeholder="Tìm kiếm phiếu sữa chữa theo mã phiếu sữa chữa"
+            placeholder="Tìm kiếm phiếu sữa chưa theo mã phiếu sữa chữa"
             value={filterText}
             onChange={(e) => onChangeText(e)}
           />
@@ -138,7 +137,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
   showFilter: (show) => dispatch(showFilter(show)),
-  fetchOrderCollation: (filter, page) => dispatch(fetchOrderCollation(filter, page))
+  // fetchOrderCollation: (filter, page) => dispatch(fetchOrderCollation(filter, page))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMainCard);

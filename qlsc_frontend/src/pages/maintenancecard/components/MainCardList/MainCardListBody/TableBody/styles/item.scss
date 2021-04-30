@@ -1,10 +1,10 @@
-.delivery-collations-item-wrapper{
+.main-card-item-wrapper{
     align-items: center;
     border-bottom: 1px solid #E0E0E0;
     padding: 15px 0;
     min-width: 920px;
     flex-wrap: wrap;
-    .delivery-collations-listing-item{
+    .main-card-listing-item{
       align-items: center;
     }
     &:last-child{
@@ -34,6 +34,6 @@
       text-overflow: ellipsis;
     }
   }
-  .delivery-collations-item-wrapper:nth-child(odd) {
+  .main-card-item-wrapper:nth-child(odd) {
     background-color: #f9f9f9;
   }

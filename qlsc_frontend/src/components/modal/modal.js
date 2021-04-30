@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 // styles
 import './modal.scss'
 import { resetModal } from './modalActions'
-import CreateProductModal from '../../pages/product/list/CreateProductModal'
+// import CreateProductModal from '../../pages/product/list/CreateProductModal'
 
 function Modals (props) {
   const { history } = props
@@ -56,9 +56,9 @@ function Modals (props) {
   const { modal } = props
   return (
     <div className="modal_container">
-      <CreateProductModal />
+      {/* <CreateProductModal />
 
-      {modal.createProductModal.show ? (<CreateProductModal />) : null}
+      {modal.createProductModal.show ? (<CreateProductModal />) : null} */}
     </div>
   )
 }

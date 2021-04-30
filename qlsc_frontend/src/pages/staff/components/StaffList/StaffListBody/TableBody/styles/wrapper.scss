@@ -1,0 +1,22 @@
+.staff-list-wrapper{
+    #staff-filter-empty-wrapper {
+      display: flex;
+      height: 500px;
+      position: relative;
+      #staff-filter-empty-text {
+        align-self: center;
+        font-size: 30px;
+        padding: 0 0 20px 5%;
+        white-space: nowrap;
+      }
+      #staff-filter-empty-icon {
+        position: absolute;
+        right: 5%;
+        svg {
+          height: 500px;
+          width: 600px;
+        }
+      }
+    }
+  }
+  

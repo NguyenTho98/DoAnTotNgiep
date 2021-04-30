@@ -18,9 +18,9 @@ function Item(props) {
 
 
   return (
-    <div className="delivery-collations-item-wrapper">
+    <div className="main-card-item-wrapper">
       <div
-        className="d-flex delivery-collations-listing-item"
+        className="d-flex main-card-listing-item"
       >
         <div role="presentation" className="checkbox header-checkbox" onClick={(e) => onCheck(e)}>
           <input

@@ -20,7 +20,7 @@ function Header(props) {
 
     return (
       <React.Fragment>
-        <div className="d-flex dropdown dd-bulk-action delivery-collations-bulk-action-dd">
+        <div className="d-flex dropdown dd-bulk-action main-card-bulk-action-dd">
           <div className="d-flex checkbox-wrapper">
             {
               minus ? (
@@ -60,7 +60,7 @@ function Header(props) {
   };
   const { onClick, checked, minus } = props;
   return (
-    <div className="d-flex header-list delivery-collations-header" style={{ padding: checked || minus ? '0px 0 8px' : '' }}>
+    <div className="d-flex header-list main-card-header" style={{ padding: checked || minus ? '0px 0 8px' : '' }}>
       {
           checked || minus ? null : (
             <div className="checkbox header-checkbox" onClick={() => onClick()}>

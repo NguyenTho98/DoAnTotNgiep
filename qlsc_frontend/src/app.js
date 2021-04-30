@@ -5,34 +5,36 @@ import {
   Switch,
   withRouter,
 } from "react-router-dom";
-import { getCity } from "pages/customer/actions/locationActions";
+// import { getCity } from "pages/customer/actions/locationActions";
 import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
 import SideBar from "./components/sideBar/SideBar";
 import TopBar from "./components/topBar/TopBar";
-import ProductList from "./pages/product/list/ProductList.js";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 //customer
-import CustomerList from './pages/customer/components/CustomerList';
-import AddCustomer from './pages/customer/components/AddCustomer';
-import CustomerInfo from './pages/customer/components/CustomerInfo';
-import EditCustomer from './pages/customer/components/EditCustomer';
+// import CustomerList from './pages/customer/components/CustomerList';
+// import AddCustomer from './pages/customer/components/AddCustomer';
+// import CustomerInfo from './pages/customer/components/CustomerInfo';
+// import EditCustomer from './pages/customer/components/EditCustomer';
 
 import Modals from "./components/modal/modal";
 import "./styles/app.scss";
 import login from "./pages/login/login";
 import MainCardList from "./pages/maintenancecard/components/MainCardList/MainCardList";
+import StaffList from "./pages/staff/components/StaffList/StaffList";
 import MainCardCreate from "./pages/maintenancecard/components/MainCardCreate/MainCardCreate";
+import ProductList from "./pages/product/components/ProductList/ProductList";
+import CustomerList from "./pages/customer/components/CustomerList/CustomerList";
 
 
 function App (props) {
   const { showMenu } = props;
 
-  useEffect(() => {
-    props.getCity();
-  }, []);
+  // useEffect(() => {
+  //   props.getCity();
+  // }, []);
  {/* <Route exact path="/login" component={login}/> */}
   return (
     <React.Fragment>
@@ -56,14 +58,16 @@ function App (props) {
         <Switch>
           <div className={showMenu ? 'content-dashboard-active' : 'content-dashboard'}>
               <TopBar />
-              <Route exact path="/product" component={ProductList}/>
               {/* customer */}
               <Route exact path="/customer" component={CustomerList}/>
-              <Route exact path="/customer/create" component={AddCustomer}/>
+              {/* <Route exact path="/customer/create" component={AddCustomer}/>
               <Route exact path="/customer/:id/info" component={CustomerInfo}/>
-              <Route exact path="/customer/:id/edit" component={EditCustomer}/>
+              <Route exact path="/customer/:id/edit" component={EditCustomer}/> */}
               <Route exact path="/maintenance-card" component={MainCardList}/>
               <Route exact path="/maintenance-card/create" component={MainCardCreate}/>
+              <Route exact path="/staff" component={StaffList}/>
+              <Route exact path="/product" component={ProductList}/>
+              {/* <Route exact path="/staff/create" component={StaffCreate}/> */}
           </div>
         </Switch>
       </Router>
@@ -79,4 +83,4 @@ const mapStateToProps = (state) => {
     showMenu,
   };
 };
-export default withRouter(connect(mapStateToProps, { getCity })(App));
+export default withRouter(connect(mapStateToProps, null)(App));

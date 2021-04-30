@@ -3,10 +3,10 @@ import filterInfo from './filterInfo';
 import mainCard from './mainCard';
 import ui from './ui';
 
-const deliveryCollationReducer = combineReducers({
+const mainCardReducer = combineReducers({
   filterInfo,
   mainCard,
   ui,
 });
 
-export default deliveryCollationReducer;
+export default mainCardReducer;

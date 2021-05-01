@@ -200,7 +200,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean checkLogin(UserDTO userDTO) {
-
         String username = userDTO.getEmail();
         String password = userDTO.getPassword();
         User user = userRepository.checkLogin(username, password);

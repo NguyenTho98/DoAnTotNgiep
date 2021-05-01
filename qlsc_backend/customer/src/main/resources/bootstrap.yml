@@ -3,4 +3,10 @@ spring:
     name: customer
   cloud:
     config:
-      uri: http://localhost:8090
+      uri: http://localhost:8761
+
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka

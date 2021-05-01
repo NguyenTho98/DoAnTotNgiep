@@ -26,9 +26,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
             .and()
             .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
-
             .authorizeRequests()
-		   .antMatchers("/admin/**").hasAnyRole("1")
+            .antMatchers("/admin/**").hasAnyRole("1")
             .anyRequest().permitAll();
     }
 

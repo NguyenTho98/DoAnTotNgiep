@@ -1,6 +1,5 @@
 import axios from 'axios';
 import storage from './storage';
-import * as API from 'constants/api';
 
 const callApi = function callApi(url, options) {
   const accessToken = storage.get('token', false);
@@ -20,7 +19,6 @@ const callApi = function callApi(url, options) {
   } else {
     options.headers = {
       'X-APP-PAGE-TOKEN': accessToken,
-      'Origin': '*',
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',

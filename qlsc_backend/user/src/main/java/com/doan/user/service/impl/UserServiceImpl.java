@@ -214,7 +214,9 @@ public class UserServiceImpl implements UserService {
     public UserDTO checkUserNameUser(String username) throws NotFoundException {
         User user = userRepository.checkExistEmail(username);
         if (user != null) {
-            return userConverter.convertToDTO(user);
+            UserDTO userDTO = userConverter.convertToDTO(user);
+            userDTO.setPassword(null);
+            return userDTO;
         } else {
             throw new NotFoundException("Not Found User");
         }

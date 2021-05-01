@@ -9,7 +9,7 @@ const initState = {
 const auth = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.RECEIVE_ACCESS_TOKEN:
-      storage.set("token", action.accessToken);
+      storage.set("token", action.accessToken, false);
       return {
         ...state,
         accessToken: action.accessToken,
@@ -17,10 +17,9 @@ const auth = (state = initState, action) => {
     case actionTypes.RECEIVE_USER_ACCOUNT:
       return {
         ...state,
-        account: {
-          ...state.account,
+        user: {
+          ...state.user,
           ...action.account,
-          limit: action.limitInfo,
         },
       };
     default:

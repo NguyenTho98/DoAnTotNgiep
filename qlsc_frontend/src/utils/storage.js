@@ -1,39 +1,3 @@
-/* global window */
-function setStorage(key, value, expireTimeInSeconds) {
-  if (expireTimeInSeconds === undefined || expireTimeInSeconds === null) {
-    expireTimeInSeconds = 24 * 60 * 60;
-  } else {
-    expireTimeInSeconds = Math.abs(expireTimeInSeconds);
-  }
-
-  const now = Date.now();
-  const schedule = now + expireTimeInSeconds * 1000;
-  const data = {
-    data: value,
-    expireTimeInMilliseconds: schedule,
-  };
-  return localStorage.setItem(key, JSON.stringify(data));
-}
-
-function getStorage(key) {
-  const data = localStorage.getItem(key);
-  if (!data) {
-    return null;
-  }
-  if (new Date().getTime() > JSON.parse(data).expireTimeInMilliseconds) {
-    return null;
-  }
-  return JSON.parse(data).data;
-}
-
-function removeStorage(name) {
-  try {
-    localStorage.removeItem(name);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
 
 /* global window */
 const storage = {

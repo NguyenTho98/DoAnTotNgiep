@@ -79,11 +79,10 @@ public class UserController {
     }
 
     @GetMapping("checkUser")
-    public ResponseEntity<UserDTO> getInformationUser() throws NotFoundException {
+    public UserDTO getInformationUser() throws NotFoundException {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        UserDTO userDTO = userService.checkUserNameUser(authentication.getName());
-        return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        return userService.checkUserNameUser(authentication.getName());
     }
 
     @GetMapping("test")

@@ -5,3 +5,13 @@ spring:
     config:
       uri: http://localhost:8090/
 
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+zuul:
+  ignored-services: "*"
+
+server:
+  port: 8762

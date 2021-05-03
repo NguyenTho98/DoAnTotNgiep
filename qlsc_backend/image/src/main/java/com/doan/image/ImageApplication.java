@@ -25,9 +25,7 @@ public class ImageApplication {
 
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
-		return (args) -> {
-			storageService.init();
-		};
+		return (args) -> storageService.init();
 	}
 
 }

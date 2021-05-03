@@ -1,4 +1,4 @@
-package com.doan.customer.security;
+package com.doan.image.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +29,6 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
             .antMatchers("/admin/**").hasAnyRole("2", "1", "3", "4")
-            .antMatchers("/admin/customers/**").hasAnyRole("3", "1")
-            .antMatchers(HttpMethod.DELETE, "/admin/customers/**").hasAnyRole("3")
             .anyRequest().permitAll();
     }
 

@@ -10,13 +10,13 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/admin/")
+@RequestMapping("admin")
 @RequiredArgsConstructor
 public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    @GetMapping("/vehicle/customer/{customerId}")
+    @GetMapping("vehicle/customer/{customerId}")
     public ResponseEntity<Object> getAllByCustomer(
             @PathVariable("customerId") Long customerId) {
         List<VehicleDTO> vehicleDTOS = vehicleService.getListVehicleByCustomer(customerId);

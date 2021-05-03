@@ -2,6 +2,7 @@ package com.doan.maintenancecard.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private JwtConfig jwtConfig;
 
@@ -26,7 +28,12 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .and()
             .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
-            .antMatchers("/admin/**").hasAnyRole("1")
+            .antMatchers("/admin/**").hasAnyRole("2", "1", "3", "4")
+            .antMatchers(HttpMethod.POST, "/admin/maintenanceCards/**").hasAnyRole("1", "3")
+            .antMatchers(HttpMethod.GET, "/admin/maintenanceCards/**").hasAnyRole("1", "2", "3")
+            .antMatchers(HttpMethod.PUT, "/admin/maintenanceCards/workStatus/**").hasAnyRole("2")
+            .antMatchers(HttpMethod.PUT, "/admin/maintenanceCardDetails/status").hasAnyRole("2")
+            .antMatchers("/admin/paymentHistories/**").hasAnyRole("3")
             .anyRequest().permitAll();
     }
 

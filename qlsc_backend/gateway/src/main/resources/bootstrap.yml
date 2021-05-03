@@ -19,6 +19,15 @@ zuul:
     customer:
       path: /customer/**
       service-id: customer
+    product:
+      path: /product/**
+      service-id: product
+    maintenancecard:
+      path: /maintenancecard/**
+      service-id: maintenancecard
+    image:
+      path: /image/**
+      service-id: image
 
 server:
   port: 8762

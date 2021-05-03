@@ -2,6 +2,7 @@ package com.doan.product.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,7 +28,13 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .and()
             .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
-            .antMatchers("/admin/**").hasAnyRole("1")
+            .antMatchers("admin/product/**").hasAnyRole("4")
+            .antMatchers(HttpMethod.GET, "/admin/products/**").hasAnyRole("3", "1")
+            .antMatchers(HttpMethod.POST, "/admin/products/**").hasAnyRole("3")
+            .antMatchers(HttpMethod.PUT, "/admin/products/**").hasAnyRole("3")
+            .antMatchers(HttpMethod.DELETE, "/admin/products/**").hasAnyRole("3")
+            .antMatchers("/admin/accessories").hasAnyRole("3")
+            .antMatchers("/admin/services").hasAnyRole("3")
             .anyRequest().permitAll();
     }
 

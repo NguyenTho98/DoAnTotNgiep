@@ -1,7 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-const-assign */
-/* eslint-disable consistent-return */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -10,7 +6,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import '../../styles/wrapper.scss';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
-import { fetchMainCard, selectedMainCardIds } from '../../../../../../actions/customer';
+import { getListCustomer } from '../../../../../../actions/customerAction';
 
 function Wrapper(props) {
   // const [selectedIds, setSelectedIds] = useState([]);
@@ -19,16 +15,16 @@ function Wrapper(props) {
   } = props;
   const listRef = React.useRef();
 
-//   useEffect(() => {
-//     const filterInfo = getFilterFromURL();
-//     listRef && listRef.current && listRef.current.getData(filterInfo);
-//   }, []);
+  useEffect(() => {
+    const filterInfo = getFilterFromURL();
+    listRef && listRef.current && listRef.current.getData(filterInfo);
+  }, []);
 
-//   useEffect(() => {
-//     if (!fetching) {
-//         selectedMainCardIds([]);
-//     }
-//   }, [fetching]);
+  useEffect(() => {
+    if (!fetching) {
+        selectedMainCardIds([]);
+    }
+  }, [fetching]);
 
   const getFilterFromURL = () => {
     const { history } = props;
@@ -126,8 +122,7 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
-    fetchMainCard: (filter, page) => dispatch(fetchMainCard(filter, page)),
-  selectedMainCardIds: (ids) => dispatch(selectedMainCardIds(ids)),
+  onGetListCustomer: (filter) => dispatch(getListCustomer(filter)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Wrapper));

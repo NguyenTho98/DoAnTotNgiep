@@ -12,6 +12,7 @@ const config = {
   entry: [path.resolve(__dirname, './src/index.js')],
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'bundle.js'
   },
   devServer: {
@@ -25,7 +26,10 @@ const config = {
   },
   mode: 'development',
   resolve: {
-    modules: [path.resolve('node_modules'), 'node_modules' ]
+    modules: [
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'node_modules')
+    ]
   },
   performance: {
     hints: false

@@ -30,7 +30,6 @@ import CustomerList from "./pages/customer/components/CustomerList/CustomerList"
 import ReportMain from "./pages/report/components/ReportMain";
 import StaffCreate from "./pages/staff/components/StaffCreate/StaffCreate";
 
-
 function App (props) {
   const { showMenu } = props;
 
@@ -39,43 +38,41 @@ function App (props) {
   // }, []);
  {/* <Route exact path="/login" component={login}/> */}
   return (
-    <React.Fragment>
-      <Router history={createBrowserHistory()}>
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable={false}
-          pauseOnHover={false}
-          closeButton={false}
-          limit={1}
-        />
-        <Modals />
-        <TopBar />
-        <SideBar />
-        <Switch>
-          <Route exact path="/login" component={login}/>
-          <div className={showMenu ? 'content-dashboard-active' : 'content-dashboard'}>
-              <TopBar />
-              {/* customer */}
-              <Route exact path="/customer" component={CustomerList}/>
-              <Route exact path="/maintenance-card" component={MainCardList}/>
-              <Route exact path="/maintenance-card/create" component={MainCardCreate}/>
-              <Route exact path="/staff" component={StaffList}/>
-              <Route exact path="/product" component={ProductList}/>
-              <Route exact path="/report" component={ReportMain}/>
-              <Route exact path="/staff/create" component={StaffCreate}/>
-              {/* <Route exact path="/customer/create" component={AddCustomer}/>
+    <Router history={createBrowserHistory()}>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        closeButton={false}
+        limit={1}
+      />
+      <Modals />
+      <TopBar />
+      <SideBar />
+      <Switch>
+        <Route exact path="/login" component={login}/>
+        <div className={showMenu ? 'content-dashboard-active' : 'content-dashboard'}>
+          <TopBar />
+          {/* customer */}
+          <Route exact path="/customer" component={CustomerList}/>
+          <Route path="/maintenance-card/create" component={MainCardCreate}/>
+          <Route exact path="/maintenance-card" component={MainCardList}/>
+          <Route exact path="/staff" component={StaffList}/>
+          <Route path="/product" component={ProductList}/>
+          <Route path="/report" component={ReportMain}/>
+          <Route path="/staff/create" component={StaffCreate}/>
+          {/* <Route exact path="/customer/create" component={AddCustomer}/>
               <Route exact path="/customer/:id/info" component={CustomerInfo}/>
               <Route exact path="/customer/:id/edit" component={EditCustomer}/> */}
-          </div>
-        </Switch>
-      </Router>
-    </React.Fragment>
+        </div>
+      </Switch>
+    </Router>
   );
 }
 const mapStateToProps = (state) => {

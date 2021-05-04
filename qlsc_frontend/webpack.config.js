@@ -21,6 +21,7 @@ const config = {
     compress: false,
     open: true,
     stats: 'errors-only',
+    port: 8686,
   },
   mode: 'development',
   resolve: {

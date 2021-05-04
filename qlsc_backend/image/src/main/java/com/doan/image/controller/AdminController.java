@@ -2,6 +2,8 @@ package com.doan.image.controller;
 
 import com.doan.image.service.StorageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +27,11 @@ public class AdminController {
         } else {
             return "File không hợp lệ!";
         }
+    }
+
+    @GetMapping(path = "/image/{filename:.+}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    public Resource serveFile(@PathVariable String filename) {
+        return storageService.loadAsResource(filename);
     }
 
     @GetMapping("test")

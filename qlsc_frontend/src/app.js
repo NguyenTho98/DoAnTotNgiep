@@ -22,15 +22,8 @@ import { ToastContainer } from 'react-toastify';
 import Modals from "./components/modal/modal";
 import "./styles/app.scss";
 import login from "./pages/login/login";
-import MainCardList from "./pages/maintenancecard/components/MainCardList/MainCardList";
-import StaffList from "./pages/staff/components/StaffList/StaffList";
-import MainCardCreate from "./pages/maintenancecard/components/MainCardCreate/MainCardCreate";
-import ProductList from "./pages/product/components/ProductList/ProductList";
-import CustomerList from "./pages/customer/components/CustomerList/CustomerList";
-import ReportMain from "./pages/report/components/ReportMain";
-import StaffCreate from "./pages/staff/components/StaffCreate/StaffCreate";
-import CustomerCreate from "./pages/customer/components/CustomerCreate/CustomerCreate";
-import CustomerDetail from "./pages/customer/components/CustomerDetail/CustomerDetail";
+import DashBoard from "./pages/dashboard/DashBoard";
+import PrivateRoute from "./utils/privateRoute";
 
 function App (props) {
   const { showMenu } = props;
@@ -38,7 +31,6 @@ function App (props) {
   // useEffect(() => {
   //   props.getCity();
   // }, []);
- {/* <Route exact path="/login" component={login}/> */}
   return (
     <Router history={createBrowserHistory()}>
       <ToastContainer
@@ -55,26 +47,9 @@ function App (props) {
         limit={1}
       />
       <Modals />
-      <TopBar />
-      <SideBar />
       <Switch>
-        <Route exact path="/login" component={login}/>
-        <div className={showMenu ? 'content-dashboard-active' : 'content-dashboard'}>
-          <TopBar />
-          {/* customer */}
-          <Route exact path="/customer" component={CustomerList}/>
-          <Route exact path="/customer/create" component={CustomerCreate}/>
-          <Route exact path="/customer/detail" component={CustomerDetail}/>
-          <Route path="/maintenance-card/create" component={MainCardCreate}/>
-          <Route exact path="/maintenance-card" component={MainCardList}/>
-          <Route exact path="/staff" component={StaffList}/>
-          <Route path="/product" component={ProductList}/>
-          <Route path="/report" component={ReportMain}/>
-          <Route path="/staff/create" component={StaffCreate}/>
-          {/* <Route exact path="/customer/create" component={AddCustomer}/>
-              <Route exact path="/customer/:id/info" component={CustomerInfo}/>
-              <Route exact path="/customer/:id/edit" component={EditCustomer}/> */}
-        </div>
+        <Route path="/login" component={login}/>
+        <PrivateRoute path="/" component={()=> <DashBoard showMenu={showMenu} />}/>
       </Switch>
     </Router>
   );

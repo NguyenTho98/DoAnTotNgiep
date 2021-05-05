@@ -29,6 +29,8 @@ import ProductList from "./pages/product/components/ProductList/ProductList";
 import CustomerList from "./pages/customer/components/CustomerList/CustomerList";
 import ReportMain from "./pages/report/components/ReportMain";
 import StaffCreate from "./pages/staff/components/StaffCreate/StaffCreate";
+import CustomerCreate from "./pages/customer/components/CustomerCreate/CustomerCreate";
+import CustomerDetail from "./pages/customer/components/CustomerDetail/CustomerDetail";
 
 function App (props) {
   const { showMenu } = props;
@@ -61,6 +63,8 @@ function App (props) {
           <TopBar />
           {/* customer */}
           <Route exact path="/customer" component={CustomerList}/>
+          <Route exact path="/customer/create" component={CustomerCreate}/>
+          <Route exact path="/customer/detail" component={CustomerDetail}/>
           <Route path="/maintenance-card/create" component={MainCardCreate}/>
           <Route exact path="/maintenance-card" component={MainCardList}/>
           <Route exact path="/staff" component={StaffList}/>

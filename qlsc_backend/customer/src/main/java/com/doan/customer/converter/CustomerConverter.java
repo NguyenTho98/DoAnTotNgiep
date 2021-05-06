@@ -15,7 +15,7 @@ public class CustomerConverter {
     public CustomerDTO convertToDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setId(customer.getId());
-        customerDTO.setCode(customer.getCode());
+        customerDTO.setCode(customer.getCode().toUpperCase());
         customerDTO.setCreatedDate(customer.getCreatedDate());
         customerDTO.setModifiedDate(customer.getModifiedDate());
         customerDTO.setPhone(customer.getPhone());

@@ -1,27 +1,29 @@
-import React from 'react';
-import Pagination from 'components/Pagination/Pagination';
-import { connect } from 'react-redux';
-import '../../styles/footer.scss';
+import React, { useState, useEffect } from "react";
+import Pagination from "components/Pagination/Pagination";
+import { connect } from "react-redux";
+import "../../styles/footer.scss";
 
 function Footer(props) {
+  const { customer } = props;
+  const { currentPage, totalItems, totalPages, customers } = customer;
+  const [size, setSize] = useState(0);
+
+  useEffect(() => {
+    if (customers && customers.length) setSize(customers.length);
+  }, [customer]);
+
   const calculateBegin = () => {
-    const { page, size } = props;
-    const pageTmp = page - 1;
-    if (pageTmp === 0) {
+    if (currentPage === 1) {
       return 1;
-    } return size * pageTmp + 1;
+    }
+    return size * currentPage;
   };
 
   const calculateEnd = () => {
-    const { page, size, total } = props;
-    const pageTmp = page - 1;
-    const per = total / size;
-    if (per <= 1) {
-      return total;
+    if (totalPages <= 1) {
+      return totalItems;
     }
-    if (pageTmp < Math.floor(per)) {
-      return (pageTmp + 1) * size;
-    } return total;
+    return currentPage * size;
   };
 
   const onChangePage = (id) => {
@@ -30,16 +32,14 @@ function Footer(props) {
     resetSelected();
   };
 
-  const {
-    total, page, size, fetching, isEmpty
-  } = props;
+  const { total, page, fetching, isEmpty } = props;
   if (fetching || isEmpty) return null;
   return (
     <div className="d-flex delivery-collations-footer">
       <div className="result-info">
         Hiển thị kết quả từ&nbsp;
         {calculateBegin()} -&nbsp;
-        {calculateEnd()} trên tổng {total}
+        {calculateEnd()} trên tổng {totalItems}
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">
@@ -59,7 +59,12 @@ Footer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { mainCards: { mainCard: { total, page }, ui: { fetching } } } = state;
+  const {
+    mainCards: {
+      mainCard: { total, page },
+      ui: { fetching },
+    },
+  } = state;
   return {
     total,
     page,

@@ -31,7 +31,6 @@ const wrapAccessToken = (url, params, token, store) => (
   params.headers["Origin"] = API.PORT;
   params.headers["Access-Control-Allow-Origin"] = "*";
   params.headers["Access-Control-Allow-Methods"] = "HEAD, GET, POST, PUT, PATCH, DELETE";
-  console.log('params', params);
   if (params.isContentType !== false) {
     params.headers["Content-Type"] = "application/json";
   }

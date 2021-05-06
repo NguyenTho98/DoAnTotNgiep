@@ -1,22 +1,16 @@
 
-import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
-
-import Guard from 'components/Guard/Guard';
+import React, { forwardRef } from 'react';
 import '../../styles/list.scss';
-import { connect } from 'react-redux';
 import Item from '../Item/Item';
 
 const List = forwardRef((props, ) => {
   const { customer } = props;
-  console.log('customer', customer);
+  const { customers } = customer;
   return (
     <div className="order-list-container">
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+      {customers.length && customers.map((customer) => {
+        return <Item customer={customer} />
+      })}
     </div>
   );
 });

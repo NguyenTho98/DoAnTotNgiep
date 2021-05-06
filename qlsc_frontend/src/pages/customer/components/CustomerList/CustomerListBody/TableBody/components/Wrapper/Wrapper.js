@@ -25,7 +25,7 @@ function Wrapper(props) {
     return (
       <div className="count-check">
         <span className="details">
-          Đã chọn ({selectedIds.length} đơn hàng)
+          Đã chọn ({selectedIds.length} khách hàng)
         </span>
       </div>
     );
@@ -60,6 +60,7 @@ function Wrapper(props) {
           customer={props.customer}
         />
         <Footer
+          customer={props.customer}
           resetSelected={resetSelected}
           isEmpty={isEmpty}
         />

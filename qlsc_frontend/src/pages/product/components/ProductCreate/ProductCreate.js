@@ -1,11 +1,11 @@
 /* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import InfoStaffFooter from './InfoStaffFooter/InfoStaffFooter';
-import InfoStaffLeft from './InfoStaffLeft/InfoStaffLeft';
-import InfoStaffRight from './InfoStaffRight/InfoStaffRight';
+import InfoProductFooter from './InfoProductFooter/InfoProductFooter';
+import InfoProductLeft from './InfoProductLeft/InfoProductLeft';
+import InfoProductRight from './InfoProductRight/InfoProductRight';
 import './styles.scss';
-function StaffCreate(props) {
+function ProductCreate(props) {
   const {  } = props;
   const [user, setUser] = useState({
     name: null,
@@ -20,21 +20,21 @@ function StaffCreate(props) {
   useEffect(() => {
   }, []);
   return (
-    <div className="staff-screen-wrapper-create">
+    <div className="product-screen-wrapper-create">
       <div className="row">
         <div className="col-md-8">
-            <InfoStaffLeft />
+            <InfoProductLeft />
         </div>
         <div className="col-md-4">
-            <InfoStaffRight />
+            <InfoProductRight />
         </div>
-        <InfoStaffFooter />
+        <InfoProductFooter />
       </div>
     </div>
   );
 }
-StaffCreate.defaultProps = {
+ProductCreate.defaultProps = {
 
 };
 
-export default React.memo(connect(null, null)(StaffCreate));
+export default React.memo(connect(null, null)(ProductCreate));

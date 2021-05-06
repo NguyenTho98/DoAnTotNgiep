@@ -14,6 +14,7 @@ import CustomerDetail from "../customer/components/CustomerDetail/CustomerDetail
 import CustomerList from "../customer/components/CustomerList/CustomerList";
 import MainCardCreate from "../maintenancecard/components/MainCardCreate/MainCardCreate";
 import MainCardList from "../maintenancecard/components/MainCardList/MainCardList";
+import ProductCreate from "../product/components/ProductCreate/ProductCreate";
 import ProductList from "../product/components/ProductList/ProductList";
 import ReportMain from "../report/components/ReportMain";
 import StaffCreate from "../staff/components/StaffCreate/StaffCreate";
@@ -31,15 +32,16 @@ function Dashboard(props) {
         <SideBar />
         <TopBar />
         <Switch>
-          <Route exact path="/customer" component={CustomerList} />
+          <Route exact path="/customers" component={CustomerList} />
           <Route exact path="/customer/create" component={CustomerCreate} />
-          <Route exact path="/customer/detail" component={CustomerDetail} />
-          <Route path="/maintenance-card/create" component={MainCardCreate} />
-          <Route exact path="/maintenance-card" component={MainCardList} />
-          <Route exact path="/staff" component={StaffList} />
-          <Route path="/product" component={ProductList} />
-          <Route path="/" component={ReportMain} />
-          <Route path="/staff/create" component={StaffCreate} />
+          <Route exact path="/customer/detail/" component={CustomerDetail} />
+          <Route exact path="/maintenance-card/create" component={MainCardCreate} />
+          <Route exact path="/maintenance-cards" component={MainCardList} />
+          <Route exact path="/staffs" component={StaffList} />
+          <Route exact path="/products" component={ProductList} />
+          <Route exact path="/product/create" component={ProductCreate} />
+          <Route exact path="/report" component={ReportMain} />
+          <Route exact path="/staff/create" component={StaffCreate} />
         </Switch>
       </div>
     </React.Fragment>

@@ -22,21 +22,20 @@ import pushstate from "utils/pushstate";
 function App (props) {
   const { showMenu } = props;
 
-  useEffect(() => {
-    const token = storage.get("token", false);
-    if (token) {
-      props.onCheckInfoUser(token).then((json) => {
-        if (json && json.role) {
-          pushstate(props.history, "/");
-        } else {
-          pushstate(props.history, "/login");
-        }
-      });
-    } else {
-      pushstate(props.history, "/login");
-    }
+  // useEffect(() => {
+  //   const token = storage.get("token", false);
+  //   if (token) {
+  //     props.onCheckInfoUser(token).then((json) => {
+  //       if (json && json.role) {
+  //         pushstate(props.history, "/");
+  //       } else {
+  //         pushstate(props.history, "/login");
+  //       }
+  //     });
+  //   } else {
+  //     pushstate(props.history, "/login");
+  //   }
     props.onGetCity();
-  }, []);
 
   return (
     <Router history={createBrowserHistory()}>
@@ -56,7 +55,7 @@ function App (props) {
       <Modals />
       <Switch>
         <Route path="/login" component={LoginPage}/>
-        <PrivateRoute path="/" component={()=> <DashBoard showMenu={showMenu} />}/>
+        <Route path="/" component={()=> <DashBoard showMenu={showMenu} />}/>
       </Switch>
     </Router>
   );

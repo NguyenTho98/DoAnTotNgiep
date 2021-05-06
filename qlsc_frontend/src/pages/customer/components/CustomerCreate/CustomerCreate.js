@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import InfoCustomerLeft from "./InfoCustomerLeft/InfoCustomerLeft";
 import InfoCustomerRight from "./InfoCustomerRight/InfoCustomerRight";
+import InfoCustomerFooter from './InfoCustomerFooter/InfoCustomerFooter';
 import { saveCustomer } from "../../actions/customerAction";
 import { receiveWard } from "../../actions/locationActions";
 import pushstate from "utils/pushstate";
@@ -52,6 +53,7 @@ function CustomerCreate(props) {
         <div className="col-md-4">
           <InfoCustomerRight onChangeUser={onChangeUser} user={user} />
         </div>
+        <InfoCustomerFooter />
       </div>
     </div>
   );

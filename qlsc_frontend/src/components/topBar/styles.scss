@@ -1,0 +1,44 @@
+#top-bar-market-place {
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.14);
+    height: 55px;
+    display: flex;
+    color: #4F4F4F;
+    background: #FFF;
+    .header-top-bar-text{
+        margin-left: 15px;
+    }
+    #top-bar-sendo-icon {
+        align-self: center;
+        margin: 0 10px 0 30px;
+        img{
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    }
+
+    .top-bar-text {
+        align-self: center;
+        font-size: 20px;
+        margin-right: 5px;
+        .top_bar_focus{
+            cursor: pointer;
+            &:hover{
+                color: #0088ff;
+            }
+        }
+      .header-product-listing-create {
+        cursor: pointer;
+        &:hover {
+          color: #0088FF;
+        }
+      }
+      .header-tools {
+        cursor: pointer;
+        &:hover {
+          color: #0088FF;
+        }
+      }
+    }
+}

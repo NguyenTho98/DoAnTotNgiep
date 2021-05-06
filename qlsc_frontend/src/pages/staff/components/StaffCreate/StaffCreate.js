@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import InfoStaffFooter from './InfoStaffFooter/InfoStaffFooter';
 import InfoStaffLeft from './InfoStaffLeft/InfoStaffLeft';
 import InfoStaffRight from './InfoStaffRight/InfoStaffRight';
 import './styles.scss';
@@ -27,6 +28,7 @@ function StaffCreate(props) {
         <div className="col-md-4">
             <InfoStaffRight />
         </div>
+        <InfoStaffFooter />
       </div>
     </div>
   );

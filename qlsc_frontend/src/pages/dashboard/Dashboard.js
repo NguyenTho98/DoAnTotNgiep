@@ -32,13 +32,13 @@ function Dashboard(props) {
         <SideBar />
         <TopBar />
         <Switch>
-          <Route exact path="/customer" component={CustomerList} />
+          <Route exact path="/customers" component={CustomerList} />
           <Route exact path="/customer/create" component={CustomerCreate} />
-          <Route exact path="/customer/detail" component={CustomerDetail} />
+          <Route exact path="/customer/detail/" component={CustomerDetail} />
           <Route exact path="/maintenance-card/create" component={MainCardCreate} />
-          <Route exact path="/maintenance-card" component={MainCardList} />
-          <Route exact path="/staff" component={StaffList} />
-          <Route exact path="/product" component={ProductList} />
+          <Route exact path="/maintenance-cards" component={MainCardList} />
+          <Route exact path="/staffs" component={StaffList} />
+          <Route exact path="/products" component={ProductList} />
           <Route exact path="/product/create" component={ProductCreate} />
           <Route exact path="/report" component={ReportMain} />
           <Route exact path="/staff/create" component={StaffCreate} />

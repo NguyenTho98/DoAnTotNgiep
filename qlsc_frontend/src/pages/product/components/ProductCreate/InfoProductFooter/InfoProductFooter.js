@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import './styles.scss';
-function InfoStaffFooter(props) {
+function InfoProductFooter(props) {
   return (
-    <div className="info-staff-footer">
+    <div className="info-product-footer">
      <div className="d-flex align-items-center justify-content-end">
           <div className="dlv-button-cancel">
               Hủy
@@ -29,7 +29,7 @@ function InfoStaffFooter(props) {
     </div>
   );
 }
-InfoStaffFooter.defaultProps = {
+InfoProductFooter.defaultProps = {
 
 };
-export default React.memo(connect(null, null)(InfoStaffFooter));
+export default React.memo(connect(null, null)(InfoProductFooter));

@@ -9,7 +9,6 @@ import {
 import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
 import SideBar from "./components/sideBar/SideBar";
-import TopBar from "./components/topBar/TopBar";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 

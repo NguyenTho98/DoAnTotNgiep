@@ -5,20 +5,11 @@ import {
   Switch,
   withRouter,
 } from "react-router-dom";
-// import { getCity } from "pages/customer/actions/locationActions";
+import { getCity } from "./pages/customer/actions/locationActions";
 import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
-import SideBar from "./components/sideBar/SideBar";
-import TopBar from "./components/topBar/TopBar";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-
-//customer
-// import CustomerList from './pages/customer/components/CustomerList';
-// import AddCustomer from './pages/customer/components/AddCustomer';
-// import CustomerInfo from './pages/customer/components/CustomerInfo';
-// import EditCustomer from './pages/customer/components/EditCustomer';
-
 import Modals from "./components/modal/modal";
 import "./styles/app.scss";
 import LoginPage from "./pages/login/login";
@@ -44,6 +35,7 @@ function App (props) {
     } else {
       pushstate(props.history, "/login");
     }
+    props.onGetCity();
   }, []);
 
   return (
@@ -80,5 +72,6 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => ({
   onCheckInfoUser: (token) => dispatch(checkInfoUser(token)),
+  onGetCity: () => dispatch(getCity()),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

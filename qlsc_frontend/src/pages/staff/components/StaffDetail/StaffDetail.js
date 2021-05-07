@@ -2,24 +2,22 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import CustomerDetailInfo from './CustomerDetailInfo/CustomerDetailInfo';
+import StaffDetailInfo from './StaffDetailInfo/StaffDetailInfo';
 import HistoryMainCard from './HistoryMainCard/HistoryMainCard';
 import './styles.scss';
-import TitleAndAction from './TitleAndAction/TitleAndAction';
-function CustomerDetail(props) {
+function StaffDetail(props) {
   const {  } = props;
   useEffect(() => {
   }, []);
   return (
-    <div className="customer-screen-wrapper-detail">
-        <TitleAndAction />
-        <CustomerDetailInfo />
+    <div className="staff-screen-wrapper-detail">
+        <StaffDetailInfo />
         <HistoryMainCard />
     </div>
   );
 }
-CustomerDetail.defaultProps = {
+StaffDetail.defaultProps = {
 
 };
 
-export default withRouter(CustomerDetail);
+export default withRouter(StaffDetail);

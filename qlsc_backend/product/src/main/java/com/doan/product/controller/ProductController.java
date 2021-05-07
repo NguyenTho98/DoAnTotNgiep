@@ -1,26 +1,23 @@
 package com.doan.product.controller;
 
-
 import com.doan.product.exception.NotANumberException;
 import com.doan.product.exception.productException.ProductNotFoundException;
 import com.doan.product.model.ProductRequest;
+import com.doan.product.model.ProductResponse;
 import com.doan.product.service.ProductService;
-import com.doan.product.converter.ProductConverter;
 import com.doan.product.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("admin")
@@ -71,14 +68,12 @@ public class ProductController {
     }
 
     @PostMapping("products")
-    public ResponseEntity<ProductDTO> create(ProductRequest productRequest) {
-        ProductDTO productDTO = null;
+    public ProductResponse create(@RequestBody ProductRequest productRequest) {
         try {
-            productDTO = productService.save(productRequest);
+            return productService.save(productRequest);
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ProductResponse(Boolean.FALSE, "false");
         }
-        return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "products/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
@@ -90,20 +85,9 @@ public class ProductController {
 
     @SneakyThrows
     @PutMapping("products/{id}")
-    public ResponseEntity<ProductDTO> update(ProductRequest productRequest,
-                                             @PathVariable("id") String pathId) {
-        // check if path id is numeric and check its existence
-        if (!StringUtils.isNumeric(pathId)) {
-            try {
-                throw new NotANumberException("Invalid product id: the id is not a number");
-            } catch (NotANumberException e) {
-                e.printStackTrace();
-            }
-        }
-        Long id = Long.parseLong(pathId);
-        // Save product info
-        ProductDTO returnedProductDTO = productService.update(productRequest, id);
-        return new ResponseEntity<>(returnedProductDTO, HttpStatus.OK);
+    public ProductResponse update(@RequestBody ProductRequest productRequest,
+                                  @PathVariable("id") String id) {
+        return productService.update(productRequest, Long.parseLong(id));
     }
 
     @SneakyThrows

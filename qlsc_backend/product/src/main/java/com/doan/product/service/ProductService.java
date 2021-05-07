@@ -4,6 +4,7 @@ import com.doan.product.exception.NotANumberException;
 import com.doan.product.exception.productException.ProductNotFoundException;
 import com.doan.product.model.ProductRequest;
 import com.doan.product.dto.ProductDTO;
+import com.doan.product.model.ProductResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,8 +16,8 @@ public interface ProductService {
     Page<ProductDTO> getAll(String search, Pageable pageable);
     Page<ProductDTO> getAllAccessories(String search, Pageable pageable);
     Page<ProductDTO> getAllServices(String search, Pageable pageable);
-    ProductDTO save(ProductRequest productRequest) throws Exception;
-    ProductDTO update(ProductRequest productRequest, Long id) throws Exception;
+    ProductResponse save(ProductRequest productRequest) throws Exception;
+    ProductResponse update(ProductRequest productRequest, Long id) throws Exception;
     String createNewCode() throws NotANumberException;
     byte[] getImageByte(HttpServletResponse response, String imageName) throws IOException;
     ProductDTO getOneById(Long id) throws ProductNotFoundException;

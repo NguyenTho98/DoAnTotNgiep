@@ -1,5 +1,6 @@
 package com.doan.product.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,13 +11,13 @@ import java.util.Optional;
 @Setter
 public class ProductRequest {
 
-    private MultipartFile image;
+    private String image;
     private String name;
     private int quantity;
     private String unit;
     private String pricePerUnit;
     private String code;
     private String description;
-    private String type;
+    private Byte type;
     private byte status;
 }

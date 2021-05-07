@@ -28,14 +28,13 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .and()
             .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
-            .antMatchers("admin/product/**").hasAnyRole("4")
-            .antMatchers(HttpMethod.GET, "/admin/products/**").hasAnyRole("3", "1")
-            .antMatchers(HttpMethod.POST, "/admin/products/**").hasAnyRole("3")
-            .antMatchers(HttpMethod.PUT, "/admin/products/**").hasAnyRole("3")
-            .antMatchers(HttpMethod.DELETE, "/admin/products/**").hasAnyRole("3")
-            .antMatchers("/admin/accessories").hasAnyRole("3")
-            .antMatchers("/admin/services").hasAnyRole("3")
-            .anyRequest().permitAll();
+            .antMatchers(HttpMethod.GET, "/admin/products/**").hasAnyRole("3", "1", "4")
+            .antMatchers(HttpMethod.POST, "/admin/products/**").hasAnyRole("3", "4")
+            .antMatchers(HttpMethod.PUT, "/admin/products/**").hasAnyRole("3", "4")
+            .antMatchers(HttpMethod.DELETE, "/admin/products/**").hasAnyRole("3", "4")
+            .antMatchers("/admin/accessories").hasAnyRole("3", "4")
+            .antMatchers("/admin/services").hasAnyRole("3", "4")
+            .anyRequest().authenticated();
     }
 
     @Bean

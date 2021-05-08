@@ -6,10 +6,13 @@ import { connect } from 'react-redux';
 import ProductMainCard from './ProductMainCard/ProductMainCard';
 import InfoCustomer from './InfoCustomer/InfoCustomer';
 import InfoMainCard from './InfoMainCard/InfoMainCard';
+import TitleAndAction from './TitleAndAction/TitleAndAction';
+import CustomerModal from './Modal/CustomerModal/CustomerModal';
 
 function MainCardCreate(props) {
   return (
     <div className="main-card-create-warpper">
+        <TitleAndAction />
         <div className="contatiner">
             <div className="row">
                 <div className="col-md-8">
@@ -21,6 +24,7 @@ function MainCardCreate(props) {
                 </div>
             </div>
         </div>
+        <CustomerModal />
     </div>
   );
 }

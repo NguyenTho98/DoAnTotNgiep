@@ -9,6 +9,7 @@ import { receiveWard } from "../../actions/locationActions";
 import pushstate from "utils/pushstate";
 import { useParams } from "react-router-dom";
 import "./styles.scss";
+import TitleAndAction from "./TitleAndAction/TitleAndAction";
 
 const initialState = {
   name: null,
@@ -60,6 +61,7 @@ function CustomerCreate(props) {
 
   return (
     <div className="customer-screen-wrapper-create">
+      <TitleAndAction />
       <div className="row">
         <div className="col-md-8">
           <InfoCustomerLeft onChangeCustomer={onChangeCustomer} customer={customer} />

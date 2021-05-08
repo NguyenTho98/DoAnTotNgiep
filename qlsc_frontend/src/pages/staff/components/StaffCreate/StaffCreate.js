@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import TitleAndAction from './TitleAndAction/TitleAndAction';
 import InfoStaffFooter from './InfoStaffFooter/InfoStaffFooter';
 import InfoStaffLeft from './InfoStaffLeft/InfoStaffLeft';
 import InfoStaffRight from './InfoStaffRight/InfoStaffRight';
@@ -21,6 +22,7 @@ function StaffCreate(props) {
   }, []);
   return (
     <div className="staff-screen-wrapper-create">
+      <TitleAndAction />
       <div className="row">
         <div className="col-md-8">
             <InfoStaffLeft />

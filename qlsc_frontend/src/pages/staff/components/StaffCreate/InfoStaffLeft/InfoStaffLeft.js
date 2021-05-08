@@ -7,13 +7,13 @@ function InfoStaffLeft(props) {
   return (
     <div className="info-staff-left">
       <div className="card info-staff-left-01">
-        <div className="title">Thông tin khách hàng</div>
+        <div className="title">Thông tin nhân viên</div>
         <div className="content">
           <div className="row">
             <div className="col-md-12">
               <div className="field form-group">
                 <span style={{ color: 'red', marginRight: '4px' }}>*</span>
-                <label className="control-label">Tên sản phẩm</label>
+                <label className="control-label">Tên nhân viên</label>
                 <div className="controls">
                   <input
                     className="input"
@@ -30,7 +30,7 @@ function InfoStaffLeft(props) {
             <div className="col-md-6">
               <div className="field form-group">
                 <span style={{ color: 'red', marginRight: '4px' }}>*</span>
-                <label className="control-label">Tên sản phẩm</label>
+                <label className="control-label">Mã nhân viên</label>
                 <div className="controls">
                   <input
                     className="input"
@@ -45,7 +45,7 @@ function InfoStaffLeft(props) {
             <div className="col-md-6">
             <div className="field form-group">
                 <span style={{ color: 'red', marginRight: '4px' }}>*</span>
-                <label className="control-label">Tên sản phẩm</label>
+                <label className="control-label">Số điện thoại</label>
                 <div className="controls">
                   <input
                     className="input"
@@ -62,7 +62,7 @@ function InfoStaffLeft(props) {
             <div className="col-md-12">
               <div className="field form-group">
                 <span style={{ color: 'red', marginRight: '4px' }}>*</span>
-                <label className="control-label">Tên sản phẩm</label>
+                <label className="control-label">Địa chỉ</label>
                 <div className="controls">
                   <input
                     className="input"

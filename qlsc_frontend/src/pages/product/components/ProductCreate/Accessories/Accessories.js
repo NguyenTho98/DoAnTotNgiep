@@ -123,7 +123,7 @@ function Accessories(props) {
               className="display-none"
               ref={inputRef}
               accept="*"
-              // onChange={e => uploadFile(e)}
+              onChange={e => uploadFile(e)}
               multiple
             />
           </div>

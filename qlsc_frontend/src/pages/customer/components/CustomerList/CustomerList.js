@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import "./styles.scss";

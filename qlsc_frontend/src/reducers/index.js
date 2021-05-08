@@ -6,7 +6,7 @@ import customer from './customer/customer';
 import locations from './locations/locations';
 import auth from './auth';
 import mainCards from './maintenancecard';
-import staffs from './staff';
+import staff from './staff/staff';
 
 export default combineReducers({
   auth,
@@ -16,5 +16,5 @@ export default combineReducers({
   customer,
   locations,
   mainCards,
-  staffs,
+  staff,
 })

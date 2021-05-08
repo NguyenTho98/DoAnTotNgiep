@@ -1,12 +1,9 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React from "react";
+import "./styles.scss";
 import { useHistory } from 'react-router';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
-import './styles.scss';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import pushstate from '../../../../../utils/pushstate';
-
 function StaffListHeader(props) {
   const history = useHistory();
   const onClick = () => {
@@ -16,7 +13,7 @@ function StaffListHeader(props) {
     <div className="tilte-action">
       <div className="d-flex list-header">
         <div className="header-title">
-          <div style={{ fontSize: '22px' }}>Danh sách nhân viên</div>
+          <div style={{ fontSize: "22px" }}>Danh sách nhân viên</div>
         </div>
         <div className="header-action">
           <button
@@ -37,9 +34,6 @@ function StaffListHeader(props) {
     </div>
   );
 }
-StaffListHeader.defaultProps = {
-
-};
-
+StaffListHeader.defaultProps = {};
 
 export default React.memo(connect(null, null)(StaffListHeader));

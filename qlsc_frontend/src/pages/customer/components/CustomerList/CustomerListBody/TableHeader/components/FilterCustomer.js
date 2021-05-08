@@ -1,18 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import '../styles/filterCustomer.scss';
-import * as Icons from 'pages/maintenancecard/commons/Icons';
+import React from "react";
+import { connect } from "react-redux";
+import "../styles/filterCustomer.scss";
+import * as Icons from "pages/maintenancecard/commons/Icons";
 function FilterCustomer(props) {
   const { handleInputOnchange, search } = props;
   return (
     <div id="filter-customer-wrapper">
       <div id="filter-customer-by-tab-wrapper">
         <ul id="filter-customer-by-tab">
-          <li
-            className="filter-customer-tab active"
-          >
-              Tất cả khách hàng
-          </li>
+          <li className="filter-customer-tab active">Tất cả khách hàng</li>
         </ul>
       </div>
       <div id="filter-customer-option-wrapper">
@@ -32,9 +28,8 @@ function FilterCustomer(props) {
   );
 }
 
-FilterCustomer.defaultProps = {
-};
-const mapStateToProps = state => {
+FilterCustomer.defaultProps = {};
+const mapStateToProps = (state) => {
   //
 };
 

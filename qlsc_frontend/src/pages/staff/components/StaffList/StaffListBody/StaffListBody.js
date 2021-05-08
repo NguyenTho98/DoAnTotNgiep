@@ -3,13 +3,14 @@ import './styles.scss';
 import Wrapper from './TableBody/components/Wrapper/Wrapper';
 import TableHeader from './TableHeader/TableHeader';
 
-function StaffListBody() {
+function StaffListBody(props) {
+  const { handleInputOnchange, search, onChangeFilter } = props;
   return (
     <div className="staff-list-body">
-      <TableHeader />
+      <TableHeader search={search} handleInputOnchange={handleInputOnchange} />
       <div className="dashboard-body-content">
         <div className="content-container">
-          <Wrapper />
+          <Wrapper onChangeFilter={onChangeFilter} />
         </div>
       </div>
     </div>

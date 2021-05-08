@@ -61,21 +61,11 @@ Footer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const {
-    mainCards: {
-      mainCard: { total, page },
-      ui: { fetching },
-    },
-  } = state;
-  return {
-    total,
-    page,
-    fetching,
-  };
+  //
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onClick: (page) => dispatch(fetchMainCard(null, page)),
+  //
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Footer);

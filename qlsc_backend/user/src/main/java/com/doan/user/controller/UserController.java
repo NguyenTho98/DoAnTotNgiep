@@ -32,21 +32,20 @@ public class UserController {
                                                            @RequestParam(value = "sortBy", defaultValue = "modifiedDate") String sortBy,
                                                            @RequestParam(value = "descending", defaultValue = "desc") String descending,
                                                            @RequestParam(value = "param", defaultValue = "") String param) {
-
         Map<String, Object> allUser = userService.getListUser(pageNum, pageSize, sortBy, descending, param);
-        return new ResponseEntity(allUser, HttpStatus.OK);
+        return new ResponseEntity<>(allUser, HttpStatus.OK);
     }
 
     @GetMapping("users/maintenanceCard")
-    public ResponseEntity getTotalMaintenanceCardByRepairman(@RequestParam(defaultValue = "1", required = false) int page,
+    public ResponseEntity<Map<String, Object>> getTotalMaintenanceCardByRepairman(@RequestParam(defaultValue = "1", required = false) int page,
                                                              @RequestParam(defaultValue = "5", required = false) int size,
                                                              @RequestParam(defaultValue = "", required = false) String key) {
         HashMap<String, Object> allUser = userService.getTotalMaintenanceCardByRepairman(page, size, key);
-        return new ResponseEntity(allUser, HttpStatus.OK);
+        return new ResponseEntity<>(allUser, HttpStatus.OK);
     }
 
     @GetMapping("users/{id}")
-    public ResponseEntity<?> getInfoUser(@PathVariable("id") Long id) throws NotFoundException {
+    public ResponseEntity<UserDTO> getInfoUser(@PathVariable("id") Long id) throws NotFoundException {
         UserDTO userDTO = userService.getUserById(id);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }

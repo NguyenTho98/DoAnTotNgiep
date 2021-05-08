@@ -1,52 +1,16 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-const-assign */
-/* eslint-disable consistent-return */
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import List from '../List/List';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import '../../styles/wrapper.scss';
-import * as Icons from 'pages/maintenancecard/commons/Icons';
-import { fetchMainCard, selectedMainCardIds } from '../../../../../../actions/staff';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import List from "../List/List";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import "../../styles/wrapper.scss";
+import * as Icons from "pages/maintenancecard/commons/Icons";
 
 function Wrapper(props) {
-  // const [selectedIds, setSelectedIds] = useState([]);
-  const {
-    selectedIds, selectedMainCardIds, fetching, isEmpty
-  } = props;
+  const { staff, onChangeFilter } = props;
+  const [selectedIds, setSelectedIds] = useState([]);
   const listRef = React.useRef();
-
-//   useEffect(() => {
-//     const filterInfo = getFilterFromURL();
-//     listRef && listRef.current && listRef.current.getData(filterInfo);
-//   }, []);
-
-//   useEffect(() => {
-//     if (!fetching) {
-//         selectedMainCardIds([]);
-//     }
-//   }, [fetching]);
-
-  const getFilterFromURL = () => {
-    const { history } = props;
-    const { search } = history.location;
-    if (!search || !search.includes('filter')) return undefined;
-    try {
-      const filter = search.split('?filter=')[1].split('&hmac')[0].split('%')[0];
-      return JSON.parse(atob(filter));
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const onCheckBoxClick = (id) => {
-    selectedMainCardIds(
-      selectedIds.includes(id) ? selectedIds.filter(it => it !== id) : selectedIds.concat(id)
-    );
-  };
 
   const resetSelected = () => {
     selectedMainCardIds([]);
@@ -56,29 +20,23 @@ function Wrapper(props) {
     listRef && listRef.current.onCheckAll();
   };
 
-  const onCheckBoxListClick = (ids) => {
-    selectedMainCardIds(ids);
-  };
-
   const renderCheckInfo = () => {
     return (
       <div className="count-check">
         <span className="details">
-          Đã chọn ({selectedIds.length} đơn hàng)
+          Đã chọn ({selectedIds.length} nhân viên)
         </span>
       </div>
     );
   };
 
   const child = renderCheckInfo();
-  const ordersSize = props.itemIds && props.itemIds.length;
+  const isEmpty = staff && !staff.totalItem;
   if (isEmpty) {
     return (
       <div className="staff-list-wrapper">
         <div id="staff-filter-empty-wrapper">
-          <div id="staff-filter-empty-text">
-              Không có phiếu sửa chữa
-          </div>
+          <div id="staff-filter-empty-text">Không có nhân viên</div>
           <div id="staff-filter-empty-icon">
             <Icons.OrderCollationFilterEmpty />
           </div>
@@ -89,23 +47,11 @@ function Wrapper(props) {
   return (
     <React.Fragment>
       <div className="staff-list-wrapper">
-        <Header
-          onClick={onClick}
-          checked={selectedIds.length && selectedIds.length === ordersSize}
-          minus={selectedIds.length && selectedIds.length < ordersSize}
-          child={child}
-        />
-        <List
-          ref={listRef}
-          itemIds={props.itemIds}
-          fetchMainCard={() => props.fetchMainCard()}
-          onCheckBoxClick={onCheckBoxClick}
-          selectedIds={selectedIds}
-          onCheckBoxListClick={onCheckBoxListClick}
-          isEmpty={isEmpty}
-          fetching={fetching}
-        />
+        <Header onClick={onClick} checked={false} minus={false} child={child} />
+        <List staff={staff} />
         <Footer
+          onChangeFilter={onChangeFilter}
+          staff={staff}
           resetSelected={resetSelected}
           isEmpty={isEmpty}
         />
@@ -115,19 +61,13 @@ function Wrapper(props) {
 }
 Wrapper.defaultProps = {
   selectedIds: [],
-  selectedMainCardIds: () => {}
+  staff: [],
 };
 const mapStateToProps = (state) => {
-  const { staffs: { ui: { fetching, isEmpty }, staff: { selectedIds } } } = state;
+  const { staff } = state;
   return {
-    fetching,
-    isEmpty,
-    selectedIds,
+    staff,
   };
 };
-const mapDispatchToProps = (dispatch) => ({
-    fetchMainCard: (filter, page) => dispatch(fetchMainCard(filter, page)),
-  selectedMainCardIds: (ids) => dispatch(selectedMainCardIds(ids)),
-});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Wrapper));
+export default withRouter(connect(mapStateToProps, null)(Wrapper));

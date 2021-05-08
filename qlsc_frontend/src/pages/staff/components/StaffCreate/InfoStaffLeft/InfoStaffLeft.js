@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import "./styles.scss";
 function InfoStaffLeft(props) {
-  const {} = props;
-  useEffect(() => {}, []);
+  const { staff, onChangeStaff } = props;
   return (
     <div className="info-staff-left">
       <div className="card info-staff-left-01">
@@ -12,7 +11,7 @@ function InfoStaffLeft(props) {
           <div className="row">
             <div className="col-md-12">
               <div className="field form-group">
-                <span style={{ color: 'red', marginRight: '4px' }}>*</span>
+                <span style={{ color: "red", marginRight: "4px" }}>*</span>
                 <label className="control-label">Tên nhân viên</label>
                 <div className="controls">
                   <input
@@ -20,63 +19,72 @@ function InfoStaffLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="name"
-                    placeholder="Nhập tên sản phẩm"
+                    value={staff.name || ""}
+                    onChange={(e) => onChangeStaff("name", e.target.value)}
+                    placeholder="Nhập tên nhân viên"
                   />
                 </div>
               </div>
             </div>
           </div>
-        <div className="row">
+          <div className="row">
             <div className="col-md-6">
               <div className="field form-group">
-                <span style={{ color: 'red', marginRight: '4px' }}>*</span>
                 <label className="control-label">Mã nhân viên</label>
                 <div className="controls">
                   <input
                     className="input"
                     data-tip=""
                     data-for="_extends_popup_error"
-                    name="name"
-                    placeholder="Nhập tên sản phẩm"
+                    name="code"
+                    value={staff.code || ""}
+                    onChange={(e) => onChangeStaff("code", e.target.value)}
+                    placeholder="Nhập mã nhân viên"
                   />
                 </div>
               </div>
             </div>
             <div className="col-md-6">
-            <div className="field form-group">
-                <span style={{ color: 'red', marginRight: '4px' }}>*</span>
+              <div className="field form-group">
+                <span style={{ color: "red", marginRight: "4px" }}>*</span>
                 <label className="control-label">Số điện thoại</label>
                 <div className="controls">
                   <input
                     className="input"
                     data-tip=""
                     data-for="_extends_popup_error"
-                    name="name"
-                    placeholder="Nhập tên sản phẩm"
+                    name="phone"
+                    value={staff.phone || ""}
+                    onChange={(e) => onChangeCustomer("phone", e.target.value)}
+                    placeholder="Nhập số điện thoại"
                   />
                 </div>
               </div>
             </div>
           </div>
-        <div className="row">
+          <div className="row">
             <div className="col-md-12">
               <div className="field form-group">
-                <span style={{ color: 'red', marginRight: '4px' }}>*</span>
+                <span style={{ color: "red", marginRight: "4px" }}>*</span>
                 <label className="control-label">Địa chỉ</label>
                 <div className="controls">
                   <input
                     className="input"
                     data-tip=""
                     data-for="_extends_popup_error"
-                    name="name"
-                    placeholder="Nhập tên sản phẩm"
+                    name="address"
+                    value={staff.address || ""}
+                    onChange={(e) =>
+                      onChangeCustomer("address", e.target.value)
+                    }
+                    placeholder="Nhập địa chỉ"
                   />
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 }

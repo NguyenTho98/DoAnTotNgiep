@@ -7,6 +7,9 @@ const initState = {
   totalPage: 0,
   product: {},
   service: {},
+  //state giao điện
+  fetching: false,
+  isEmpty: false,
 };
 
 export default (state = initState, action) => {
@@ -28,6 +31,16 @@ export default (state = initState, action) => {
       return {
         ...state,
         service: action.service,
+      };
+    case actionTypes.PRODUCT_FETCHING:
+      return {
+        ...state,
+        fetching: action.bool,
+      };
+    case actionTypes.PRODUCT_IS_EMPTY:
+      return {
+        ...state,
+        isEmpty: action.bool,
       };
     default:
       return state;

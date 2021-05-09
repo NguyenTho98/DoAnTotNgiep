@@ -22,7 +22,6 @@ const List = forwardRef((props, ref) => {
         onCheckBoxListClick([]);
       }
     },
-
   }));
 
   if (isEmpty) return '';

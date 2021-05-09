@@ -5,7 +5,7 @@ import List from "../List/List";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "../../styles/wrapper.scss";
-import * as Icons from "pages/maintenancecard/commons/Icons";
+import * as Icons from "pages/staff/commons/Icons";
 
 function Wrapper(props) {
   const { staff, onChangeFilter } = props;
@@ -13,12 +13,20 @@ function Wrapper(props) {
   const [selectedIds, setSelectedIds] = useState([]);
   const listRef = React.useRef();
 
+  const onClick = () => {
+    listRef && listRef.current.onCheckAll();
+  };
+
+  const onCheckBoxClick = (id) => {
+    setSelectedIds(selectedIds.includes(id) ? selectedIds.filter(it => it !== id) : selectedIds.concat(id));
+  };
+
   const resetSelected = () => {
     setSelectedIds([]);
   };
 
-  const onClick = () => {
-    listRef && listRef.current.onCheckAll();
+  const onCheckBoxListClick = (ids) => {
+    setSelectedIds(ids);
   };
 
   const renderCheckInfo = () => {
@@ -32,7 +40,8 @@ function Wrapper(props) {
   };
 
   const child = renderCheckInfo();
-  const isEmpty = staff && !staff.totalItem;
+  const isEmpty = staff.isEmpty
+  const fetching = staff.fetching
   if (isEmpty) {
     return (
       <div className="staff-list-wrapper">
@@ -49,13 +58,27 @@ function Wrapper(props) {
   return (
     <React.Fragment>
       <div className="staff-list-wrapper">
-        <Header onClick={onClick} checked={false} minus={false} child={child} />
-        <List staffs={staffs} />
+        <Header
+          onClick={onClick}
+          checked={selectedIds.length && selectedIds.length === staffs.length}
+          minus={selectedIds.length && selectedIds.length < staffs.length}
+          child={child}
+        />
+        <List
+          staffs={staffs}
+          ref={listRef}
+          fetching={fetching}
+          isEmpty={isEmpty}
+          onCheckBoxClick={onCheckBoxClick}
+          selectedIds={selectedIds}
+          onCheckBoxListClick={onCheckBoxListClick}
+        />
         <Footer
           onChangeFilter={onChangeFilter}
           staff={staff}
           resetSelected={resetSelected}
           isEmpty={isEmpty}
+          fetching={fetching}
         />
       </div>
     </React.Fragment>

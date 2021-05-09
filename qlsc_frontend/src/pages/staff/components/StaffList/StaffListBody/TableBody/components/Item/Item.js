@@ -11,7 +11,7 @@ function Item(props) {
   const onCheck = (e) => {
     e.stopPropagation();
     const { onCheckBoxClick } = props;
-    onCheckBoxClick(id);
+    onCheckBoxClick(staff.id);
   };
 
   const handleTextRole = () => {

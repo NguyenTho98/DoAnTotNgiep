@@ -5,7 +5,10 @@ const initState = {
   staffs: [],
   totalItem: 0,
   totalPage: 0,
-  staff: {}
+  staff: {},
+  //state giao điện
+  fetching: false,
+  isEmpty: false,
 };
 
 export default (state = initState, action) => {
@@ -23,6 +26,16 @@ export default (state = initState, action) => {
         ...state,
         staff: action.staff,
       }
+    case actionTypes.STAFF_FETCHING:
+      return {
+        ...state,
+        fetching: action.bool,
+      };
+    case actionTypes.STAFF_IS_EMPTY:
+      return {
+        ...state,
+        isEmpty: action.bool,
+      };
     default:
       return state;
   }

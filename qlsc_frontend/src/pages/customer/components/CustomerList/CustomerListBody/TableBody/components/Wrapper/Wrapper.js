@@ -5,7 +5,7 @@ import List from "../List/List";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "../../styles/wrapper.scss";
-import * as Icons from "pages/maintenancecard/commons/Icons";
+import * as Icons from "pages/customer/commons/Icons";
 
 function Wrapper(props) {
   const { customer, onGetCustomer, onChangeFilter } = props;
@@ -59,7 +59,8 @@ function Wrapper(props) {
   return (
     <React.Fragment>
       <div className="delivery-collations-list-wrapper">
-        <Header onClick={onClick}
+        <Header
+          onClick={onClick}
           checked={selectedIds.length && selectedIds.length === customers.length}
           minus={selectedIds.length && selectedIds.length < customers.length}
           child={child} />

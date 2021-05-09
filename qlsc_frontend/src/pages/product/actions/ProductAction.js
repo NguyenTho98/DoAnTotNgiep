@@ -2,17 +2,33 @@ import * as actionTypes from "actions/actionTypes";
 import { API_PRODUCT } from "constants/api";
 import { fetch } from "utils/fetchMiddleware";
 
-export const getProductService = (search = '', option = {}) => (dispatch, getState) => {
-  const { productServices, currentPage, totalItem, totalPage } = dispatch(getFilterProductService(search, option));
-  dispatch(getProductServices(productServices, currentPage, totalItem, totalPage));
-};
-export const getFilterProductService = (search = '', option = {}) => (dispatch, getState) => {
-  const filter = processOption(search, option);
-  return dispatch(fetch(`${API_PRODUCT}/products${filter}`, {
-    method: 'GET',
-  }))
+export const getProductService = (search = "", option = {}) => (
+  dispatch,
+  getState
+) => {
+  dispatch(getFilterProductService(search, option))
     .then((json) => {
-      return json
+      const { productServices, currentPage, totalItem, totalPage } = json;
+      dispatch(
+        getProductServices(productServices, currentPage, totalItem, totalPage)
+      );
+    })
+    .catch((e) => {
+      console.log("Có lỗi xảy ra khi lấy danh sách sản phẩm");
+    });
+};
+export const getFilterProductService = (search = "", option = {}) => (
+  dispatch,
+  getState
+) => {
+  const filter = processOption(search, option);
+  return dispatch(
+    fetch(`${API_PRODUCT}/products${filter}`, {
+      method: "GET",
+    })
+  )
+    .then((json) => {
+      return json;
     })
     .catch((e) => {
       return e;
@@ -35,7 +51,10 @@ export const getProductServiceById = (id) => (dispatch, getState) => {
     });
 };
 
-export const updateProductService = (id, productSerice = {}) => (dispatch, getState) => {
+export const updateProductService = (id, productSerice = {}) => (
+  dispatch,
+  getState
+) => {
   const endpoint = `${API_PRODUCT}/products/${id}`;
   return dispatch(
     fetch(endpoint, {
@@ -52,7 +71,10 @@ export const updateProductService = (id, productSerice = {}) => (dispatch, getSt
     });
 };
 
-export const saveProductService = (productSerice = {}) => (dispatch, getState) => {
+export const saveProductService = (productSerice = {}) => (
+  dispatch,
+  getState
+) => {
   const endpoint = `${API_PRODUCT}/products`;
   return dispatch(
     fetch(endpoint, {
@@ -70,15 +92,15 @@ export const saveProductService = (productSerice = {}) => (dispatch, getState) =
 };
 
 const processOption = (search, option) => {
-  let filter = '?';
+  let filter = "?";
   if (search) {
-    filter += `search=${search}`
+    filter += `search=${search}`;
   }
   if (option && option.page) {
     filter += `&page=${option.page}`;
   }
   return filter;
-}
+};
 
 export const getProduct = (product) => ({
   type: actionTypes.RECEIVE_PRODUCT,
@@ -86,13 +108,19 @@ export const getProduct = (product) => ({
 });
 
 export const getService = (service) => ({
-    type: actionTypes.RECEIVE_SERVICE,
-    service,
-  });
+  type: actionTypes.RECEIVE_SERVICE,
+  service,
+});
 
 export const getProductServices = (
-    productServices, currentPage, totalItem, totalPage
+  productServices,
+  currentPage,
+  totalItem,
+  totalPage
 ) => ({
   type: actionTypes.RECEIVE_PRODUCT_SERVICE,
-  productServices, currentPage, totalItem, totalPage
+  productServices,
+  currentPage,
+  totalItem,
+  totalPage,
 });

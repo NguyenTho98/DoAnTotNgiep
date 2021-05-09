@@ -14,7 +14,7 @@ export default (state = initState, action) => {
     case actionTypes.RECEIVE_PRODUCT_SERVICE:
       return {
         ...state,
-        productSerives: action.users,
+        productSerives: action.productServices,
         currentPage: action.currentPage,
         totalItem: action.totalItem,
         totalPage: action.totalPage,

@@ -5,11 +5,13 @@ import FilterProduct from "./components/FilterProduct";
 import FilterProductModal from "./components/FilterProductModal";
 
 function TableHeader(props) {
-  const { showFilter } = props;
+  const { search, handleInputOnchange } = props;
   return (
     <div id="delivery-collations-table-header" style={{ position: "relative" }}>
-      <FilterProduct />
-      {showFilter ? <FilterProductModal /> : null}
+      <FilterProduct
+        search={search}
+        handleInputOnchange={handleInputOnchange}
+      />
     </div>
   );
 }

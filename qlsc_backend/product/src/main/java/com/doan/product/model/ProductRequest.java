@@ -8,7 +8,7 @@ import java.util.List;
 @Setter
 public class ProductRequest {
 
-    private List<String> image;
+    private List<String> images;
     private String name;
     private int quantity;
     private String unit;

@@ -1,38 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import List from '../List/List';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import '../../styles/wrapper.scss';
-import * as Icons from 'pages/maintenancecard/commons/Icons';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import List from "../List/List";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import "../../styles/wrapper.scss";
+import * as Icons from "pages/maintenancecard/commons/Icons";
 
 function Wrapper(props) {
-  // const [selectedIds, setSelectedIds] = useState([]);
-  const {
-    selectedIds, selectedMainCardIds, fetching, isEmpty
-  } = props;
+  const { product, onChangeFilter } = props;
+  const [selectedIds, setSelectedIds] = useState([]);
   const listRef = React.useRef();
 
-//   useEffect(() => {
-//     const filterInfo = getFilterFromURL();
-//     listRef && listRef.current && listRef.current.getData(filterInfo);
-//   }, []);
-
-//   useEffect(() => {
-//     if (!fetching) {
-//         selectedMainCardIds([]);
-//     }
-//   }, [fetching]);
-
   const onCheckBoxClick = (id) => {
-    selectedMainCardIds(
-      selectedIds.includes(id) ? selectedIds.filter(it => it !== id) : selectedIds.concat(id)
-    );
+    setSelectedIds([]);
   };
 
   const resetSelected = () => {
-    selectedMainCardIds([]);
+    setSelectedIds([]);
   };
 
   const onClick = () => {
@@ -40,28 +25,26 @@ function Wrapper(props) {
   };
 
   const onCheckBoxListClick = (ids) => {
-    selectedMainCardIds(ids);
+    setSelectedIds([]);
   };
 
   const renderCheckInfo = () => {
     return (
       <div className="count-check">
         <span className="details">
-          Đã chọn ({selectedIds.length} đơn hàng)
+          Đã chọn ({selectedIds.length} sản phẩm dịch vụ)
         </span>
       </div>
     );
   };
 
   const child = renderCheckInfo();
-  const ordersSize = props.itemIds && props.itemIds.length;
+  const isEmpty = product && !product.totalItem;
   if (isEmpty) {
     return (
       <div className="product-list-wrapper">
         <div id="product-filter-empty-wrapper">
-          <div id="product-filter-empty-text">
-              Không có phiếu sửa chữa
-          </div>
+          <div id="product-filter-empty-text">Không có sản phẩm dịch vụ</div>
           <div id="product-filter-empty-icon">
             <Icons.OrderCollationFilterEmpty />
           </div>
@@ -72,23 +55,11 @@ function Wrapper(props) {
   return (
     <React.Fragment>
       <div className="product-list-wrapper">
-        <Header
-          onClick={onClick}
-          checked={selectedIds.length && selectedIds.length === ordersSize}
-          minus={selectedIds.length && selectedIds.length < ordersSize}
-          child={child}
-        />
-        <List
-          ref={listRef}
-          itemIds={props.itemIds}
-          fetchMainCard={() => props.fetchMainCard()}
-          onCheckBoxClick={onCheckBoxClick}
-          selectedIds={selectedIds}
-          onCheckBoxListClick={onCheckBoxListClick}
-          isEmpty={isEmpty}
-          fetching={fetching}
-        />
+        <Header onClick={onClick} checked={false} minus={false} child={child} />
+        <List product={product} />
         <Footer
+          onChangeFilter={onChangeFilter}
+          product={product}
           resetSelected={resetSelected}
           isEmpty={isEmpty}
         />
@@ -98,13 +69,14 @@ function Wrapper(props) {
 }
 Wrapper.defaultProps = {
   selectedIds: [],
-  selectedMainCardIds: () => {}
+  product: {},
 };
-const mapStateToProps = (state) => {
-  //
-};
-const mapDispatchToProps = (dispatch) => ({
-  //
-});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Wrapper));
+const mapStateToProps = (state) => {
+  const { product } = state;
+  return {
+    product,
+  };
+};
+
+export default withRouter(connect(mapStateToProps, null)(Wrapper));

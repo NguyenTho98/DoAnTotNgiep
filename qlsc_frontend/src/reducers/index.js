@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import products from './product/product';
+import product from './product/product';
 import globalUI from './globalUI';
 import modal from './../components/modal/modalReducer';
 import customer from './customer/customer';
@@ -10,7 +10,7 @@ import staff from './staff/staff';
 
 export default combineReducers({
   auth,
-  products,
+  product,
   globalUI,
   modal,
   customer,

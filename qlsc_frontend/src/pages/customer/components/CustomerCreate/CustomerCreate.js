@@ -54,6 +54,7 @@ function CustomerCreate(props) {
       }
     });
   };
+  
   const cancel = () => {
     setUser(initialState);
     pushstate(props.history, "/customer");

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
-import debounce from "utils/debounce"
+import debounce from "utils/debounce";
 import { getProductService } from "../../actions/ProductAction";
 import ProductListBody from "./ProductListBody/ProductListBody";
 import ProductListHeader from "./ProductHeader/ProductListHeader";
@@ -47,7 +47,11 @@ function ProductList(props) {
   return (
     <div className="product-screen-wrapper">
       <ProductListHeader />
-      <ProductListBody />
+      <ProductListBody
+        search={search}
+        handleInputOnchange={handleInputOnchange}
+        onChangeFilter={onChangeFilter}
+      />
     </div>
   );
 }

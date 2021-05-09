@@ -158,7 +158,7 @@ public class ProductServiceImpl implements ProductService {
         } else {
             product.setCode(createNewCode());
         }
-        product.setImages(productReq.getImage());
+        product.setImages(productReq.getImages());
         product.setName(productReq.getName());
         product.setQuantity(productReq.getQuantity());
         product.setUnit(productReq.getUnit());
@@ -201,7 +201,7 @@ public class ProductServiceImpl implements ProductService {
         if (StringUtils.isNotBlank(productReq.getCode())) {
             product.setCode(productReq.getCode());
         }
-        product.setImages(productReq.getImage());
+        product.setImages(productReq.getImages());
         product.setName(productReq.getName());
         product.setQuantity(productReq.getQuantity());
         product.setUnit(productReq.getUnit());

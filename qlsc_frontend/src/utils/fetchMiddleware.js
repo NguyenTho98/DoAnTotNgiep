@@ -31,10 +31,9 @@ const wrapAccessToken = (url, params, token, store) => (
   params.headers["Origin"] = API.PORT;
   params.headers["Access-Control-Allow-Origin"] = "*";
   params.headers["Access-Control-Allow-Methods"] = "HEAD, GET, POST, PUT, PATCH, DELETE";
-  if (params.isContentType !== false) {
+  if (!params.headers["Content-Type"]) {
     params.headers["Content-Type"] = "application/json";
   }
-
   return fetchImplementation(url, params)
     .then((res) => {
       const body = res.json();

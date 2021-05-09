@@ -7,8 +7,7 @@ import '../../styles/header.scss';
 import { connect } from 'react-redux';
 
 function Header(props) {
-  const history = useHistory();
-  const onClickCreateMainCard = () => {
+  const deleteCustomer = () => {
     alert("xin cahfo")
   };
 
@@ -52,7 +51,7 @@ function Header(props) {
             Lựa chọn thao tác
           </button>
           <div className="dropdown-menu bulk-dd-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" onClick={() => onClickCreateMainCard()}>Xoá</a>
+            <a className="dropdown-item" onClick={() => deleteCustomer()}>Xoá</a>
           </div>
         </div>
       </React.Fragment>

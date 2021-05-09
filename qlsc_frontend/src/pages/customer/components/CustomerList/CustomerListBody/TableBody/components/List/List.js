@@ -4,8 +4,9 @@ import '../../styles/list.scss';
 import Item from '../Item/Item';
 import Guard from 'components/Guard/Guard'
 const List = forwardRef((props, ) => {
-  const { customer, fetching } = props;
+  const { customer, fetching, isEmpty} = props;
   const { customers } = customer;
+  if (isEmpty) return '';
   if (fetching) {
     return (
       <Guard />

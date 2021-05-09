@@ -5,7 +5,6 @@ import { toastError } from "../../../utils/toast";
 
 export const getListCustomer = (search = '', option = {}) => (dispatch, getState) => {
   dispatch(updateCustomerFetching(true))
-  dispatch(updateCustomerIsEmpty(false))
   dispatch(getFilterCustomers(search, option)).then((json)=>{
     const { customers, currentPage, totalItems, totalPages } = json;
     if(customers.length===0){
@@ -15,6 +14,7 @@ export const getListCustomer = (search = '', option = {}) => (dispatch, getState
     }else {
       dispatch(getCustomers(customers, currentPage, totalItems, totalPages));
       dispatch(updateCustomerFetching(false))
+      dispatch(updateCustomerIsEmpty(false))
     }
 
   }).catch((e) =>{

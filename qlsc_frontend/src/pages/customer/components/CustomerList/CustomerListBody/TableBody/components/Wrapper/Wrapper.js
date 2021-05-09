@@ -52,7 +52,7 @@ function Wrapper(props) {
     <React.Fragment>
       <div className="delivery-collations-list-wrapper">
         <Header onClick={onClick} checked={false} minus={false} child={child} />
-        <List customer={customer} fetching={fetching} />
+        <List customer={customer} fetching={fetching}  isEmpty={isEmpty}/>
         <Footer
           onChangeFilter={onChangeFilter}
           customer={customer}

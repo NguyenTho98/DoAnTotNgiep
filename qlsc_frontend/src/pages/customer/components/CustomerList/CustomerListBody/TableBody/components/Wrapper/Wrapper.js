@@ -32,7 +32,8 @@ function Wrapper(props) {
   };
 
   const child = renderCheckInfo();
-  const isEmpty = customer && !customer.totalItems;
+  const isEmpty = customer.isEmpty
+  const fetching = customer.fetching
   if (isEmpty) {
     return (
       <div className="delivery-collations-list-wrapper">
@@ -51,13 +52,14 @@ function Wrapper(props) {
     <React.Fragment>
       <div className="delivery-collations-list-wrapper">
         <Header onClick={onClick} checked={false} minus={false} child={child} />
-        <List customer={customer} />
+        <List customer={customer} fetching={fetching} />
         <Footer
           onChangeFilter={onChangeFilter}
           customer={customer}
           resetSelected={resetSelected}
           isEmpty={isEmpty}
           onGetCustomer={onGetCustomer}
+          fetching={fetching}
         />
       </div>
     </React.Fragment>

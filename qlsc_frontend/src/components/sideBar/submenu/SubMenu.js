@@ -42,7 +42,7 @@ function SubMenu (props) {
                   <span>{ !showMenu ? item.title : ''}</span>
                 </Link>
                 {
-                  item.submenu.length > 0 && !showMenu && init.menu === item.id || (url.includes(item.url) && check)  ? (
+                  item.submenu.length > 0 && !showMenu && init.menu === item.id || (url.includes(item.url) && check) && !showMenu ? (
                     <ul className="sub-menu">
                       {
                         item.submenu.map((a, index) => {

@@ -19,7 +19,7 @@ function CustomerDetail(props) {
     <div className="customer-screen-wrapper-detail">
         <TitleAndAction />
         <CustomerDetailInfo customer={customer} />
-        <HistoryMainCard />
+        {/* <HistoryMainCard /> */}
     </div>
   );
 }

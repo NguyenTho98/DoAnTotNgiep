@@ -10,22 +10,30 @@ import * as Icons from "pages/maintenancecard/commons/Icons";
 function Wrapper(props) {
   const { customer, onGetCustomer, onChangeFilter } = props;
   const [selectedIds, setSelectedIds] = useState([]);
-
+  const { customers } = customer
   const listRef = React.useRef();
-
-  const resetSelected = () => {
-    selectedMainCardIds([]);
-  };
 
   const onClick = () => {
     listRef && listRef.current.onCheckAll();
+  };
+
+  const onCheckBoxClick = (id) => {
+    setSelectedIds(selectedIds.includes(id) ? selectedIds.filter(it => it !== id) : selectedIds.concat(id));
+  };
+
+  const resetSelected = () => {
+    setSelectedIds([]);
+  };
+
+  const onCheckBoxListClick = (ids) => {
+    setSelectedIds(ids);
   };
 
   const renderCheckInfo = () => {
     return (
       <div className="count-check">
         <span className="details">
-          Đã chọn ({selectedIds.length} khách hàng)
+          Đã chọn ({selectedIds.length} đơn hàng)
         </span>
       </div>
     );
@@ -51,8 +59,19 @@ function Wrapper(props) {
   return (
     <React.Fragment>
       <div className="delivery-collations-list-wrapper">
-        <Header onClick={onClick} checked={false} minus={false} child={child} />
-        <List customer={customer} fetching={fetching}  isEmpty={isEmpty}/>
+        <Header onClick={onClick}
+          checked={selectedIds.length && selectedIds.length === customers.length}
+          minus={selectedIds.length && selectedIds.length < customers.length}
+          child={child} />
+        <List
+          ref={listRef}
+          customer={customer}
+          fetching={fetching}
+          isEmpty={isEmpty}
+          onCheckBoxClick={onCheckBoxClick}
+          selectedIds={selectedIds}
+          onCheckBoxListClick={onCheckBoxListClick}
+        />
         <Footer
           onChangeFilter={onChangeFilter}
           customer={customer}

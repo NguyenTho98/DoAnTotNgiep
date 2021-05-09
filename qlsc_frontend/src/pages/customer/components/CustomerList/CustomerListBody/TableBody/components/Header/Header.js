@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 
 function Header(props) {
   const history = useHistory();
-  const { filterInfo } = props;
   const onClickCreateMainCard = () => {
     alert("xin cahfo")
   };
@@ -48,6 +47,7 @@ function Header(props) {
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
+            style={{ borderRadius: '0px 4px 4px 0px' }}
           >
             Lựa chọn thao tác
           </button>
@@ -100,11 +100,5 @@ function Header(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => {
-  const { mainCards: { filterInfo, mainCard: { checkCreate } } } = state;
-  return {
-    checkCreate,
-    filterInfo,
-  };
-};
-export default connect(mapStateToProps, null)(Header);
+;
+export default connect(null, null)(Header);

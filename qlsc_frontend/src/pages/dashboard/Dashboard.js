@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
@@ -10,6 +9,7 @@ import {
 import SideBar from "../../components/sideBar/SideBar";
 import TopBar from "../../components/topBar/TopBar";
 import CustomerCreate from "../customer/components/CustomerCreate/CustomerCreate";
+import CustomerUpdate from "../customer/components/CustomerUpdate/CustomerUpdate";
 import CustomerDetail from "../customer/components/CustomerDetail/CustomerDetail";
 import CustomerList from "../customer/components/CustomerList/CustomerList";
 import MainCardCreate from "../maintenancecard/components/MainCardCreate/MainCardCreate";
@@ -19,11 +19,11 @@ import ProductList from "../product/components/ProductList/ProductList";
 import ReportMain from "../report/components/ReportMain";
 import StaffCreate from "../staff/components/StaffCreate/StaffCreate";
 import StaffDetail from "../staff/components/StaffDetail/StaffDetail";
+import StaffUpdate from "../staff/components/StaffUpdate/StaffUpdate";
 import StaffList from "../staff/components/StaffList/StaffList";
 import "./styles.scss";
 function Dashboard(props) {
   const { showMenu } = props;
-  console.log("showMemu", showMenu);
   useEffect(() => {}, []);
   return (
     <React.Fragment>
@@ -33,10 +33,10 @@ function Dashboard(props) {
         <SideBar />
         <TopBar />
         <Switch>
-          <Route path="/customers" component={CustomerList} />
+          <Route exact path="/customers" component={CustomerList} />
           <Route exact path="/customer/create" component={CustomerCreate} />
           <Route exact path="/customer/detail/:id([1-9]+[0-9]*)" component={CustomerDetail} />
-          <Route exact path="/customer/edit/:id([1-9]+[0-9]*)" component={CustomerCreate} />
+          <Route exact path="/customer/update/:id" component={CustomerUpdate} />
           <Route exact path="/maintenance-card/create" component={MainCardCreate} />
           <Route exact path="/maintenance-cards" component={MainCardList} />
           <Route exact path="/staffs" component={StaffList} />
@@ -45,6 +45,7 @@ function Dashboard(props) {
           <Route exact path="/report" component={ReportMain} />
           <Route exact path="/staff/create" component={StaffCreate} />
           <Route exact path="/staff/detail/:id([1-9]+[0-9]*)" component={StaffDetail} />
+          <Route exact path="/staff/update/:id([1-9]+[0-9]*)" component={StaffUpdate} />
         </Switch>
       </div>
     </React.Fragment>

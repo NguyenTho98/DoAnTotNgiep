@@ -1,11 +1,12 @@
-.info-product-left{
-    .card{
+.info-product-left {
+    .card {
         padding: 15px;
         background: #ffffff;
         border: 1px solid #d3d3d3;
         box-sizing: border-box;
         border-radius: 4px;
         padding-bottom: 0px;
+
         .title {
             font-size: 20px;
             font-weight: 400;
@@ -16,9 +17,11 @@
             padding-left: 16px;
             padding-bottom: 17px;
         }
+
         .content {
             padding: 1rem;
-            textarea{
+
+            textarea {
                 height: 100px;
                 width: 100%;
                 border: 1px solid #c4cdd5;
@@ -26,11 +29,13 @@
                 outline-color: #0088ff;
                 border-radius: 3px !important;
             }
-            .control-label{
-                
+
+            .control-label {
+
                 margin-bottom: 10px;
             }
-            input{
+
+            input {
                 display: inline-block;
                 // vertical-align: baseline;
                 width: auto;
@@ -49,7 +54,7 @@
                 width: 100%;
                 font-size: 13px;
                 font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI,
-                Roboto, Helvetica Neue, sans-serif;
+                    Roboto, Helvetica Neue, sans-serif;
                 border-style: inset;
                 border: 1px solid #c4cdd5;
                 border-radius: 3px !important;
@@ -57,35 +62,59 @@
             }
         }
     }
-    .info-product-left-02{
+
+    .info-product-left-02 {
         margin-top: 20px;
     }
 }
-.info-product-right{
-    .text-image{
+
+.info-product-right {
+    width: 250px;
+    min-height: 285px;
+
+    .text-image {
         font-weight: 600;
         margin-bottom: 20px;
         cursor: pointer;
     }
-    .content-image{
+
+    .preview-image {
+        padding-top: 10px;
+        .image:first-child {
+            width: 100px;
+            height: 100px;
+        }
+        .image {
+            width: 85px;
+            height: 85px;
+            padding: 5px;
+        }
+    }
+
+    .content-image {
         width: 140px;
         height: 110px;
         margin: auto;
         margin-top: 30px;
         margin-bottom: 20px;
         cursor: pointer;
-        svg{
+
+        svg {
             width: 100%;
             height: 100%;
         }
     }
-    .card{
+
+    .card {
         padding: 15px;
         background: #ffffff;
         border: 1px solid #d3d3d3;
         box-sizing: border-box;
         border-radius: 4px;
         padding-bottom: 0px;
+        width: 250px;
+        min-height: 285px;
+
         .title {
             font-size: 20px;
             font-weight: 400;
@@ -96,12 +125,15 @@
             padding-left: 16px;
             padding-bottom: 17px;
         }
+
         .content {
             padding: 1rem;
-            .control-label{
+
+            .control-label {
                 margin-bottom: 10px;
-                
+
             }
+
             textarea {
                 font-size: 14px;
                 width: 100%;

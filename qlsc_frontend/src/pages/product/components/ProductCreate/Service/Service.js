@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import "./styles.scss";
 function Service(props) {
-  const {} = props;
+  const { product, onchangeValue } = props;
   useEffect(() => {}, []);
   return (
     <div className="col-md-12">
@@ -21,7 +21,9 @@ function Service(props) {
                       data-tip=""
                       data-for="_extends_popup_error"
                       name="name"
-                      placeholder="Nhập tên sản phẩm"
+                      value={product.name || ""}
+                      onChange={(e) => onchangeValue("name", e.target.value)}
+                      placeholder="Nhập tên dịch vụ"
                     />
                   </div>
                 </div>
@@ -35,8 +37,12 @@ function Service(props) {
                       className="input"
                       data-tip=""
                       data-for="_extends_popup_error"
-                      name="name"
-                      placeholder="Nhập tên sản phẩm"
+                      name="pricePerUnit"
+                      value={product.pricePerUnit || ""}
+                      onChange={(e) =>
+                        onchangeValue("pricePerUnit", e.target.value)
+                      }
+                      placeholder="Nhập giá sản phẩm"
                     />
                   </div>
                 </div>
@@ -50,8 +56,10 @@ function Service(props) {
                       className="input"
                       data-tip=""
                       data-for="_extends_popup_error"
-                      name="name"
-                      placeholder="Nhập tên sản phẩm"
+                      name="code"
+                      value={product.code || ""}
+                      onChange={(e) => onchangeValue("code", e.target.value)}
+                      placeholder="Nhập mã dịch vụ"
                     />
                   </div>
                 </div>
@@ -63,7 +71,14 @@ function Service(props) {
                 <div className="field form-group">
                   <label className="control-label">Mô tả</label>
                   <div className="controls">
-                    <textarea name="description" placeholder="Mô tả" />
+                    <textarea
+                      name="description"
+                      placeholder="Nhập mô tả"
+                      value={product.description || ""}
+                      onChange={(e) =>
+                        onchangeValue("description", e.target.value)
+                      }
+                    />
                   </div>
                 </div>
               </div>

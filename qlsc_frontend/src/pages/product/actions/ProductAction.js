@@ -1,6 +1,7 @@
 import * as actionTypes from "actions/actionTypes";
-import { API_PRODUCT } from "constants/api";
+import { API_PRODUCT, API_IMAGE } from "constants/api";
 import { fetch } from "utils/fetchMiddleware";
+import callApi from "utils/callApi";
 
 export const getProductService = (search = "", option = {}) => (
   dispatch,
@@ -17,6 +18,7 @@ export const getProductService = (search = "", option = {}) => (
       console.log("Có lỗi xảy ra khi lấy danh sách sản phẩm");
     });
 };
+
 export const getFilterProductService = (search = "", option = {}) => (
   dispatch,
   getState
@@ -31,6 +33,27 @@ export const getFilterProductService = (search = "", option = {}) => (
       return json;
     })
     .catch((e) => {
+      return e;
+    });
+};
+
+export const upLoadImage = (file) => (dispatch, getState) => {
+  let formData = new FormData();
+  formData.append("file", file);
+  const endpoint = `${API_IMAGE}/uploadFile`;
+  const options = {
+    method: "POST",
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  return callApi(endpoint, options)
+    .then((json) => {
+      return json;
+    })
+    .catch((e) => {
+      console.error(e);
       return e;
     });
 };

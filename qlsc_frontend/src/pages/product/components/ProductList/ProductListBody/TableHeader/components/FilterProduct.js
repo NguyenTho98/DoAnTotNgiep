@@ -3,12 +3,7 @@ import { connect } from "react-redux";
 import "../styles/filterProduct.scss";
 import * as Icons from "pages/maintenancecard/commons/Icons";
 function FilterProduct(props) {
-  const {} = props;
-  const [filterText, setFilterText] = useState("");
-
-  useEffect(() => {
-    setFilterText(filterText);
-  }, [filterText]);
+  const { handleInputOnchange, search } = props;
 
   return (
     <div id="filter-product-wrapper">
@@ -18,10 +13,6 @@ function FilterProduct(props) {
         </ul>
       </div>
       <div id="filter-product-option-wrapper">
-        <button type="button" id="filter-product-button">
-          Lọc phiếu sửa chữa
-          <Icons.ArrowDown />
-        </button>
         <div id="filter-product-search">
           <div id="filter-product-search-icon">
             <Icons.Search />
@@ -29,8 +20,8 @@ function FilterProduct(props) {
           <input
             id="filter-product-search-input"
             placeholder="Tìm kiếm phiếu sữa chữa theo mã phiếu sữa chữa"
-            value={filterText}
-            onChange={(e) => onChangeText(e)}
+            value={search}
+            onChange={(e) => handleInputOnchange(e)}
           />
         </div>
       </div>

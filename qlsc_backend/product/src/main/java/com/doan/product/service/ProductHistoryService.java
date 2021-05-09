@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ProductHistoryService {
 
-    public Page<ProductHistoryDTO> getAll(int page, int size);
+    Page<ProductHistoryDTO> getAll(int page, int size);
 
 }

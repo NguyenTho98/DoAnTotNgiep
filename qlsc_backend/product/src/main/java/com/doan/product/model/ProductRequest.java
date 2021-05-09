@@ -1,17 +1,14 @@
 package com.doan.product.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Optional;
+import java.util.List;
 
 @Getter
 @Setter
 public class ProductRequest {
 
-    private String image;
+    private List<String> image;
     private String name;
     private int quantity;
     private String unit;

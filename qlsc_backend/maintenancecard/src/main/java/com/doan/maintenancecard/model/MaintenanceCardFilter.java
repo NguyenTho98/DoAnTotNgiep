@@ -22,7 +22,6 @@ public class MaintenanceCardFilter {
     private byte[] payStatus;
     private byte[] workStatus;
 
-
     public MaintenanceCardFilter() {
         this.size = 10;
         this.page = 1;

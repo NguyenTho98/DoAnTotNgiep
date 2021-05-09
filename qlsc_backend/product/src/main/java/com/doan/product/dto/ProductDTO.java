@@ -1,6 +1,8 @@
 package com.doan.product.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +12,7 @@ public class ProductDTO extends BaseDTO {
 
     private String name;
     private String code;
-    private String image;
+    private List<String> image;
     private int quantity;
     private String unit;
     private BigDecimal pricePerUnit;

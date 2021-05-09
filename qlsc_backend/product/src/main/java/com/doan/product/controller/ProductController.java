@@ -4,20 +4,20 @@ import com.doan.product.exception.NotANumberException;
 import com.doan.product.exception.productException.ProductNotFoundException;
 import com.doan.product.model.ProductRequest;
 import com.doan.product.model.ProductResponse;
+import com.doan.product.model.SearchProduct;
 import com.doan.product.service.ProductService;
 import com.doan.product.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("admin")
@@ -27,33 +27,12 @@ public class ProductController {
 
     private final ProductService productService;
 
+    //Type 1: accessories
+    //Type 2: services
     @GetMapping("products")
-    public ResponseEntity<Page<ProductDTO>> getAll(@RequestParam(value = "search", required = false) String search, Pageable pageable) {
-        Page<ProductDTO> productDTOs = productService.getAll("", pageable);
-        if (StringUtils.isNotBlank(search)) {
-            productDTOs = productService.getAll(search, pageable);
-        }
-        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
-    }
-
-    // Type 1
-    @GetMapping("accessories")
-    public ResponseEntity<Page<ProductDTO>> getAllAccessories(@RequestParam(value = "search", required = false) String search, Pageable pageable) {
-        Page<ProductDTO> productDTOs = productService.getAllAccessories("", pageable);
-        if (StringUtils.isNotBlank(search)) {
-            productDTOs = productService.getAllAccessories(search, pageable);
-        }
-        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
-    }
-
-    // Type 2
-    @GetMapping("services")
-    public ResponseEntity<Page<ProductDTO>> getAllServices(@RequestParam(value = "search", required = false) String search, Pageable pageable) {
-        Page<ProductDTO> productDTOs = productService.getAllServices("", pageable);
-        if (StringUtils.isNotBlank(search)) {
-            productDTOs = productService.getAllServices(search, pageable);
-        }
-        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+    public ResponseEntity<Object> getAll(@ModelAttribute("searchProduct") SearchProduct searchProduct) {
+        Map<String, Object> products = productService.getAll(searchProduct);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("products/{id}")
@@ -74,13 +53,6 @@ public class ProductController {
         } catch (Exception e) {
             return new ProductResponse(Boolean.FALSE, "false");
         }
-    }
-
-    @GetMapping(value = "products/image/{imageName}", produces = MediaType.IMAGE_PNG_VALUE)
-    public @ResponseBody
-    ResponseEntity<byte[]> getImage(HttpServletResponse response, @PathVariable("imageName") String imageName) throws IOException {
-        byte[] imageBytes = productService.getImageByte(response, imageName);
-        return new ResponseEntity<>(imageBytes, HttpStatus.OK);
     }
 
     @SneakyThrows

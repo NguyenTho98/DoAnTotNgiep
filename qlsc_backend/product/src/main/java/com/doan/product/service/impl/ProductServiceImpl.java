@@ -1,15 +1,12 @@
 package com.doan.product.service.impl;
 
 import com.doan.product.entity.ProductHistory;
-import com.doan.product.exception.NotANumberException;
-import com.doan.product.exception.commonException.UnknownException;
-import com.doan.product.exception.productException.InvalidImageTypeException;
 import com.doan.product.exception.productException.ProductNotFoundException;
 import com.doan.product.model.ProductRequest;
 import com.doan.product.model.ProductResponse;
+import com.doan.product.model.SearchProduct;
 import com.doan.product.repository.ProductHistoryRepository;
 import com.doan.product.repository.ProductRepository;
-import com.doan.product.service.ImageService;
 import com.doan.product.service.ProductService;
 import com.doan.product.converter.ProductConverter;
 import com.doan.product.dto.ProductDTO;
@@ -17,23 +14,14 @@ import com.doan.product.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.method.P;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,25 +29,43 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductConverter productConverter;
-    private final ImageService imageService;
     private final ProductHistoryRepository productHistoryRepository;
 
     @Override
-    public Page<ProductDTO> getAll(String search, Pageable pageable) {
-        Page<Product> products = productRepository.findAllByStatusNotAndNameContainingIgnoreCaseOrStatusNotAndCodeContainingIgnoreCaseOrderByModifiedDateDesc((byte) 0, search, (byte) 0, search, pageable);
-        return products.map(product -> productConverter.convertToDTO(product));
-    }
+    public Map<String, Object> getAll(SearchProduct searchProduct) {
 
-    @Override
-    public Page<ProductDTO> getAllAccessories(String search, Pageable pageable) {
-        Page<Product> products = productRepository.findAllByTypeAndStatusNotAndNameContainingIgnoreCaseOrTypeAndStatusNotAndCodeContainingIgnoreCaseOrderByModifiedDateDesc((byte) 1, (byte) 0, search, (byte) 1, (byte) 0, search, pageable);
-        return products.map(productConverter::convertToDTO);
-    }
+        int pageNumber = searchProduct.getPage();
+        int size = searchProduct.getSize();
+        String nameField = searchProduct.getNameField();
+        String order = searchProduct.getOrder();
+        String keyWork = searchProduct.getSearch();
+        Byte[] type = convertIntToByte(searchProduct.getType());
+        Pageable paging = PageRequest.of(pageNumber - 1, size, Sort.by("modifiedDate").descending());
 
-    @Override
-    public Page<ProductDTO> getAllServices(String search, Pageable pageable) {
-        Page<Product> products = productRepository.findAllByTypeAndStatusNotAndNameContainingIgnoreCaseOrTypeAndStatusNotAndCodeContainingIgnoreCaseOrderByModifiedDateDesc((byte) 2, (byte) 0, search, (byte) 2, (byte) 0, search, pageable);
-        return products.map(productConverter::convertToDTO);
+        if (nameField.equals("code")) {
+            if (order.equals("ascend")) {
+                paging = PageRequest.of(pageNumber - 1, size, Sort.by("code"));
+            } else if (order.equals("descend")) {
+                paging = PageRequest.of(pageNumber - 1, size, Sort.by("code").descending());
+            }
+        } else if (nameField.equals("name")) {
+            if (order.equals("ascend")) {
+                paging = PageRequest.of(pageNumber - 1, size, Sort.by("name"));
+            } else if (order.equals("descend")) {
+                paging = PageRequest.of(pageNumber - 1, size, Sort.by("name").descending());
+            }
+        }
+
+        Page<Product> productPage = productRepository.search(paging, keyWork, type);
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        HashMap<String, Object> map = new HashMap<>();
+        List<Product> products = productPage.getContent();
+        products.forEach(product -> productDTOS.add(productConverter.convertToDTO(product)));
+        map.put("productAndService", productDTOS);
+        map.put("currentPage", productPage.getNumber() + 1);
+        map.put("totalItem", productPage.getTotalElements());
+        map.put("totalPage", productPage.getTotalPages());
+        return map;
     }
 
     @Override
@@ -81,28 +87,6 @@ public class ProductServiceImpl implements ProductService {
             while (this.isCodeExist(newCode.toString()));
         }
         return newCode.toString();
-    }
-
-    @Override
-    public byte[] getImageByte(HttpServletResponse response, String imageName) throws IOException {
-        Optional<Product> productOptional = productRepository.findByImage(imageName);
-        if (productOptional.isEmpty()) {
-            throw new IOException("Image not found");
-        }
-        Product product = productOptional.get();
-        String directory = "product-image\\";
-        File file = new File(directory + product.getImage());
-        byte[] imageBytes = new byte[(int) file.length()];
-        if (file.exists()) {
-            String contentType = "image/png";
-            response.setContentType(contentType);
-            OutputStream out = response.getOutputStream();
-            FileInputStream in = new FileInputStream(file);
-            IOUtils.copy(in, out);
-            out.close();
-            in.close();
-        }
-        return imageBytes;
     }
 
     @Override
@@ -148,12 +132,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean isCodeExistToUpdate(String code, Long id) {
-        Optional<String> codeOptional = productRepository.findCodeByCodeAndIdNot(code, id);
-        return codeOptional.isPresent();
-    }
-
-    @Override
     public ProductDTO getOneByIdAndType(Long id, Byte type) throws ProductNotFoundException {
         Optional<Product> productOptional = productRepository.findByIdAndType(id, type);
         if (productOptional.isEmpty()) {
@@ -161,18 +139,6 @@ public class ProductServiceImpl implements ProductService {
         }
         Product product = productOptional.get();
         return productConverter.convertToDTO(product);
-    }
-
-    @Override
-    public boolean isNameExist(String name) {
-        Optional<String> nameOptional = productRepository.findNameByName(name);
-        return nameOptional.isPresent();
-    }
-
-    @Override
-    public boolean isNameExistToUpdate(String name, Long id) {
-        Optional<String> nameOptional = productRepository.findNameByNameAndIdNot(name, id);
-        return nameOptional.isPresent();
     }
 
     @Override
@@ -192,7 +158,7 @@ public class ProductServiceImpl implements ProductService {
         } else {
             product.setCode(createNewCode());
         }
-        product.setImage(productReq.getImage());
+        product.setImages(productReq.getImage());
         product.setName(productReq.getName());
         product.setQuantity(productReq.getQuantity());
         product.setUnit(productReq.getUnit());
@@ -235,7 +201,7 @@ public class ProductServiceImpl implements ProductService {
         if (StringUtils.isNotBlank(productReq.getCode())) {
             product.setCode(productReq.getCode());
         }
-        product.setImage(productReq.getImage());
+        product.setImages(productReq.getImage());
         product.setName(productReq.getName());
         product.setQuantity(productReq.getQuantity());
         product.setUnit(productReq.getUnit());
@@ -263,4 +229,14 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    private Byte[] convertIntToByte(List<Integer> type) {
+        if (type.contains(1) && !type.contains(2)) {
+            return new Byte[]{1};
+        } else if (!type.contains(1) && type.contains(2)) {
+            return new Byte[]{2};
+        } else if (type.contains(1) && type.contains(2)) {
+            return new Byte[]{1, 2};
+        }
+        return new Byte[]{1, 2};
+    }
 }

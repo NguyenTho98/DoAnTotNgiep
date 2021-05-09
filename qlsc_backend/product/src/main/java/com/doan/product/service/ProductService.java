@@ -5,27 +5,23 @@ import com.doan.product.exception.productException.ProductNotFoundException;
 import com.doan.product.model.ProductRequest;
 import com.doan.product.dto.ProductDTO;
 import com.doan.product.model.ProductResponse;
+import com.doan.product.model.SearchProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 public interface ProductService {
 
-    Page<ProductDTO> getAll(String search, Pageable pageable);
-    Page<ProductDTO> getAllAccessories(String search, Pageable pageable);
-    Page<ProductDTO> getAllServices(String search, Pageable pageable);
+    Map<String, Object> getAll(SearchProduct searchProduct);
     ProductResponse save(ProductRequest productRequest) throws Exception;
     ProductResponse update(ProductRequest productRequest, Long id) throws Exception;
     String createNewCode() throws NotANumberException;
-    byte[] getImageByte(HttpServletResponse response, String imageName) throws IOException;
     ProductDTO getOneById(Long id) throws ProductNotFoundException;
     void deleteById(Long id) throws ProductNotFoundException;
     boolean isCodeExist(String code);
-    boolean isCodeExistToUpdate(String code, Long id);
     ProductDTO getOneByIdAndType(Long id, Byte type) throws ProductNotFoundException;
-    boolean isNameExist(String name);
-    boolean isNameExistToUpdate(String name, Long id);
     void multiDelete(Long[] idArray);
 }

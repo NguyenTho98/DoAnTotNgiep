@@ -2,6 +2,7 @@ package com.doan.product.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +19,10 @@ public class Product extends BaseEntity {
     @Column(name = "code", nullable = false, length = 11, unique = true)
     private String code;
 
-    @Column(name = "image", length = 255)
-    private String image;
+    @Column(name = "image")
+    @ElementCollection
+    @JoinTable(name = "images", joinColumns = @JoinColumn(name = "product_id"))
+    private List<String> images;
 
     @Column(name = "quantity", columnDefinition = "int default 0")
     private int quantity;
@@ -36,6 +39,8 @@ public class Product extends BaseEntity {
     @Column(name = "status", nullable = false)
     private byte status;
 
+    //type = 1 : product
+    //type = 2 : service
     @Column(name = "type")
     private byte type;
 }

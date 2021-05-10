@@ -78,6 +78,11 @@ function ProductUpdate(props) {
       });
   };
 
+  const removeImage = (index) => {
+    const images = product.images.filter((img, idx) => idx === index);
+    onchangeValue("images", images);
+  }
+
   return (
     <React.Fragment>
       <div className="product-screen-wrapper-create">
@@ -88,6 +93,7 @@ function ProductUpdate(props) {
               product={product}
               onchangeValue={onchangeValue}
               handleUploadImage={handleUploadImage}
+              removeImage={removeImage}
             />
           ) : (
             <Service product={product} onchangeValue={onchangeValue} />

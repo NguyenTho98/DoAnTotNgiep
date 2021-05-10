@@ -80,6 +80,10 @@
 
     .preview-image {
         padding-top: 10px;
+        .wrapper-image {
+            position: relative;
+            width: fit-content;
+        }
         .image:first-child {
             width: 100px;
             height: 100px;

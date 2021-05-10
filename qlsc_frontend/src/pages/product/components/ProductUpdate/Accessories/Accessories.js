@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as Icons from "pages/product/commons/Icons";
 import "./styles.scss";
 function Accessories(props) {
-  const { product, onchangeValue, handleUploadImage } = props;
+  const { product, onchangeValue, handleUploadImage, removeImage } = props;
   useEffect(() => {}, []);
   const inputRef = useRef();
   const onOpenFile = () => {
@@ -189,12 +189,21 @@ function Accessories(props) {
                   product.images.length &&
                   product.images.map((image, index) => {
                     return (
-                      <img
-                        key={index}
-                        className="image"
-                        src={image}
-                        alt={image}
-                      />
+                      <div className="wrapper-image">
+                        <img
+                          key={index}
+                          className="image"
+                          src={image}
+                          alt={image}
+                          style={{}}
+                        />
+                        <span style={{
+                          position: 'absolute',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => removeImage(index)}
+                        >x</span>
+                      </div>
                     );
                   })}
               </div>

@@ -58,8 +58,6 @@ function ProductUpdate(props) {
     });
   };
 
-  console.log('product', product);
-
   const cancel = () => {
     setUser(initialState);
     setShowContent(1);

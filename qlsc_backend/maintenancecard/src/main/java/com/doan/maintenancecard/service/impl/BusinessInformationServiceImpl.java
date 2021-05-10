@@ -1,11 +1,9 @@
 package com.doan.maintenancecard.service.impl;
 
-import com.doan.maintenancecard.converter.PaymentHistoryConverter;
-import com.doan.maintenancecard.dto.StatisticRepairmanDTO;
-import com.doan.maintenancecard.dto.TotalMoneyDTO;
+import com.doan.maintenancecard.model.BusinessResponse;
+import com.doan.maintenancecard.model.TotalMoney;
 import com.doan.maintenancecard.repository.BusinessInformationCustom;
 import com.doan.maintenancecard.repository.MaintenanceCardRepository;
-import com.doan.maintenancecard.repository.PaymentHistoryRepository;
 import com.doan.maintenancecard.service.BusinessInformationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,8 +23,6 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
 
     private final BusinessInformationCustom businessInformationCustom;
     private final MaintenanceCardRepository maintenanceCardRepository;
-    private final PaymentHistoryRepository paymentHistoryRepository;
-    private final PaymentHistoryConverter paymentHistoryConverter;
 
     @Override
     public int getTotalMaintenanceCard() {
@@ -95,79 +91,81 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
     }
 
     @Override
-    public List<TotalMoneyDTO> getAllTotalMoney(String startDate, String endDate) {
-        int startDay = Integer.parseInt(startDate.substring(0, 2));
-        int endDay = Integer.parseInt(endDate.substring(0, 2));
+    public BusinessResponse getReport(String from, String to) {
+        BusinessResponse businessResponse = new BusinessResponse();
+        try {
+            Date eDatetime = new Date(new SimpleDateFormat("dd/MM/yyyy").parse(to).getTime() + (1000 * 60 * 60 * 24));
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String sDate = dateFormat.format(new SimpleDateFormat("dd/MM/yyyy").parse(from));
+            String eDate = dateFormat.format(eDatetime);
+            businessResponse.setTopStaffs(businessInformationCustom.getTopRepairMan(sDate, eDate));
+            businessResponse.setTopServices(businessInformationCustom.getTopService(sDate, eDate));
+            businessResponse.setTotalMonies(getTotalMonies(from, to));
+        } catch (Exception e) {
+            return businessResponse;
+        }
+        return businessResponse;
+    }
 
-        int startMonth = Integer.parseInt(startDate.substring(3, 5));
-        int endMonth = Integer.parseInt(endDate.substring(3, 5));
+    private String getDateNow() {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(date);
+    }
 
+    private List<TotalMoney> getTotalMonies(String from, String to) {
+        int startDay = Integer.parseInt(from.substring(0, 2));
+        int endDay = Integer.parseInt(to.substring(0, 2));
+        int startMonth = Integer.parseInt(from.substring(3, 5));
+        int endMonth = Integer.parseInt(to.substring(3, 5));
+        List<String> dates = getDates(startDay, endDay, startMonth, endMonth, from, to);
+        List<TotalMoney> monies = new ArrayList<>();
+        try {
+            dates.forEach(date -> {
+                TotalMoney totalMoney = businessInformationCustom.getMoney(date);
+                if (totalMoney.getDate() == null) {
+                    totalMoney.setDate(date);
+                }
+                if (totalMoney.getTotalDayMoney() == null) {
+                    totalMoney.setTotalDayMoney(BigDecimal.valueOf(0));
+                }
+                monies.add(totalMoney);
+            });
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        return monies;
+    }
+
+    private List<String> getDates(int startDay, int endDay,
+                                  int startMonth, int endMonth,
+                                  String from, String to) {
         List<String> dates = new ArrayList<>();
         if (endMonth - startMonth == 0) {
             for (int i = startDay; i <= endDay; i++) {
                 if (i < 10) {
-                    dates.add("0" + i + startDate.substring(2));
+                    dates.add("0" + i + from.substring(2));
                 } else {
-                    dates.add(i + startDate.substring(2));
+                    dates.add(i + from.substring(2));
                 }
             }
         } else if (endMonth - startMonth == 1) {
             for (int i = startDay; i <= 31; i++) {
                 if (i < 10) {
-                    dates.add("0" + i + startDate.substring(2));
+                    dates.add("0" + i + from.substring(2));
                 } else {
-                    dates.add(i + startDate.substring(2));
+                    dates.add(i + from.substring(2));
                 }
             }
             for (int i = 1; i <= endDay; i++) {
                 if (i < 10) {
-                    dates.add("0" + i + endDate.substring(2));
+                    dates.add("0" + i + to.substring(2));
                 } else {
-                    dates.add(i + endDate.substring(2));
+                    dates.add(i + to.substring(2));
                 }
             }
         }
-        List<TotalMoneyDTO> moneyDTOList = new ArrayList<>();
-        try {
-            for (String date : dates) {
-                TotalMoneyDTO totalMoneyDTO = new TotalMoneyDTO();
-                totalMoneyDTO = businessInformationCustom.getMoneyDto(date);
-                if (totalMoneyDTO.getDate() == null) {
-                    totalMoneyDTO.setDate(date);
-                }
-                if (totalMoneyDTO.getTotalDayMoney() == null) {
-                    totalMoneyDTO.setTotalDayMoney(BigDecimal.valueOf(0));
-                }
-                moneyDTOList.add(totalMoneyDTO);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return moneyDTOList;
-    }
-
-    @Override
-    public List<StatisticRepairmanDTO> getTopService(Date startDate, Date endDate) {
-        Date eDate1 = new Date(endDate.getTime() + (1000 * 60 * 60 * 24));
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String sDate = dateFormat.format(startDate);
-        String eDate = dateFormat.format(eDate1);
-        return businessInformationCustom.getTopService(sDate, eDate);
-    }
-
-    @Override
-    public List<StatisticRepairmanDTO> getTopRepairman(Date startDate, Date endDate) {
-        Date eDate1 = new Date(endDate.getTime() + (1000 * 60 * 60 * 24));
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String sDate = dateFormat.format(startDate);
-        String eDate = dateFormat.format(eDate1);
-        return businessInformationCustom.getTopRepairMan(sDate, eDate);
-    }
-    
-    private String getDateNow() {
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(date);
+        return dates;
     }
 
 }

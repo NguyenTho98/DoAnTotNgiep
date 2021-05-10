@@ -1,7 +1,7 @@
 package com.doan.maintenancecard.repository;
 
-import com.doan.maintenancecard.dto.StatisticRepairmanDTO;
-import com.doan.maintenancecard.dto.TotalMoneyDTO;
+import com.doan.maintenancecard.model.StatisticRepairman;
+import com.doan.maintenancecard.model.TotalMoney;
 
 import java.util.List;
 
@@ -15,10 +15,10 @@ public interface BusinessInformationCustom {
 
     int getTotalMaintenanceCardSuccessPayed(String date);
 
-    TotalMoneyDTO getMoneyDto(String date);
+    TotalMoney getMoney(String date);
 
-    List<StatisticRepairmanDTO> getTopService(String startDate, String endDate);
+    List<StatisticRepairman> getTopService(String startDate, String endDate);
 
-    List<StatisticRepairmanDTO> getTopRepairMan(String startDate, String endDate);
+    List<StatisticRepairman> getTopRepairMan(String startDate, String endDate);
 
 }

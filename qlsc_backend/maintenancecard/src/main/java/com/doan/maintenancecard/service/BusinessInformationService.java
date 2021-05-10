@@ -1,12 +1,9 @@
 package com.doan.maintenancecard.service;
 
-import com.doan.maintenancecard.dto.StatisticRepairmanDTO;
-import com.doan.maintenancecard.dto.TotalMoneyDTO;
+import com.doan.maintenancecard.model.BusinessResponse;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
 
 public interface BusinessInformationService {
 
@@ -24,10 +21,6 @@ public interface BusinessInformationService {
 
     BigDecimal getTotalLiabilities(String startDate, String endDate) throws ParseException;
 
-    List<TotalMoneyDTO> getAllTotalMoney(String startDate, String endDate);
-
-    List<StatisticRepairmanDTO> getTopService(Date startDate, Date endDate);
-
-    List<StatisticRepairmanDTO> getTopRepairman(Date startDate, Date endDate);
+    BusinessResponse getReport(String from, String to);
 
 }

@@ -14,7 +14,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
     case actionTypes.RECEIVE_STAFF_HISTORY_MAIN_CARDS:
+      console.log("aaaaaaaaaaa", action);
       return {
         ...state,
         staffHistoryMainCards: action.staffHistoryMainCards,

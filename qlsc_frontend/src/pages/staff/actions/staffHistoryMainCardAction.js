@@ -10,13 +10,14 @@ export const getListStaffHistoryMainCard = (search = "", option = {}) => (
   dispatch(updateStaffHistoryMainCardFetching(true));
   dispatch(getFilterStaffHistoryMainCard(search, option))
     .then((json) => {
-      const { staffHistoryMainCard, currentPage, totalItems, totalPages } = json;
-      if (staffHistoryMainCard.length === 0) {
-        dispatch(getStaffHistoryMainCards(staffHistoryMainCard, currentPage, totalItems, totalPages));
+      const { staffHistoryMainCards, currentPage, totalItems, totalPages } = json;
+      console.log("json", json);
+      if (staffHistoryMainCards.length === 0) {
+        dispatch(getStaffHistoryMainCards(staffHistoryMainCards, currentPage, totalItems, totalPages));
         dispatch(updateStaffHistoryMainCardFetching(false));
         dispatch(updateStaffHistoryMainCardIsEmpty(true));
       } else {
-        dispatch(getStaffHistoryMainCards(staffHistoryMainCard, currentPage, totalItems, totalPages));
+        dispatch(getStaffHistoryMainCards(staffHistoryMainCards, currentPage, totalItems, totalPages));
         dispatch(updateStaffHistoryMainCardFetching(false));
         dispatch(updateStaffHistoryMainCardIsEmpty(false));
       }
@@ -50,32 +51,33 @@ const processOption = (search, option) => {
   if (search) {
     filter += `search=${search}`;
   }
-  if (option && option.id) {
-    filter += `userid=${option.id}`;
+  if (option && option.page) {
+    filter += `&page=${option.page}`;
+    filter += `&id=${option.id}`;
   }
   return filter;
 };
 
 
 export const getStaffHistoryMainCards = (
-  staffHistoryMainCard,
+  staffHistoryMainCards,
   currentPage,
   totalItems,
   totalPages
 ) => ({
-  type: actionTypes.RECEIVE_HISTORY_MAIN_CARDS,
-  staffHistoryMainCard,
+  type: actionTypes.RECEIVE_STAFF_HISTORY_MAIN_CARDS,
+  staffHistoryMainCards,
   currentPage,
   totalItems,
   totalPages,
 });
 
 export const updateStaffHistoryMainCardIsEmpty = (bool) => ({
-  type: actionTypes.HISTORY_MAIN_CARD_IS_EMPTY,
+  type: actionTypes.STAFF_HISTORY_MAIN_CARD_IS_EMPTY,
   bool,
 });
 
 export const updateStaffHistoryMainCardFetching = (bool) => ({
-  type: actionTypes.HISTORY_MAIN_CARD_FETCHING,
+  type: actionTypes.STAFF_HISTORY_MAIN_CARD_FETCHING,
   bool,
 });

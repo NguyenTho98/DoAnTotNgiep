@@ -549,7 +549,8 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
             }
         }
 
-        Page<MaintenanceCard> maintenanceCardPage = maintenanceCardRepository.getMaintenanceCardByIdCustomer(paging, id, search, payStatus, workStatus);
+         Page<MaintenanceCard> maintenanceCardPage =
+             maintenanceCardRepository.getMaintenanceCardByIdCustomer(paging, id, search, payStatus, workStatus);
 
         List<MaintenanceCardDTO> maintenanceCardDTOS = new ArrayList<>();
         HashMap<String, Object> map = new HashMap<>();
@@ -557,7 +558,14 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
         for (MaintenanceCard maintenanceCard : maintenanceCards) {
             maintenanceCardDTOS.add(maintenanceCardConverter.convertToDTO(maintenanceCard));
         }
-        map.put("customers", maintenanceCardDTOS);
+        if (maintenanceCardPage.getContent().size() == 0) {
+            map.put("historyMainCards", maintenanceCardDTOS);
+            map.put("currentPage", 0);
+            map.put("totalItems", 0);
+            map.put("totalPages", 0);
+            return map;
+        }
+        map.put("historyMainCards", maintenanceCardDTOS);
         map.put("currentPage", maintenanceCardPage.getNumber() + 1);
         map.put("totalItems", maintenanceCardPage.getTotalElements());
         map.put("totalPages", maintenanceCardPage.getTotalPages());

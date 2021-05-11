@@ -11,7 +11,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class TotalMoney {
 
-    private String date;
-    private BigDecimal totalDayMoney;
+    private String time;
+    private BigDecimal total;
+    private int quantity;
+    private int average;
+
+    public TotalMoney(String time, BigDecimal total) {
+        this.time = time;
+        this.total = total;
+    }
 
 }

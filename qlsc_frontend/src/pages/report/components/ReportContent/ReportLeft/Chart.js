@@ -2,7 +2,6 @@ import React from 'react';
 import ReactHighcharts from 'react-highcharts';
 import classname from 'classname';
 import { ChartConfig } from 'components/Chart/ChartConfig';
-import { useHistory } from 'react-router';
 
 const isSameYear = (data) => {
   let isSame = true;
@@ -63,7 +62,6 @@ function Chart(props) {
   const data = [...revenue].reverse();
   const onClick = (id) => {
     if (viewActive.length === 1 && viewActive.includes(id)) {
-      SapoApp.flashError('Vui lòng chọn tối thiểu 1 chỉ số');
       return false;
     }
     if (viewActive.includes(id)) {

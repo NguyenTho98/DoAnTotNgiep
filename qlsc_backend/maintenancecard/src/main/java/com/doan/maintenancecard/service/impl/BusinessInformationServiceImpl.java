@@ -1,106 +1,45 @@
 package com.doan.maintenancecard.service.impl;
 
 import com.doan.maintenancecard.model.BusinessResponse;
+import com.doan.maintenancecard.model.BusinessToday;
 import com.doan.maintenancecard.model.TotalMoney;
 import com.doan.maintenancecard.repository.BusinessInformationCustom;
-import com.doan.maintenancecard.repository.MaintenanceCardRepository;
 import com.doan.maintenancecard.service.BusinessInformationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
 public class BusinessInformationServiceImpl implements BusinessInformationService {
 
     private final BusinessInformationCustom businessInformationCustom;
-    private final MaintenanceCardRepository maintenanceCardRepository;
-
-    @Override
-    public int getTotalMaintenanceCard() {
-        String date = getDateNow();
-        return businessInformationCustom.getTotalMaintenanceCard(date);
-    }
-
-    @Override
-    public int getTotalMaintenanceCardSuccess() {
-        String date = getDateNow();
-        return businessInformationCustom.getTotalMaintenanceCardSuccess(date);
-    }
-
-    @Override
-    public int getTotalMaintenanceCardSuccessNotPay() {
-        String date = getDateNow();
-        return businessInformationCustom.getTotalMaintenanceCardSuccessNotPay(date);
-    }
-
-    @Override
-    public int getTotalMaintenanceCardSuccessPayed() {
-        String date = getDateNow();
-        return businessInformationCustom.getTotalMaintenanceCardSuccessPayed(date);
-    }
-
-    @Override
-    public int getTotalMaintenanceCards(String startDate, String endDate) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-        String strSDate = startDate;
-        String strEDate = endDate;
-        Date sDate = formatter.parse(startDate);
-        Date eDate = formatter.parse(strEDate);
-        Date eDate1 = new Date(eDate.getTime() + (1000 * 60 * 60 * 24));
-        return maintenanceCardRepository.getTotalMaintenanceCard(sDate, eDate1);
-    }
-
-    @Override
-    public BigDecimal getTotalMoney(String startDate, String endDate) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-        String strSDate = startDate;
-        String strEDate = endDate;
-        Date sDate = formatter.parse(startDate);
-        Date eDate = formatter.parse(strEDate);
-        Date eDate1 = new Date(eDate.getTime() + (1000 * 60 * 60 * 24));
-        BigDecimal bigDecimal = maintenanceCardRepository.getTotalMoney(sDate, eDate1);
-        if (bigDecimal == null) {
-            bigDecimal = BigDecimal.valueOf(0);
-        }
-        return bigDecimal;
-    }
-
-    @Override
-    public BigDecimal getTotalLiabilities(String startDate, String endDate) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-        String strSDate = startDate;
-        String strEDate = endDate;
-        Date sDate = formatter.parse(startDate);
-        Date eDate = formatter.parse(strEDate);
-        Date eDate1 = new Date(eDate.getTime() + (1000 * 60 * 60 * 24));
-        //System.out.println(eDate1);
-        BigDecimal bigDecimal = maintenanceCardRepository.getTotalLiabilities(sDate, eDate1);
-        if (bigDecimal == null) {
-            bigDecimal = BigDecimal.valueOf(0);
-        }
-        return bigDecimal;
-    }
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
 
     @Override
     public BusinessResponse getReport(String from, String to) {
         BusinessResponse businessResponse = new BusinessResponse();
         try {
-            Date eDatetime = new Date(new SimpleDateFormat("dd/MM/yyyy").parse(to).getTime() + (1000 * 60 * 60 * 24));
+            Date eDatetime = new Date(new SimpleDateFormat(DATE_FORMAT).parse(to).getTime() + (1000 * 60 * 60 * 24));
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String sDate = dateFormat.format(new SimpleDateFormat("dd/MM/yyyy").parse(from));
+            String sDate = dateFormat.format(new SimpleDateFormat(DATE_FORMAT).parse(from));
             String eDate = dateFormat.format(eDatetime);
             businessResponse.setTopStaffs(businessInformationCustom.getTopRepairMan(sDate, eDate));
             businessResponse.setTopServices(businessInformationCustom.getTopService(sDate, eDate));
             businessResponse.setTotalMonies(getTotalMonies(from, to));
+            String dateNow = getDateNow();
+            BusinessToday businessToday = new BusinessToday();
+            businessToday.setTotalMaintenanceCard(businessInformationCustom.getTotalMaintenanceCard(dateNow));
+            businessToday.setTotalMaintenanceCardSuccess(businessInformationCustom.getTotalMaintenanceCardSuccess(dateNow));
+            businessToday.setTotalMaintenanceCardScPayed(businessInformationCustom.getTotalMaintenanceCardSuccessPayed(dateNow));
+            businessToday.setTotalMaintenanceCardScNotPay(businessInformationCustom.getTotalMaintenanceCardSuccessNotPay(dateNow));
+            businessResponse.setBusinessToday(businessToday);
         } catch (Exception e) {
             return businessResponse;
         }
@@ -109,7 +48,7 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
 
     private String getDateNow() {
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         return formatter.format(date);
     }
 
@@ -123,11 +62,11 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
         try {
             dates.forEach(date -> {
                 TotalMoney totalMoney = businessInformationCustom.getMoney(date);
-                if (totalMoney.getDate() == null) {
-                    totalMoney.setDate(date);
+                if (totalMoney.getTime() == null) {
+                    totalMoney.setTime(date);
                 }
-                if (totalMoney.getTotalDayMoney() == null) {
-                    totalMoney.setTotalDayMoney(BigDecimal.valueOf(0));
+                if (totalMoney.getTotal() == null) {
+                    totalMoney.setTotal(BigDecimal.valueOf(0));
                 }
                 monies.add(totalMoney);
             });

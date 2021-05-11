@@ -1,5 +1,6 @@
 package com.doan.maintenancecard.controller;
 
+import com.doan.maintenancecard.model.MaintenanceCardUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.doan.maintenancecard.dto.MaintenanceCardDTO;
 import com.doan.maintenancecard.exception.CodeExistedException;
@@ -125,22 +126,14 @@ public class MaintenanceCardController {
     }
 
     @PutMapping("maintenanceCards/returnDate/{id}")
-    public ResponseEntity<Object> setReturnDate(@PathVariable Long id) throws NotFoundException, NotFoundRepairmanException, NotEnoughProductException, JsonProcessingException {
+    public ResponseEntity<Object> setReturnDate(@PathVariable Long id) {
         MaintenanceCardDTO maintenanceCardDTO = maintenanceCardService.setReturnDate(id);
         return new ResponseEntity<>(maintenanceCardDTO, HttpStatus.OK);
     }
 
-    @GetMapping("users/maintenanceCards/{userid}")
-    public ResponseEntity<Map<String, Object>> getMaintenanceCardByUserId
-        (@RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
-         @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize,
-         @RequestParam(value = "sortBy", defaultValue = "") String sortBy,
-         @RequestParam(value = "descending", defaultValue = "false") boolean descending,
-         @RequestParam(value = "code", defaultValue = "") String code,
-         @PathVariable(value = "userid", required = true) Long userid,
-         @RequestParam(value = "payStatus", required = false, defaultValue = "0,1") byte[] payStatus,
-         @RequestParam(value = "workStatus", required = false, defaultValue = "0,1,2") byte[] workStatus) {
-        Map<String, Object> map = maintenanceCardService.getMaintenanceCardByRepairMan(pageNum, pageSize, sortBy, descending, userid, code, payStatus, workStatus);
+    @GetMapping("users/maintenanceCards")
+    public ResponseEntity<Map<String, Object>> getMaintenanceCardByUserId(@ModelAttribute("maintenanceCardUser") MaintenanceCardUser maintenanceCardUser) {
+        Map<String, Object> map = maintenanceCardService.getMaintenanceCardByRepairMan(maintenanceCardUser);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }

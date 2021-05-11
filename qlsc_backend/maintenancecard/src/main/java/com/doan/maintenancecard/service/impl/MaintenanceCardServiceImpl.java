@@ -17,6 +17,7 @@ import com.doan.maintenancecard.kafka.ProductModel;
 import com.doan.maintenancecard.kafka.VehicleModel;
 import com.doan.maintenancecard.model.MaintenanceCardCustomer;
 import com.doan.maintenancecard.model.MaintenanceCardFilter;
+import com.doan.maintenancecard.model.MaintenanceCardUser;
 import com.doan.maintenancecard.model.MessageModel;
 import com.doan.maintenancecard.repository.MaintenanceCardDetailRepository;
 import com.doan.maintenancecard.repository.MaintenanceCardRepository;
@@ -459,28 +460,26 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
     }
 
     @Override
-    public Map<String, Object> getMaintenanceCardByRepairMan(int PageNum, int PageSize, String sortBy, boolean descending, Long userId, String code, byte[] payStatus, byte[] workStatus) {
-        Page<MaintenanceCard> page = null;
-        Pageable pageable = null;
-        if (descending) {
-            pageable = PageRequest.of(PageNum - 1, PageSize, Sort.by(sortBy.length() == 0 ? "id" : sortBy).descending());
+    public Map<String, Object> getMaintenanceCardByRepairMan(MaintenanceCardUser user) {
+        Page<MaintenanceCard> page;
+        Pageable pageable;
+        if (user.isDescending()) {
+            pageable = PageRequest.of(user.getPage() - 1, user.getPage(), Sort.by(user.getSortBy().length() == 0 ? "id" : user.getSortBy()).descending());
         } else {
-            pageable = PageRequest.of(PageNum - 1, PageSize, Sort.by(sortBy.length() == 0 ? "id" : sortBy).ascending());
+            pageable = PageRequest.of(user.getPage() - 1, user.getPage(), Sort.by(user.getSortBy().length() == 0 ? "id" : user.getSortBy()).ascending());
         }
-        if ((payStatus != null && payStatus.length > 0) || (workStatus != null && workStatus.length > 0)) {
-            page = maintenanceCardRepository.filterByWsandPs(pageable, userId, workStatus, payStatus, code);
+        if ((user.getPayStatus() != null && user.getPayStatus().length > 0) || (user.getWorkStatus() != null && user.getWorkStatus().length > 0)) {
+            page = maintenanceCardRepository.filterByWsandPs(pageable, user.getId(), user.getWorkStatus(), user.getPayStatus(), user.getCode());
         } else {
-            page = maintenanceCardRepository.getMaintenanceCardByRepairMan(pageable, userId, code);
+            page = maintenanceCardRepository.getMaintenanceCardByRepairMan(pageable, user.getId(), user.getCode());
         }
         List<MaintenanceCardDTO> maintenanceCardDTO = new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
-        page.toList().forEach(maintenanceCard -> {
-            maintenanceCardDTO.add(maintenanceCardConverter.convertToDTO(maintenanceCard));
-        });
+        page.toList().forEach(maintenanceCard -> maintenanceCardDTO.add(maintenanceCardConverter.convertToDTO(maintenanceCard)));
         map.put("maintenanceCard", maintenanceCardDTO);
         map.put("totalPage", page.getTotalPages());
         map.put("totalElement", page.getTotalElements());
-        map.put("currentPage", PageNum);
+        map.put("currentPage", user.getPage());
         return map;
 
     }

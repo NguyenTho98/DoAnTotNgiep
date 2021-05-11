@@ -9,6 +9,7 @@ import com.doan.maintenancecard.exception.maintenanceCardException.NotFoundRepai
 import com.doan.maintenancecard.exception.maintenanceCardException.NotUpdateException;
 import com.doan.maintenancecard.model.MaintenanceCardCustomer;
 import com.doan.maintenancecard.model.MaintenanceCardFilter;
+import com.doan.maintenancecard.model.MaintenanceCardUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public interface MaintenanceCardService {
 
     boolean deleteMaintenanceCard(Long id) throws NotFoundException, NotFoundRepairmanException, NotEnoughProductException, UnknownException, JsonProcessingException;
 
-    Map<String, Object> getMaintenanceCardByRepairMan(int PageNum, int PageSize, String sortBy, boolean descending, Long userId, String code, byte[] payStatus, byte[] workStatus);
+    Map<String, Object> getMaintenanceCardByRepairMan(MaintenanceCardUser maintenanceCardUser);
 
     MaintenanceCardDTO setReturnDate(long id);
 }

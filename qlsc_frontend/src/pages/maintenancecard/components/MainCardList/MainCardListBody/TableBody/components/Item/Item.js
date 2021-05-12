@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 import { withRouter } from "react-router-dom";
 import "../../styles/item.scss";
 import ReactTooltip from "react-tooltip";
@@ -18,12 +18,14 @@ function Item(props) {
   const onRedirectDetail = (e) => {
     e.stopPropagation();
     pushstate(history, `/mainCard/detail/${mainCard.id}`);
-  }
+  };
 
   return (
-    <div className="delivery-collations-item-wrapper">
-      <div className="d-flex delivery-collations-listing-item"
-      onClick={(e) => onRedirectDetail(e)}>
+    <div className="main-card-item-wrapper">
+      <div
+        className="d-flex main-card-listing-item"
+        onClick={(e) => onRedirectDetail(e)}
+      >
         <div
           role="presentation"
           className="checkbox header-checkbox"
@@ -39,9 +41,9 @@ function Item(props) {
               data-tip
               data-for={`order_collation_number_id_${1}`}
               target="_blank"
-              style={{ textDecoration: "none", color: '#007bff' }}
+              style={{ textDecoration: "none", color: "#007bff" }}
             >
-              {(mainCard && mainCard.code) || ''}
+              {(mainCard && mainCard.code) || "---"}
               <ReactTooltip
                 place="top"
                 type="dark"
@@ -49,26 +51,41 @@ function Item(props) {
                 isMultiline
                 id={`order_collation_number_id_${1}`}
               >
-                {(mainCard && mainCard.code) || ''}
+                {(mainCard && mainCard.code) || "---"}
               </ReactTooltip>
             </a>
           </span>
         </div>
         <div className="margin-right20 item-list text-ellipsis">
-        {(mainCard && mainCard.name) || ''}
+          {(mainCard && mainCard.customer_name) || ""}
         </div>
         <div
           className="margin-right20 delivery-collation-location"
           data-tip
           data-for={`delivery-collation-location_${1}`}
         >
-         {(mainCard && mainCard.phone) || ''}
+          {(mainCard && mainCard.customer_name) || "---"}
         </div>
         <div
           className="margin-right20 item-list"
           style={{ color: status.color }}
         >
-          {(mainCard && mainCard.email) || ''}
+          {(mainCard && mainCard.coordinator_name) || ""}
+        </div>
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.repairman_name) || ""}
+        </div>
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.pay_status) || ""}
+        </div>
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.work_status) || ""}
+        </div>
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.return_date) || ""}
+        </div>
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.price  ) || ""}
         </div>
       </div>
     </div>

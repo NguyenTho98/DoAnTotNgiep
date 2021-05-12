@@ -1,7 +1,7 @@
 import * as actionTypes from 'actions/actionTypes';
 
 const initState = {
-  slectedFilter: [],
+  selectedFilter: [],
   showFilter: false,
   filterText: '',
   statusWork: '',
@@ -26,6 +26,7 @@ const filterInfo = (state = initState, action) => {
         statusPayment: action.filterInfo.statusPayment,
         endDate: action.filterInfo.endDate,
         startDate: action.filterInfo.startDate,
+        selectedFilter: action.filterInfo.selectedFilter,
       };
     default:
       return state;

@@ -75,7 +75,7 @@ function DeleteModal(props) {
     <Modal
       show
       onHide={handleClose}
-      size="lg"
+      size="md"
       dialogClassName="modal-create-customer"
     >
       <Modal.Header closeButton>

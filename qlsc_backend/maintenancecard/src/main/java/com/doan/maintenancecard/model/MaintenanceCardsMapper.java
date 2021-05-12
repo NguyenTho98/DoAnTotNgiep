@@ -43,6 +43,7 @@ public class MaintenanceCardsMapper {
         maintenanceCardsModel.setWorkStatus(maintenanceCard.getWorkStatus());
         maintenanceCardsModel.setModifiedDate(maintenanceCard.getModifiedDate());
         maintenanceCardsModel.setCreatedDate(maintenanceCard.getCreatedDate());
+        maintenanceCardsModel.setRepairmanName(maintenanceCard.getRepairmanName());
 
         return maintenanceCardsModel;
     }

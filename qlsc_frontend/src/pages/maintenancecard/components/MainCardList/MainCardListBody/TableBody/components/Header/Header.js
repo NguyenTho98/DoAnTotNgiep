@@ -94,19 +94,19 @@ function Header(props) {
               <div className="margin-right20 header-item order-collations-status">
                 NV điều phối
               </div>
-              <div className="margin-right20 header-item order-collations-channel-code">
+              <div className="margin-right20 header-item">
                 NV sửa chưa
               </div>
-              <div className="margin-right20 header-item order-collations-total-amount">
+              <div className="margin-right20 header-item">
                 TT thanh toán
               </div>
-              <div className="margin-right20 header-item order-collations-ship-fee">
+              <div className="margin-right20 header-item">
                 TT công việc
               </div>
-              <div className="margin-right20 header-item order-collations-paid">
+              <div className="margin-right20 header-item">
                 Ngày trả xe
               </div>
-              <div className="margin-right20 header-item order-collations-paid">
+              <div className="margin-right20 header-item">
                 Giá tiền
               </div>
             </React.Fragment>

@@ -34,10 +34,14 @@ function FilterMainCard(props) {
     }
     filterInfo.selectedFilter = newSelectedFilter;
     if (filterName === default_option[0]) {
-      filterInfo.status = '';
+      filterInfo.statusWork = '';
     }
     if (filterName === default_option[1]) {
-      filterInfo.selectedLocation = [];
+      filterInfo.statusPayment = [];
+    }
+    if (filterName === default_option[2]) {
+      filterInfo.startDate = '';
+      filterInfo.endDate = '';
     }
     props.fetchMainCard(filterInfo);
   };
@@ -51,21 +55,23 @@ function FilterMainCard(props) {
   };
 
   const getFilterText = (filterName) => {
+    console.log("filterName", filterName);
+    console.log("filterInfo", props.filterInfo);
     if (filterName === 'statusWork') {
-      for (let i = 0; i < default_status.length; i++) {
-        if (props.filterInfo.status === default_status_work[i]) {
+      for (let i = 0; i < default_status_work.length; i++) {
+        if (props.filterInfo.statusWork === default_status_work[i]) {
           return `Trạng thái công việc: ${default_status_work_detail[i]}`;
         }
       }
     }
     if (filterName === 'statusPayment') {
-      for (let i = 0; i < default_status.length; i++) {
-        if (props.filterInfo.status === default_status_payment[i]) {
+      for (let i = 0; i < default_status_payment.length; i++) {
+        if (props.filterInfo.statusPayment === default_status_payment[i]) {
           return `Trạng thái thanh toán: ${default_status_payment_detail[i]}`;
         }
       }
     }
-    if (filterName === 'datetime') {
+    if (filterName === 'date') {
       return `Ngày tạo: Từ 01/09/1998- 17/09/1998`;
     }
     return null;
@@ -74,7 +80,7 @@ function FilterMainCard(props) {
   const search = (e) => {
     const { filterInfo } = props;
     filterInfo.filterText = e;
-    // props.fetchMainCard(filterInfo);
+    props.fetchMainCard(filterInfo);
   };
   return (
     <div id="filter-delivery-collations-wrapper">

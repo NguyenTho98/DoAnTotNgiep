@@ -160,7 +160,7 @@ function FilterMainCardsModal(props) {
         selectedFilter.push(option);
       }
       if (
-        option === 'datetime'
+        option === 'date'
       ) {
         selectedFilter.push(option);
       }
@@ -173,6 +173,7 @@ function FilterMainCardsModal(props) {
       endDate,
       startDate,
     };
+    console.log("afterInfo", afterInfo);
     props.fetchMainCard(afterInfo);
   };
 
@@ -347,8 +348,8 @@ function FilterMainCardsModal(props) {
         return (
           <button
             key={index}
-            className={`filter-delivery-collations-button ${statusPayment === index + 1 ? 'active' : null}`}
-            onClick={() => selectStatusPayment(index)}
+            className={`filter-delivery-collations-button ${statusWork === index + 1 ? 'active' : null}`}
+            onClick={() => selectStatusWork(index)}
             type="button"
           >
             {default_status_work_detail[index]}
@@ -367,8 +368,8 @@ function FilterMainCardsModal(props) {
         return (
           <button
             key={index}
-            className={`filter-delivery-collations-button ${statusWork === index + 1 ? 'active' : null}`}
-            onClick={() => selectStatusWork(index)}
+            className={`filter-delivery-collations-button ${statusPayment === index + 1 ? 'active' : null}`}
+            onClick={() => selectStatusPayment(index)}
             type="button"
           >
             {default_status_payment_detail[index]}

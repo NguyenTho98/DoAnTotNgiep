@@ -1,37 +1,38 @@
 import React, { useState } from "react";
-import Pagination from "components/Pagination/Pagination";
 import { connect } from "react-redux";
 import "../../styles/footer.scss";
+import Pagination from "../Pagination/Pagination";
 
 function Footer(props) {
   const { mainCards, fetchMainCard, isEmpty , fetching} = props;
   const { currentPage, totalItems, totalPages, mainCardList } = mainCards;
-  const [size, setSize] = useState(10);
 
   const calculateBegin = () => {
     if (currentPage === 1) {
       return 1;
     }
     if (currentPage === totalPages) {
-      return (size * (currentPage - 1) + mainCardList.length);
+      return (totalItems * (currentPage - 1) + mainCardList.length);
     }
-    return (size * currentPage) + 1;
+    return (totalItems * currentPage) + 1;
   };
-
+  const onChangePage = (id) => {
+    fetchMainCard(null, id);
+  };
   const calculateEnd = () => {
     if (totalPages === 1) {
       return totalItems + 1;
     }
     if (currentPage === 1) {
-      return (currentPage * size);
+      return (currentPage * totalItems);
     }
     if (totalPages > currentPage) {
-      return ((currentPage + 1) * size);
+      return ((currentPage + 1) * totalItems);
     }
     if (currentPage === totalPages) {
       return totalItems + 1;
     }
-    return (currentPage * size) + (totalItems%currentPage);
+    return (currentPage * totalItems) + (totalItems%currentPage);
   };
   if (fetching || isEmpty) return null;
   return (
@@ -43,12 +44,11 @@ function Footer(props) {
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">
-        <Pagination
-          totalPage={totalPages}
+      <Pagination
+          total={totalPages}
           page={currentPage}
-          totalItem={totalItems}
-          size={size}
-          fetchMainCard={fetchMainCard}
+          size={totalItems}
+          onClick={onChangePage}
         />
       </div>
     </div>

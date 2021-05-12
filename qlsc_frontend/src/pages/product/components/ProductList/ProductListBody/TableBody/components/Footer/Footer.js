@@ -59,7 +59,7 @@ Footer.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { mainCards: { mainCard: { total, page }, ui: { fetching } } } = state;
+  const { mainCard: { mainCard: { total, page }, ui: { fetching } } } = state;
   return {
     total,
     page,

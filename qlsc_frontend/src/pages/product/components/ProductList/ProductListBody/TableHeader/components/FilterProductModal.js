@@ -427,7 +427,7 @@ FilterProductModal.defaultProps = {
 };
 const mapStateToProps = (state) => {
   const {
-    mainCards: { filterInfo },
+    mainCard: { filterInfo },
   } = state;
   return {
     filterInfo,

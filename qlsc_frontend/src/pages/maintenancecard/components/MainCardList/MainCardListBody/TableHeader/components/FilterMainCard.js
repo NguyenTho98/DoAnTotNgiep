@@ -7,6 +7,7 @@ import debounce from 'utils/debounce';
 import '../styles/filterMainCard.scss';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
 import { default_option, default_status_work, default_status_work_detail, default_status_payment, default_status_payment_detail } from 'pages/maintenancecard/commons/mainCardConstants.js';
+import { fetchMainCard, showFilter } from '../../../../../actions/mainCard';
 
 function FilterMainCard(props) {
   const { showFilter } = props;
@@ -38,7 +39,7 @@ function FilterMainCard(props) {
     if (filterName === default_option[1]) {
       filterInfo.selectedLocation = [];
     }
-    // props.fetchOrderCollation(filterInfo);
+    props.fetchMainCard(filterInfo);
   };
 
   const searchChange = debounce((e) => search(e), 400);
@@ -73,7 +74,7 @@ function FilterMainCard(props) {
   const search = (e) => {
     const { filterInfo } = props;
     filterInfo.filterText = e;
-    // props.fetchOrderCollation(filterInfo);
+    // props.fetchMainCard(filterInfo);
   };
   return (
     <div id="filter-delivery-collations-wrapper">
@@ -128,7 +129,7 @@ function FilterMainCard(props) {
 FilterMainCard.defaultProps = {
 };
 const mapStateToProps = state => {
-  const { mainCards: { filterInfo, ui: { fetching } } } = state;
+  const { mainCard: { filterInfo, ui: { fetching } } } = state;
   return {
     filterInfo,
     fetching,
@@ -137,7 +138,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
   showFilter: (show) => dispatch(showFilter(show)),
-  // fetchOrderCollation: (filter, page) => dispatch(fetchOrderCollation(filter, page))
+  fetchMainCard: (filter, page) => dispatch(fetchMainCard(filter, page))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterMainCard);

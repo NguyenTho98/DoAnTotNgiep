@@ -1,53 +1,54 @@
-import React from 'react';
-import Pagination from 'components/Pagination/Pagination';
-import { connect } from 'react-redux';
-import '../../styles/footer.scss';
+import React, { useState } from "react";
+import Pagination from "components/Pagination/Pagination";
+import { connect } from "react-redux";
+import "../../styles/footer.scss";
 
 function Footer(props) {
+  const { mainCards, fetchMainCard, isEmpty , fetching} = props;
+  const { currentPage, totalItems, totalPages, mainCardList } = mainCards;
+  const [size, setSize] = useState(10);
+
   const calculateBegin = () => {
-    const { page, size } = props;
-    const pageTmp = page - 1;
-    if (pageTmp === 0) {
+    if (currentPage === 1) {
       return 1;
-    } return size * pageTmp + 1;
+    }
+    if (currentPage === totalPages) {
+      return (size * (currentPage - 1) + mainCardList.length);
+    }
+    return (size * currentPage) + 1;
   };
 
   const calculateEnd = () => {
-    const { page, size, total } = props;
-    const pageTmp = page - 1;
-    const per = total / size;
-    if (per <= 1) {
-      return total;
+    if (totalPages === 1) {
+      return totalItems + 1;
     }
-    if (pageTmp < Math.floor(per)) {
-      return (pageTmp + 1) * size;
-    } return total;
+    if (currentPage === 1) {
+      return (currentPage * size);
+    }
+    if (totalPages > currentPage) {
+      return ((currentPage + 1) * size);
+    }
+    if (currentPage === totalPages) {
+      return totalItems + 1;
+    }
+    return (currentPage * size) + (totalItems%currentPage);
   };
-
-  const onChangePage = (id) => {
-    const { onClick, resetSelected } = props;
-    onClick(id);
-    resetSelected();
-  };
-
-  const {
-    total, page, size, fetching, isEmpty
-  } = props;
   if (fetching || isEmpty) return null;
   return (
     <div className="d-flex delivery-collations-footer">
       <div className="result-info">
         Hiển thị kết quả từ&nbsp;
         {calculateBegin()} -&nbsp;
-        {calculateEnd()} trên tổng {total}
+        {calculateEnd()} trên tổng {totalItems + 1}
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">
         <Pagination
-          total={total}
-          page={page}
+          totalPage={totalPages}
+          page={currentPage}
+          totalItem={totalItems}
           size={size}
-          onClick={onChangePage}
+          fetchMainCard={fetchMainCard}
         />
       </div>
     </div>
@@ -55,20 +56,7 @@ function Footer(props) {
 }
 
 Footer.defaultProps = {
-  size: 20,
+  size: 10,
 };
 
-const mapStateToProps = (state) => {
-  const { mainCards: { mainCard: { total, page }, ui: { fetching } } } = state;
-  return {
-    total,
-    page,
-    fetching,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onClick: (page) => dispatch(fetchMainCard(null, page)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+export default connect(null, null)(Footer);

@@ -65,7 +65,7 @@ public class MaintenanceCardsModel implements Serializable {
     @JsonProperty("modified_date")
     private Date modifiedDate;
 
-    @JsonProperty("modified_date")
+    @JsonProperty("created_date")
     private Date createdDate;
 
 }

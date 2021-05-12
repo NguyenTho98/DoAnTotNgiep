@@ -1,33 +1,28 @@
 import * as actionTypes from 'actions/actionTypes';
 
 const initState = {
-  items: {},
-  total: 0,
-  page: 1,
-  selectedIds: [],
-  listOrderCollation: [],
-  checkCreate: false,
+  currentPage: 0,
+  mainCardList: [],
+  totalItems: 0,
+  totalPages: 0,
+  mainCard: {},
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
-    // case actionTypes.GET_MAIN_CARD: {
-    //   return {
-    //     ...state,
-    //     items: action.data.items,
-    //     total: action.data.total,
-    //     page: action.data.page,
-    //   };
-    // }
-    // case actionTypes.SELECTED_MAIN_CARD_IDS: {
-    //   const tmp = filterOrderCollation(action.ids, state.items);
-    //   return {
-    //     ...state,
-    //     selectedIds: action.ids,
-    //     listOrderCollation: tmp.list,
-    //     checkCreate: tmp.check,
-    //   };
-    // }
+    case actionTypes.RECEIVE_MAIN_CARDS:
+      return {
+        ...state,
+        mainCardList: action.maintenancecards,
+        currentPage: action.currentPage,
+        totalItems: action.totalItems,
+        totalPages: action.totalPages,
+      };
+    case actionTypes.RECEIVE_MAIN_CARD:
+      return {
+        ...state,
+        mainCard: action.mainCard,
+      };
     // case actionTypes.UPDATE_MAIN_CARD: {
     //   return {
     //     ...state,

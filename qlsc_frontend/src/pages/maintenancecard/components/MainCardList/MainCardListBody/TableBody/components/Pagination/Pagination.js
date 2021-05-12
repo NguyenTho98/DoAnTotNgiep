@@ -1,12 +1,10 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 
 function Pagination(props) {
   const selectPageNumber = (pageNum) => {
-    const { page, onClick } = props;
+    const { page, fetchMainCard } = props;
     if (page !== pageNum) {
-      onClick(pageNum);
+      fetchMainCard( null,pageNum);
     }
   };
 

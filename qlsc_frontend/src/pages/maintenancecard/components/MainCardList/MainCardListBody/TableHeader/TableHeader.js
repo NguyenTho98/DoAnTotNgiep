@@ -15,7 +15,7 @@ function TableHeader(props) {
 }
 
 const mapStateToProps = state => {
-  const { mainCards: { filterInfo } } = state;
+  const { mainCard: { filterInfo } } = state;
   const showFilter = filterInfo && filterInfo.showFilter;
   return {
     showFilter,

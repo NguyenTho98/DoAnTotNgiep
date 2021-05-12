@@ -116,9 +116,8 @@ function Header(props) {
   );
 }
 const mapStateToProps = (state) => {
-  const { mainCards: { filterInfo, mainCard: { checkCreate } } } = state;
+  const { mainCard: { filterInfo, } } = state;
   return {
-    checkCreate,
     filterInfo,
   };
 };

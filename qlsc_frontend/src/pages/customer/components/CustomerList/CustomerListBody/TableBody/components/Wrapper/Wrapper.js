@@ -33,7 +33,7 @@ function Wrapper(props) {
     return (
       <div className="count-check">
         <span className="details">
-          Đã chọn ({selectedIds.length} đơn hàng)
+          Đã chọn ({selectedIds.length} khách hàng)
         </span>
       </div>
     );
@@ -63,7 +63,9 @@ function Wrapper(props) {
           onClick={onClick}
           checked={selectedIds.length && selectedIds.length === customers.length}
           minus={selectedIds.length && selectedIds.length < customers.length}
-          child={child} />
+          child={child} 
+          selectedIds={selectedIds}
+          />
         <List
           ref={listRef}
           customer={customer}

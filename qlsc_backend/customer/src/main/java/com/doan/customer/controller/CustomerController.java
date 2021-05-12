@@ -56,7 +56,7 @@ public class CustomerController {
         return ResponseEntity.ok("Success");
     }
 
-    @DeleteMapping("customers/updateStatus")
+    @PostMapping("customers/updateStatus")
     public CustomerRes updateMultipleStatusCustomer(
             @RequestParam(name = "ids", required = false, defaultValue = "") List<Long> ids) {
         return customerService.updateMultipleStatusCustomer(ids);

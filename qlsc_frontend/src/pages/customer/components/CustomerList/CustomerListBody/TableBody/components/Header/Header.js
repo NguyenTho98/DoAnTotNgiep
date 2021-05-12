@@ -1,14 +1,15 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { useHistory } from 'react-router';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
 import '../../styles/header.scss';
 import { connect } from 'react-redux';
+import { openModal } from '../../../../../../../../components/modal/modalActions';
 
 function Header(props) {
+  const { selectedIds, onOpenModalDelete } = props;
   const deleteCustomer = () => {
-    alert("xin cahfo")
+    if (selectedIds.length) {
+      onOpenModalDelete("deleteCustomer", { ids: selectedIds});
+    }
   };
 
   const renderBulkAction = () => {
@@ -99,5 +100,9 @@ function Header(props) {
     </div>
   );
 }
-;
-export default connect(null, null)(Header);
+
+const mapDispatchToProps = (dispatch) => ({
+  onOpenModalDelete: (modalName, data) => dispatch(openModal(modalName, data)),
+});
+
+export default connect(null, mapDispatchToProps)(Header);

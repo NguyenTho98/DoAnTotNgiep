@@ -78,7 +78,7 @@ export const deleteCustomer = (ids = []) => (dispatch, getState) => {
   const endpoint = `${API_CUSTOMER}/customers/updateStatus?ids=${ids}`;
   return dispatch(
     fetch(endpoint, {
-      method: "DELETE",
+      method: "POST",
     })
   )
     .then((json) => {

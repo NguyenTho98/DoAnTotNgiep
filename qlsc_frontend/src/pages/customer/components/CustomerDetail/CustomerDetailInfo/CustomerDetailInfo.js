@@ -22,7 +22,7 @@ function CustomerDetailInfo(props) {
     return txtAddress;
   }
   const handleDeleteCustomer = () => {
-    onOpenModalDelete("deleteCustomer", { id: customer.id });
+    onOpenModalDelete("deleteCustomer", { customer });
   }
   const dateTime = customer && customer.createdDate ? convertSecondToDate(customer.createdDate) : '---';
   return (

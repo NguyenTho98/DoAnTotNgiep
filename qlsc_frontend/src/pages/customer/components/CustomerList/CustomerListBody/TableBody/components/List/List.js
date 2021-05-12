@@ -1,5 +1,5 @@
 
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useEffect } from 'react';
 import "../../styles/list.scss";
 import Item from "../Item/Item";
 
@@ -8,12 +8,15 @@ import { normalize, schema } from 'normalizr';
 const customersTemp = new schema.Entity('items');
 
 const List = forwardRef((props, ref) => {
-  const { customer, fetching, isEmpty, selectedIds, onCheckBoxClick } = props;
+  const { customer, fetching, isEmpty, onCheckBoxClick, onCheckBoxListClick, selectedIds } = props;
   const { customers } = customer;
+
+  useEffect(() => {
+    if (fetching) onCheckBoxListClick([]);
+  }, [fetching])
 
   useImperativeHandle(ref, () => ({
     onCheckAll() {
-      const { onCheckBoxListClick, selectedIds } = props;
       if (customers.length !== selectedIds.length) {
         const normalized = normalize(customers, [customersTemp]);
         const itemIds = normalized.result;

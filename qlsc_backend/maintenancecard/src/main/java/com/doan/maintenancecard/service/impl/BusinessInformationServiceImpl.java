@@ -11,9 +11,14 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -53,17 +58,20 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
     }
 
     private List<TotalMoney> getTotalMonies(String from, String to) {
-        int startDay = Integer.parseInt(from.substring(0, 2));
-        int endDay = Integer.parseInt(to.substring(0, 2));
-        int startMonth = Integer.parseInt(from.substring(3, 5));
-        int endMonth = Integer.parseInt(to.substring(3, 5));
-        List<String> dates = getDates(startDay, endDay, startMonth, endMonth, from, to);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+        LocalDate newFrom = LocalDate.parse(from, formatter);
+        LocalDate newTo = LocalDate.parse(to, formatter).plusDays(1);
+        List<LocalDate> dates = getDatesBetween(newFrom, newTo);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_FORMAT);
+        List<String> strDates = new ArrayList<>();
+        dates.forEach(date -> strDates.add(date.format(format)));
         List<TotalMoney> monies = new ArrayList<>();
         try {
-            dates.forEach(date -> {
+            strDates.forEach(date -> {
                 TotalMoney totalMoney = businessInformationCustom.getMoney(date);
                 if (totalMoney.getTime() == null) {
-                    totalMoney.setTime(date);
+                    totalMoney.setTime(date.substring(0, 5));
+                    totalMoney.setDateText(date);
                 }
                 if (totalMoney.getTotal() == null) {
                     totalMoney.setTotal(BigDecimal.valueOf(0));
@@ -76,35 +84,11 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
         return monies;
     }
 
-    private List<String> getDates(int startDay, int endDay,
-                                  int startMonth, int endMonth,
-                                  String from, String to) {
-        List<String> dates = new ArrayList<>();
-        if (endMonth - startMonth == 0) {
-            for (int i = startDay; i <= endDay; i++) {
-                if (i < 10) {
-                    dates.add("0" + i + from.substring(2));
-                } else {
-                    dates.add(i + from.substring(2));
-                }
-            }
-        } else if (endMonth - startMonth == 1) {
-            for (int i = startDay; i <= 31; i++) {
-                if (i < 10) {
-                    dates.add("0" + i + from.substring(2));
-                } else {
-                    dates.add(i + from.substring(2));
-                }
-            }
-            for (int i = 1; i <= endDay; i++) {
-                if (i < 10) {
-                    dates.add("0" + i + to.substring(2));
-                } else {
-                    dates.add(i + to.substring(2));
-                }
-            }
-        }
-        return dates;
+    public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
+        long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+        return IntStream.iterate(0, i -> i + 1)
+            .limit(numOfDaysBetween)
+            .mapToObj(startDate::plusDays)
+            .collect(Collectors.toList());
     }
-
 }

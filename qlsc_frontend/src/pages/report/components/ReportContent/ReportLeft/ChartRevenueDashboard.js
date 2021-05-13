@@ -3,63 +3,6 @@ import React from "react";
 import ReactHighcharts from "react-highcharts";
 import { ChartConfig } from "components/Chart/ChartConfig";
 
-const getDateMonthYear = (objTime, groupBy) => {
-  let time = "";
-  if (groupBy === "day") {
-    time = time
-      .concat(
-        objTime.day_of_month <= 9
-          ? `0${objTime.day_of_month}/`
-          : `${objTime.day_of_month}/`
-      )
-      .concat(
-        objTime.month_of_year <= 9
-          ? `0${objTime.month_of_year}`
-          : `${objTime.month_of_year}`
-      );
-  }
-  if (groupBy === "week") {
-    let startDay = "";
-    let startWeek = "";
-    let endDay = "";
-    let endWeek = "";
-    if (objTime.day_of_week_start_text) {
-      startDay =
-        parseInt(objTime.day_of_week_start_text.split("/")[0]) <= 9
-          ? `0${objTime.day_of_week_start_text.split("/")[0]}`
-          : `${objTime.day_of_week_start_text.split("/")[0]}`;
-      startWeek =
-        parseInt(objTime.day_of_week_start_text.split("/")[1]) <= 9
-          ? `0${objTime.day_of_week_start_text.split("/")[1]}`
-          : `${objTime.day_of_week_start_text.split("/")[1]}`;
-    }
-    if (objTime.day_of_week_end_text) {
-      endDay =
-        parseInt(objTime.day_of_week_end_text.split("/")[0]) <= 9
-          ? `0${objTime.day_of_week_end_text.split("/")[0]}`
-          : `${objTime.day_of_week_end_text.split("/")[0]}`;
-      endWeek =
-        parseInt(objTime.day_of_week_end_text.split("/")[1]) <= 9
-          ? `0${objTime.day_of_week_end_text.split("/")[1]}`
-          : `${objTime.day_of_week_end_text.split("/")[1]}`;
-    }
-    time = time.concat(`${startDay}/${startWeek} - ${endDay}/${endWeek}`);
-  }
-  if (groupBy === "month") {
-    time = time
-      .concat(
-        objTime.month_of_year <= 9
-          ? `0${objTime.month_of_year}/`
-          : `${objTime.month_of_year}/`
-      )
-      .concat(objTime.year);
-  }
-  if (groupBy === "year") {
-    time = objTime.year;
-  }
-  return time;
-};
-
 function ChartRevenueDashboard(props) {
   const { revenue } = props;
   const getRevenueInfo = () => {
@@ -70,8 +13,8 @@ function ChartRevenueDashboard(props) {
 
     revenue.forEach((el) => {
       data = {
-        listTime: data.listTime.concat(getDateMonthYear(el, el.group_by)),
-        totalAmount: data.totalAmount.concat(el.total_amount),
+        listTime: data.listTime.concat(el.time),
+        totalAmount: data.totalAmount.concat(el.total),
       };
     });
     return data;

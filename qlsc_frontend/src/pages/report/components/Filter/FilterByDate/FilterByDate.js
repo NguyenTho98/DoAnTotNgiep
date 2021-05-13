@@ -71,7 +71,7 @@ function FilterByDate(props) {
     const lastParams = getNewParams(`?${newParams}`, 'e', picker.endDate.unix());
     pushstate(history, `/report?${lastParams}`);
   };
-
+  
   useEffect(() => {
     const startTime = searchParams.get('s');
     const endTime = searchParams.get('e');

@@ -84,7 +84,6 @@ public class MaintenanceCardController {
     public ResponseEntity<Map<String, Object>> getMaintenanceCardsByIdCustomer(@ModelAttribute("maintenanceCardCustomer") MaintenanceCardCustomer maintenanceCardCustomer) {
         Map<String, Object> allMaintenanceCards = maintenanceCardService.getMaintenanceCardByIdCustomer(maintenanceCardCustomer);
         return new ResponseEntity<>(allMaintenanceCards, HttpStatus.OK);
-
     }
 
     // Kiem tra quyen : NV sua chua
@@ -139,7 +138,6 @@ public class MaintenanceCardController {
         Map<String, Object> map = maintenanceCardService.getMaintenanceCardByRepairMan(maintenanceCardUser);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
 
     @GetMapping("/maintenance_cards_v2")
     public ResponseEntity<MaintenanceCardsResponse> getMaintenanceCards(@Valid MaintenanceCardsFilterRequest filterRequest) {

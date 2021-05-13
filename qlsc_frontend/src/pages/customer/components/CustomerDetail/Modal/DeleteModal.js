@@ -31,7 +31,7 @@ function DeleteModal(props) {
     } else if (
       deleteCustomer &&
       deleteCustomer.data &&
-      deleteCustomer.data.ids && 
+      deleteCustomer.data.ids &&
       deleteCustomer.data.ids.length
     ) {
       onDeleteCustomer(deleteCustomer.data.ids).then((json) => {
@@ -76,7 +76,7 @@ function DeleteModal(props) {
     <Modal
       show
       onHide={handleClose}
-      size="lg"
+      size="md"
       dialogClassName="modal-create-customer"
     >
       <Modal.Header closeButton>

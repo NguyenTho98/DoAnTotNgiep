@@ -49,7 +49,7 @@ public class MaintenanceCardV1 extends com.doan.maintenancecard.dao.Entity {
     @Column(name = "coordinator_name")
     private String coordinatorName;
 
-//    @Column(name = "coordinator_email")
+    @Column(name = "coordinator_email")
     private String coordinatorEmail;
 
     @Column(name = "description", columnDefinition = "text(5000)")

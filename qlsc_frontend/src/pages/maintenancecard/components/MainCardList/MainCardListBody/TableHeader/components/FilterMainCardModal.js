@@ -8,17 +8,21 @@ import { connect } from 'react-redux';
 import * as Icons from 'pages/maintenancecard/commons/Icons';
 import { default_option, default_status_work, default_status_work_detail, default_status_payment, default_status_payment_detail } from 'pages/maintenancecard/commons/mainCardConstants.js';
 import '../styles/filterMainCardModal.scss';
-// import { fetchOrderCollation, showFilter } from '../../../../../actions/mainCard';
+import { fetchMainCard, showFilter } from '../../../../../actions/mainCard';
 
 registerLocale('vi', vi);
-function FilterOrderCollationsModal(props) {
+function FilterMainCardsModal(props) {
   const { filterInfo, showFilter } = props;
   const [listOption, setListOption] = useState([]);
   const [statusWork, setStatusWork] = useState('');
   const [statusPayment, setStatusPayment] = useState('');
   const [endDate, setEndDate] = useState('');
   const [startDate, setStartDate] = useState('');
+  const [focusEndDate, setFocusEndDate] = useState(true);
+  const [focusStartDate, setFocusStartDate] = useState(true);
   const myRef = useRef();
+  const calendar1 = useRef();
+  const calendar2 = useRef();
 
   useEffect(() => {
     if (filterInfo
@@ -60,7 +64,7 @@ function FilterOrderCollationsModal(props) {
     if (option === 'statusPayment') {
       return 'Trạng thái thanh toán';
     }
-    if (option === 'datetime') {
+    if (option === 'date') {
       return 'Thời gian trả xe';
     }
     return null;
@@ -111,7 +115,7 @@ function FilterOrderCollationsModal(props) {
         if (option === 'statusPayment') {
           setStatusPayment('');
         }
-        if (option === 'datetime') {
+        if (option === 'date') {
           setEndDate('');
           setStartDate('');
         }
@@ -156,7 +160,7 @@ function FilterOrderCollationsModal(props) {
         selectedFilter.push(option);
       }
       if (
-        option === 'datetime'
+        option === 'date'
       ) {
         selectedFilter.push(option);
       }
@@ -165,11 +169,12 @@ function FilterOrderCollationsModal(props) {
       selectedFilter,
       filterText: props.filterInfo.filterText,
       statusWork,
-      statusPaymentl,
+      statusPayment,
       endDate,
       startDate,
     };
-    // props.fetchOrderCollation(afterInfo);
+    console.log("afterInfo", afterInfo);
+    props.fetchMainCard(afterInfo);
   };
 
   const showDropdownSource = () => {
@@ -281,63 +286,70 @@ function FilterOrderCollationsModal(props) {
     }
   };
 
+  const onClickFocusEndDate = () => {
+    setFocusEndDate(!focusEndDate);
+    calendar2.current.setOpen(focusEndDate);
+  };
+
+  const onClickFocusStartDate = () => {
+    setFocusStartDate(!focusStartDate);
+    calendar2.current.setOpen(focusStartDate);
+  };
+
+
   const renderShowOption = (option) => {
-    // if (option === 'location') {
-    //   const { locations } = props;
-    //   const arrLocations = Object.values(locations);
-    //   const listStoreElm = arrLocations.map((store, index) => {
-    //     return (
-    //       <div
-    //         className="dropdown-item dropdown-item-delivery-collations-filter item-store"
-    //         key={index}
-    //         onClick={() => selectBranch(store.id)}
-    //       >
-    //         <div className="fpbsm-store-option-checkbox">
-    //           <input
-    //             type="checkbox"
-    //             className="styledCheckbox"
-    //             checked={selectedLocation.includes(store.id)}
-    //           />
-    //           <span className="styledCheckbox_span">
-    //             <Icons.CheckMarkThick />
-    //           </span>
-    //         </div>
-    //         <div className="dropdown-item-delivery-collations-filter">
-    //           {store.label}
-    //         </div>
-    //       </div>
-    //     );
-    //   });
-    //   return (
-    //     <div className="filter-delivery-collations-detail">
-    //       <button
-    //         type="button"
-    //         className="dropdown-toggle button-fillter-delivery-collations-dropdown"
-    //         id="button-source-dropdown"
-    //         onClick={() => showDropdownSource()}
-    //       >
-    //         {getFilterByBranchText(arrLocations)}
-    //         <Icons.Arrow />
-    //       </button>
-    //       <div
-    //         className={`dropdown-menu dropdown-item-delivery-collations-filter ${
-    //           showDropdownBranch ? 'show' : null
-    //         }`}
-    //         id="dropdown-delivery-collations-source"
-    //       >
-    //         {listStoreElm}
-    //       </div>
-    //     </div>
-    //   );
-    // }
+    if (option === 'date') {
+      return (
+        <div>
+          <div id="old-order-prepayment-datetime">
+            <DatePicker
+              closeOnScroll
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              dateFormat="dd/MM/yyyy"
+              endDate={endDate}
+              placeholderText="Từ ngày"
+              locale="vi"
+              ref={calendar1}
+            />
+            <span className="icon-calendar" onClick={onClickFocusStartDate}>
+              <Icons.IconCalendar />
+            </span>
+          </div>
+          <div
+            id="old-order-prepayment-datetime"
+            style={{ marginTop: '10px' }}
+          >
+            <DatePicker
+              closeOnScroll
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+              placeholderText="Đến ngày"
+              dateFormat="dd/MM/yyyy"
+              locale="vi"
+              ref={calendar2}
+            />
+            <span className="icon-calendar" onClick={onClickFocusEndDate}>
+              <Icons.IconCalendar />
+            </span>
+          </div>
+        </div>
+      );
+    }
 
     if (option === 'statusWork') {
       const list_button_work = default_status_work.map((a, index) => {
         return (
           <button
             key={index}
-            className={`filter-delivery-collations-button ${status === index + 1 ? 'active' : null}`}
-            onClick={() => selectStatusPayment(index)}
+            className={`filter-delivery-collations-button ${statusWork === index + 1 ? 'active' : null}`}
+            onClick={() => selectStatusWork(index)}
             type="button"
           >
             {default_status_work_detail[index]}
@@ -356,8 +368,8 @@ function FilterOrderCollationsModal(props) {
         return (
           <button
             key={index}
-            className={`filter-delivery-collations-button ${status === index + 1 ? 'active' : null}`}
-            onClick={() => selectStatusWork(index)}
+            className={`filter-delivery-collations-button ${statusPayment === index + 1 ? 'active' : null}`}
+            onClick={() => selectStatusPayment(index)}
             type="button"
           >
             {default_status_payment_detail[index]}
@@ -423,11 +435,11 @@ function FilterOrderCollationsModal(props) {
     </div>
   );
 }
-FilterOrderCollationsModal.defaultProps = {
+FilterMainCardsModal.defaultProps = {
 };
 const mapStateToProps = (state) => {
   const {
-    mainCards: { filterInfo },
+    mainCard: { filterInfo },
   } = state;
   return {
     filterInfo,
@@ -435,8 +447,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  // showFilter: (show) => dispatch(showFilter(show)),
-  // fetchOrderCollation: (filter, page) => dispatch(fetchOrderCollation(filter, page))
+  showFilter: (show) => dispatch(showFilter(show)),
+  fetchMainCard: (filter, page) => dispatch(fetchMainCard(filter, page))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilterOrderCollationsModal);
+export default connect(mapStateToProps, mapDispatchToProps)(FilterMainCardsModal);

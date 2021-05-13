@@ -1,49 +1,49 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import '../../styles/item.scss';
-import ReactTooltip from 'react-tooltip';
-import { moneyFormat } from 'utils/moneyFormat';
-import * as Icons from 'pages/maintenancecard/commons/Icons';
-
-
+import React from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router";
+import { withRouter } from "react-router-dom";
+import "../../styles/item.scss";
+import ReactTooltip from "react-tooltip";
+import pushstate from "utils/pushstate";
 function Item(props) {
-  const { checked } = props;
+  const { checked, mainCard } = props;
+  const history = useHistory();
+  console.log("mainCard", mainCard);
   const onCheck = (e) => {
     e.stopPropagation();
     const { onCheckBoxClick } = props;
-    onCheckBoxClick(id);
+    onCheckBoxClick(mainCard.id);
   };
 
+  const onRedirectDetail = (e) => {
+    e.stopPropagation();
+    pushstate(history, `/mainCard/detail/${mainCard.id}`);
+  };
 
   return (
     <div className="main-card-item-wrapper">
       <div
         className="d-flex main-card-listing-item"
+        onClick={(e) => onRedirectDetail(e)}
       >
-        <div role="presentation" className="checkbox header-checkbox" onClick={(e) => onCheck(e)}>
-          <input
-            type="checkbox"
-            name="check"
-            checked={checked}
-            readOnly
-          />
+        <div
+          role="presentation"
+          className="checkbox header-checkbox"
+          onClick={(e) => onCheck(e)}
+        >
+          <input type="checkbox" name="check" checked={checked} readOnly />
           <label />
         </div>
-        <div className="">
-          &nbsp;&nbsp;
-        </div>
+        <div className="">&nbsp;&nbsp;</div>
         <div className="margin-right20 item-list text-ellipsis">
           <span className="item-name">
             <a
               data-tip
               data-for={`order_collation_number_id_${1}`}
-            //   href={calcHref(connection.channel_type)}
               target="_blank"
-              style={{ textDecoration: 'none' }}
+              style={{ textDecoration: "none", color: "#007bff" }}
             >
-              CODE01
+              {(mainCard && mainCard.code) || "---"}
               <ReactTooltip
                 place="top"
                 type="dark"
@@ -51,38 +51,41 @@ function Item(props) {
                 isMultiline
                 id={`order_collation_number_id_${1}`}
               >
-                CODE01
+                {(mainCard && mainCard.code) || "---"}
               </ReactTooltip>
-
             </a>
           </span>
         </div>
         <div className="margin-right20 item-list text-ellipsis">
-            Nguyễn Thọ
+          {(mainCard && mainCard.customer_name) || ""}
         </div>
-        <div className="margin-right20 delivery-collation-location"
+        <div
+          className="margin-right20 delivery-collation-location"
           data-tip
           data-for={`delivery-collation-location_${1}`}
         >
-            99F1-24906
+          {(mainCard && mainCard.customer_name) || "---"}
         </div>
-        <div className="margin-right20 item-list" style={{ color: status.color }}>
-            Nhân viên 01
+        <div
+          className="margin-right20 item-list"
+          style={{ color: status.color }}
+        >
+          {(mainCard && mainCard.coordinator_name) || ""}
         </div>
-        <div className="margin-right20 item-list delivery-collation-code">
-            Nhân viên 02
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.repairman_name) || ""}
         </div>
-        <div className="margin-right20 item-list order-collations-total-amount">
-            Đã thanh toán
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.pay_status) || ""}
         </div>
-        <div className="margin-right20 item-list order-collations-ship-fee">
-            Đang sửa
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.work_status) || ""}
         </div>
-        <div className="margin-right20 item-list order-collations-paid">
-            21/09/2020
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.return_date) || ""}
         </div>
-        <div className="margin-right20 item-list order-collations-paid">
-            100,000 đ
+        <div className="margin-right20 item-list">
+          {(mainCard && mainCard.price  ) || ""}
         </div>
       </div>
     </div>
@@ -93,4 +96,4 @@ Item.defaultProps = {
   item: {},
 };
 
-export default connect(null, null)(Item);
+export default withRouter(connect(null, null)(Item));

@@ -74,8 +74,8 @@ public interface MaintenanceCardRepository extends JpaRepository<MaintenanceCard
         @Param("_query") String _query,
         @Param("_work_status_ids") String _work_status_ids,
         @Param("_pay_status_ids") String _pay_status_ids,
-        @Param("_from") Long _from,
-        @Param("_to") Long _to,
+        @Param("_from") Date _from,
+        @Param("_to") Date _to,
         @Param("_limit") int _limit,
         @Param("_offset") int _offset);
 
@@ -84,6 +84,6 @@ public interface MaintenanceCardRepository extends JpaRepository<MaintenanceCard
         @Param("_query") String _query,
         @Param("_work_status_ids") String _work_status_ids,
         @Param("_pay_status_ids") String _pay_status_ids,
-        @Param("_from") Long _from,
-        @Param("_to") Long _to);
+        @Param("_from") Date _from,
+        @Param("_to") Date _to);
 }

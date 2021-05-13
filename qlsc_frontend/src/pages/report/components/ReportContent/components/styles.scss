@@ -29,6 +29,22 @@
         }
     }
 
+    .content_body__bottom_empty {
+        display: flex;
+        margin: auto;
+
+        .number_empty {
+            margin: 31px auto;
+
+            .txt_empty {
+                text-align: center;
+                font-size: 14px;
+                color: #BDBDBD;
+                margin-top: 10px;
+            }
+        }
+    }
+
     .cnt-header {
         display: flex;
         width: 100%;
@@ -41,6 +57,8 @@
 
     .cnt-body {
         height: 180px;
+        max-height: 180px;
+        overflow: auto;
 
         .line-item {
             display: flex;

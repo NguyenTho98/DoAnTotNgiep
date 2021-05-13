@@ -12,7 +12,6 @@ import lombok.Setter;
 public class BusinessToday {
 
     private int totalMaintenanceCard;
-    private int totalMaintenanceCardByDay;
     private int totalMaintenanceCardSuccess;
     private int totalMaintenanceCardScNotPay;
     private int totalMaintenanceCardScPayed;

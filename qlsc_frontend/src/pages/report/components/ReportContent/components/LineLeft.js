@@ -1,34 +1,28 @@
 import React from "react";
 import "./styles.scss";
+import ChartEmpty from "./ChartEmpty";
 
-function LineLeft() {
+function LineLeft(props) {
+  const { data } = props;
   const renderLineItem = () => {
     return (
       <div className="cnt-body">
-        <div className="line-item">
-          <div className="cnt" style={{ width: "50%" }}>
-            Bui manh
-          </div>
-          <div className="cnt" style={{ width: "50%", textAlign: "right" }}>
-            10
-          </div>
-        </div>
-        <div className="line-item">
-          <div className="cnt" style={{ width: "50%" }}>
-            Bui manh
-          </div>
-          <div className="cnt" style={{ width: "50%", textAlign: "right" }}>
-            10
-          </div>
-        </div>
-        <div className="line-item">
-          <div className="cnt" style={{ width: "50%" }}>
-            Bui manh
-          </div>
-          <div className="cnt" style={{ width: "50%", textAlign: "right" }}>
-            10
-          </div>
-        </div>
+        {data.length &&
+          data.map((item, index) => {
+            return (
+              <div className="line-item" key={index}>
+                <div className="cnt" style={{ width: "50%" }}>
+                  {item.name || ""}
+                </div>
+                <div
+                  className="cnt"
+                  style={{ width: "50%", textAlign: "right" }}
+                >
+                  {item.total || ""}
+                </div>
+              </div>
+            );
+          })}
       </div>
     );
   };
@@ -36,15 +30,24 @@ function LineLeft() {
     <div className="report-top-staff-component report-border ">
       <div className="report-title">Nhân viên nổi bật</div>
       <div className="content">
-        <div className="cnt-header">
-          <div className="title" style={{ width: "50%" }}>
-            Tên nhân viên
-          </div>
-          <div className="title" style={{ width: "50%", textAlign: "right" }}>
-            Tổng số phiếu
-          </div>
-        </div>
-        {renderLineItem()}
+        {data && !data.length ? (
+          <ChartEmpty text="Không đủ dữ liệu để hiển thị" />
+        ) : (
+          <React.Fragment>
+            <div className="cnt-header">
+              <div className="title" style={{ width: "50%" }}>
+                Tên nhân viên
+              </div>
+              <div
+                className="title"
+                style={{ width: "50%", textAlign: "right" }}
+              >
+                Tổng số phiếu
+              </div>
+            </div>
+            {renderLineItem()}
+          </React.Fragment>
+        )}
       </div>
     </div>
   );

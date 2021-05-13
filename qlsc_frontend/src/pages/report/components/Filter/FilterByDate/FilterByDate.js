@@ -54,18 +54,8 @@ const locale = {
   separator: ' - ',
 };
 
-const getRenderStartDate = (start, end) => {
-  let data = new Date();
-  const localeTime = data.toLocaleDateString('en-GB');
-  if (!start) {
-    return `${localeTime} - ${localeTime}`;
-  }
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  return `${startDate.toLocaleDateString('en-GB')} - ${endDate.toLocaleDateString('en-GB')}`;
-};
-
-function FilterByDate() {
+function FilterByDate(props) {
+  const { onGetDataByFilter } = props;
   const history = useHistory();
   const { search } = history.location;
   const searchParams = new URLSearchParams(search);
@@ -89,6 +79,7 @@ function FilterByDate() {
     const e = convertUnixToDate(endTime ? endTime : moment().unix());
     setStartDate(startTime ? convertDateToMoment(s) : moment().subtract(6, 'days'));
     setEndDate(endTime ? convertDateToMoment(e) : moment());
+    onGetDataByFilter(s, e);
   }, [search]);
 
   return (

@@ -17,6 +17,7 @@ public class UserDTO extends BaseDTO{
     private String address;
     private byte status;
     private byte role;
+    private String text;
     @JsonProperty("message_number")
     private int messageNumber;
     private int totalMaintenanceCard;

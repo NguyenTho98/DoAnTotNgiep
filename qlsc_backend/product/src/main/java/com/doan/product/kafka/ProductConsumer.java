@@ -7,7 +7,6 @@ import com.doan.product.entity.Product;
 import com.doan.product.repository.ProductHistoryRepository;
 import com.doan.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -23,7 +22,7 @@ public class ProductConsumer {
     private final ProductRepository productRepository;
     private final ProductHistoryRepository productHistoryRepository;
 
-    //    @KafkaListener(topics = {"lhw3k9sy-product"},groupId = "Group_id_1")
+    @KafkaListener(topics = {"lhw3k9sy-product"}, groupId = "Group_id_1")
     public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) throws JsonProcessingException {
         ProductModel productModel = new ObjectMapper().readValue(message, ProductModel.class);
         try {
@@ -42,7 +41,6 @@ public class ProductConsumer {
                 } else if (productModel.getStatus() == 2) {
                     productHistory.setNote("Xóa khỏi đơn" + productModel.getCode().toUpperCase());
                 }
-//                productHistory.setNote("Hoàn thành đơn "+ productModel.getCode().toUpperCase());
                 productHistory.setProductId(product.getId());
                 productHistory.setStockRemain(product.getQuantity());
                 productHistory.setCreatedDate(now);
@@ -53,10 +51,5 @@ public class ProductConsumer {
             e.printStackTrace();
         }
     }
-//    @KafkaListener(topics = {"Kafka_json5"},groupId = "Group_json",containerFactory = "productDTOKafkaListenerContainerFactory")
-//    public void consumeJson(ProductDTO productDTO){
-//        System.out.println(productDTO);
-////        productService.insertProduct(productDTO);
-//    }
 
 }

@@ -24,6 +24,7 @@ public class UserConverter {
         userDTO.setCreatedDate(user.getCreatedDate());
         userDTO.setModifiedDate(user.getModifiedDate());
         userDTO.setId(user.getId());
+        userDTO.setText(user.getFullName());
         userDTO.setAddress(user.getAddress());
         userDTO.setRole(user.getRole());
         userDTO.setMessageNumber(messageService.countMessageByUserId(user.getId()));

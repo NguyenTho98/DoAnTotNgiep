@@ -5,11 +5,17 @@ import './styles.scss';
 
 function ProductMainCard(props) {
   return (
-    <div className="delivery-collation-order-info">
+    <div className="main-card-product-info">
       <div className="title">
         Thông tin sản phẩm
       </div>
-      {/* <ProductMainCardList /> */}
+      <ProductMainCardList
+        addProduct={(a)=>props.addProduct(a)} products={props.products}
+        removeProduct={(a)=>props.removeProduct(a)}
+        setShowModalProduct={(a)=>props.setShowModalProduct(a)}
+        totalPriceMainCard={(a)=> props.totalPriceMainCard(a)}
+        saveMaintenanceCard={()=> props.saveMaintenanceCard()}
+      />
     </div>
   );
 }

@@ -15,7 +15,6 @@ export const fetchMainCard = (_filterInfo, page) => (dispatch, getState) => {
   dispatch(updateMainCardFetching(true));
   dispatch(filterMainCard(filter, page))
     .then((json) => {
-      console.log("json", json);
       const { maintenance_cards, metadata } = json;
       const { limit, page, total } = metadata;
       if (maintenance_cards.length === 0) {
@@ -128,12 +127,13 @@ export const deleteMainCard = (ids = []) => (dispatch, getState) => {
     });
 };
 
-export const saveMainCard = (customer = {}) => (dispatch, getState) => {
-  const endpoint = `${API_MAINTENANCECARD}/maintenancecards`;
+export const saveMainCard = (cardMain = {}) => (dispatch, getState) => {
+  const endpoint = `${API_MAINTENANCECARD}/maintenanceCards`;
+  console.log("endpoint", endpoint);
   return dispatch(
     fetch(endpoint, {
       method: "POST",
-      body: JSON.stringify(customer),
+      body: JSON.stringify(cardMain),
     })
   )
     .then((json) => {

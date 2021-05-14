@@ -20,6 +20,7 @@ import storage from "./utils/storage";
 import { checkInfoUser } from "./pages/login/actions/loginAction";
 import pushstate from "utils/pushstate";
 import { SOCKET_URL_V2 } from "./constants/api";
+import { getStaffsByRepairman } from "./actions/commons";
 
 function App(props) {
   const { showMenu } = props;
@@ -38,6 +39,7 @@ function App(props) {
       pushstate(props.history, "/login");
     }
     props.onGetCity();
+    props.getStaffsByRepairman();
   }, []);
 
   const onConnected = () => {
@@ -92,5 +94,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   onCheckInfoUser: (token) => dispatch(checkInfoUser(token)),
   onGetCity: () => dispatch(getCity()),
+  getStaffsByRepairman: () => dispatch(getStaffsByRepairman()),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

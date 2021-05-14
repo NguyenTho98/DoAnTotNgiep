@@ -58,7 +58,6 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
     private final MaintenanceCardConverter maintenanceCardConverter;
     private final MaintenanceCardRepository maintenanceCardRepository;
     private final MaintenanceCardDetailRepository maintenanceCardDetailRepository;
-    private final MaintenanceCardsDaoImpl maintenanceCardsDao;
     private final MaintenanceCardsMapper maintenanceCardsMapper;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
@@ -105,9 +104,8 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
             int checkCode = maintenanceCardRepository.checkCode(maintenanceCard.getCode().toLowerCase(), Long.valueOf(0));
             if (checkCode != 0) throw new CodeExistedException("Code existed");
             maintenanceCard.setCode(maintenanceCard.getCode().toLowerCase());
-
         }
-        if (!(!check || maintenanceCard.getMaintenanceCardDetails().size() == 0)) {
+        if (!(!check || maintenanceCard.getMaintenanceCardDetails().isEmpty())) {
             maintenanceCard.setWorkStatus((byte) 2);
         } else {
             maintenanceCard.setWorkStatus((byte) 0);

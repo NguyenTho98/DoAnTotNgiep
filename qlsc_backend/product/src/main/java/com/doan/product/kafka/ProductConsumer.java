@@ -7,17 +7,23 @@ import com.doan.product.entity.Product;
 import com.doan.product.repository.ProductHistoryRepository;
 import com.doan.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ProductConsumer {
+
+    @Value("${cloudkarafka.topic}")
+    private String topic;
 
 //    private final ProductRepository productRepository;
 //    private final ProductHistoryRepository productHistoryRepository;
@@ -51,5 +57,14 @@ public class ProductConsumer {
 //            e.printStackTrace();
 //        }
 //    }
+
+    @KafkaListener(topics = "${cloudkarafka.topic}", groupId = "repair-manager")
+    public void processMessage(String message,
+                               @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
+                               @Header(KafkaHeaders.RECEIVED_TOPIC) List<String> topics,
+                               @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
+        System.out.printf("%s-%d[%d] \"%s\"\n", topics.get(0), partitions.get(0), offsets.get(0), message);
+    }
+
 
 }

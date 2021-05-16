@@ -1,18 +1,16 @@
 package com.doan.user.service.impl;
 
 import com.doan.user.converter.UserConverter;
+import com.doan.user.dto.PasswordRequest;
 import com.doan.user.model.UserResponse;
 import com.doan.user.service.UserService;
-import com.doan.user.dto.PasswordPoJo;
 import com.doan.user.dto.UserDTO;
 import com.doan.user.entity.User;
 import com.doan.user.exception.CodeExistedException;
 import com.doan.user.exception.commonException.NotFoundException;
-import com.doan.user.exception.userException.DuplicateEmailException;
 import com.doan.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -116,7 +114,7 @@ public class UserServiceImpl implements UserService {
         user.setId(userDTO.getId());
         user.setAddress(userDTO.getAddress());
         user.setStatus(Byte.parseByte(String.valueOf(1)));
-        user.setCode(userDTO.getCode() == null ? generateCode() : userDTO.getCode());
+        user.setCode(StringUtils.isBlank(userDTO.getCode()) ? generateCode() : userDTO.getCode());
         user.setModifiedDate(new Date());
         user.setCreatedDate(new Date());
         user.setPassword(encoder.encode(userDTO.getPassword()));
@@ -130,12 +128,20 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new CodeExistedException("Duplicate Code. Try Again");
         }
-
     }
 
     @Override
-    public UserDTO updateUser(UserDTO userDTO, Long id) throws CodeExistedException {
-        User user = userRepository.getOne(id);
+    public UserResponse updateUser(UserDTO userDTO, Long id) {
+        Optional<User> isUser = userRepository.findById(id);
+        if(isUser.isEmpty()) return new UserResponse(Boolean.FALSE, "Không tồn tại", "400");
+        User user = isUser.get();
+        if (StringUtils.isNotBlank(userDTO.getNewPassword())) {
+            if (encoder.matches(userDTO.getOldPassword(), user.getPassword())) {
+                user.setPassword(encoder.encode(userDTO.getNewPassword()));
+            } else {
+                return new UserResponse(Boolean.FALSE, "Mật khẩu cũ không đúng", "400");
+            }
+        }
         user.setCode(userDTO.getCode() == null ? user.getCode() : userDTO.getCode());
         user.setId(user.getId());
         user.setAddress(userDTO.getAddress());
@@ -147,9 +153,10 @@ public class UserServiceImpl implements UserService {
         user.setRole(userDTO.getRole());
         user.setFullName(userDTO.getName());
         try {
-            return userConverter.convertToDTO(userRepository.saveAndFlush(user));
+            userRepository.saveAndFlush(user);
+            return new UserResponse(Boolean.TRUE, "Thành công", "200");
         } catch (Exception e) {
-            throw new CodeExistedException("Duplicate Code. Try Again");
+            return new UserResponse(Boolean.FALSE, "Lỗi không xác định", "400");
         }
     }
 
@@ -176,27 +183,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String generateCode() {
-        Long codeNumber = 0L;
+        long codeNumber;
         String newCodeString;
         int index = 0;
-        String getMaxCode = null;
-        getMaxCode = userRepository.getMaxCodeUser(index);
+        String getMaxCode;
         do {
             getMaxCode = userRepository.getMaxCodeUser(index);
             if (getMaxCode == null) {
                 getMaxCode = "0";
-            } else {
-                boolean result = StringUtils.isNumeric(getMaxCode);
-                if (!result) {
-                    getMaxCode = null;
-                    index++;
-                } else {
-                    getMaxCode = getMaxCode;
-                }
+            } else if (!StringUtils.isNumeric(getMaxCode)) {
+                getMaxCode = null;
+                index++;
             }
         } while (getMaxCode == null);
         codeNumber = Long.parseLong(getMaxCode) + 1;
-        newCodeString = "ND00" + codeNumber.toString();
+        newCodeString = "ND00" + codeNumber;
         return newCodeString;
 
     }
@@ -206,10 +207,7 @@ public class UserServiceImpl implements UserService {
         String username = userDTO.getEmail();
         String password = userDTO.getPassword();
         User user = userRepository.checkLogin(username, password);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
     }
 
     @Override
@@ -226,16 +224,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO changePassword(PasswordPoJo passwordPoJo) throws NotFoundException {
-
-        User user = userRepository.getOne(passwordPoJo.getId());
-        if (encoder.matches(passwordPoJo.getOldPassword(), user.getPassword())) {
-            userRepository.changePassword(encoder.encode(passwordPoJo.getPassword()), passwordPoJo.getId());
-            return getUserById(passwordPoJo.getId());
-        } else {
-            throw new NotFoundException("Password not matches");
+    public UserResponse changePassword(PasswordRequest password) {
+        try {
+            User user = userRepository.getOne(password.getId());
+            if (encoder.matches(password.getOldPassword(), user.getPassword())) {
+                userRepository.changePassword(encoder.encode(password.getPassword()), password.getId());
+                return new UserResponse(Boolean.TRUE, "Thành công", "200");
+            } else {
+                return new UserResponse(Boolean.FALSE, "Mật khẩu không đúng", "400");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new UserResponse(Boolean.FALSE);
         }
     }
-
 
 }

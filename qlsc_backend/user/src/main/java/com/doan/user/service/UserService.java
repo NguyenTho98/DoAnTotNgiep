@@ -1,6 +1,6 @@
 package com.doan.user.service;
 
-import com.doan.user.dto.PasswordPoJo;
+import com.doan.user.dto.PasswordRequest;
 import com.doan.user.dto.UserDTO;
 import com.doan.user.exception.CodeExistedException;
 import com.doan.user.exception.commonException.NotFoundException;
@@ -19,10 +19,10 @@ public interface UserService {
     HashMap<String, Object> getTotalMaintenanceCardByRepairman(int page, int size, String key);
     UserDTO getUserById(Long id) throws NotFoundException;
     UserDTO insertUser(UserDTO userDTO) throws DuplicateEmailException, CodeExistedException;
-    UserDTO updateUser(UserDTO userDTO, Long id) throws CodeExistedException;
+    UserResponse updateUser(UserDTO userDTO, Long id) ;
     UserResponse deleteUserById(List<Long> arrayID);
     String generateCode();
     Boolean checkLogin(UserDTO userDTO);
     UserDTO checkUserNameUser(String username) throws NotFoundException;
-    UserDTO changePassword(PasswordPoJo passwordPoJo) throws NotFoundException;
+    UserResponse changePassword(PasswordRequest password) throws NotFoundException;
 }

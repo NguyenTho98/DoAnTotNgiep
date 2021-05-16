@@ -7,6 +7,7 @@ import Service from "./Service/Service";
 import InfoProductFooter from "./InfoProductFooter/InfoProductFooter";
 import { upLoadImage, saveProductService } from "../../actions/ProductAction";
 import pushstate from "utils/pushstate";
+import { toastError } from "../../../../utils/toast";
 
 const initialState = {
   name: null,
@@ -22,22 +23,44 @@ function ProductCreate(props) {
   const { onUpLoadImage, onSaveProductService } = props;
   const [product, setProduct] = useState(initialState);
   const [showContent, setShowContent] = useState(1);
+  const [isValid, setIsValid] = useState(true);
+  const [actionSave, setActionSave] = useState(false);
+
   useEffect(() => {
     onchangeValue("type", 1);
   }, []);
+
+  useEffect(() => {
+    setIsValid(true);
+    setActionSave(false);
+  }, [showContent]);
 
   useEffect(() => {
     onchangeValue("type", showContent);
   }, [showContent]);
 
   const onchangeValue = (type, value) => {
+    setActionSave(false);
+    if (type === "quantity" && isNaN(value)) {
+      toastError("Số lượng không hợp lệ. Vui lòng nhập lại!");
+      return;
+    }
     setProduct({
       ...product,
       [type]: value,
     });
   };
 
+  const onChangeStatusValid = (status) => {
+    setIsValid(status);
+  };
+
   const saveProductService = () => {
+    setActionSave(true);
+    if (isValid) {
+      toastError("Vui lòng điền đầy đủ thông tin!");
+      return;
+    }
     onSaveProductService(product).then((json) => {
       if (json && json.success) {
         setProduct(initialState);
@@ -48,7 +71,7 @@ function ProductCreate(props) {
   };
 
   const cancel = () => {
-    setUser(initialState);
+    setProduct(initialState);
     setShowContent(1);
     pushstate(props.history, "/products");
   };
@@ -75,10 +98,22 @@ function ProductCreate(props) {
     }
   };
 
+  const removeImage = (index) => {
+    const images = product.images.filter((img, idx) => idx === index);
+    if (index === 0 && product && product.images.length === 1) {
+      onchangeValue("images", []);
+      return;
+    }
+    onchangeValue("images", images);
+  };
+
   const renderContent = () => {
     if (showContent === 1) {
       return (
         <Accessories
+          removeImage={removeImage}
+          actionSave={actionSave}
+          onChangeStatusValid={onChangeStatusValid}
           product={product}
           onchangeValue={onchangeValue}
           handleUploadImage={handleUploadImage}
@@ -86,7 +121,14 @@ function ProductCreate(props) {
       );
     }
     if (showContent === 2) {
-      return <Service product={product} onchangeValue={onchangeValue} />;
+      return (
+        <Service
+          actionSave={actionSave}
+          onChangeStatusValid={onChangeStatusValid}
+          product={product}
+          onchangeValue={onchangeValue}
+        />
+      );
     }
   };
 

@@ -3,8 +3,81 @@ import { connect } from "react-redux";
 import * as Icons from "pages/product/commons/Icons";
 import "./styles.scss";
 function Accessories(props) {
-  const { product, onchangeValue, handleUploadImage, removeImage } = props;
-  useEffect(() => {}, []);
+  const {
+    product,
+    onchangeValue,
+    handleUploadImage,
+    removeImage,
+    actionSave,
+    onChangeStatusValid,
+  } = props;
+
+  const [isInvalidName, setIsInvalidName] = useState(false);
+  const [isInvalidPrice, setIsInvalidPrice] = useState(false);
+  const [isInvalidQuantity, setIsInvalidQuantity] = useState(false);
+  const [isInvalidUnit, setIsInvalidUnit] = useState(false);
+
+  useEffect(() => {
+    if (actionSave) {
+      if (!product.name) setIsInvalidName(true);
+      if (!product.pricePerUnit) setIsInvalidPrice(true);
+      if (!product.quantity) setIsInvalidQuantity(true);
+      if (!product.unit) setIsInvalidUnit(true);
+    }
+  }, [actionSave]);
+
+  useEffect(() => {
+    if (product.name) setIsInvalidName(false);
+  }, [product.name]);
+
+  useEffect(() => {
+    if (product.pricePerUnit) setIsInvalidPrice(false);
+  }, [product.pricePerUnit]);
+
+  useEffect(() => {
+    if (product.quantity) setIsInvalidQuantity(false);
+  }, [product.quantity]);
+
+  useEffect(() => {
+    if (product.unit) setIsInvalidUnit(false);
+  }, [product.unit]);
+
+  const onBlurUnit = () => {
+    if (!product.unit) {
+      onChangeStatusValid(true);
+      setIsInvalidUnit(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+
+  const onBlurQuantity = () => {
+    if (!product.quantity) {
+      onChangeStatusValid(true);
+      setIsInvalidQuantity(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+
+  const onBlurPrice = () => {
+    if (!product.pricePerUnit) {
+      onChangeStatusValid(true);
+      setIsInvalidPrice(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+
+  const onBlurName = () => {
+    if (!product.name) {
+      onChangeStatusValid(true);
+      setIsInvalidName(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+
   const inputRef = useRef();
   const onOpenFile = () => {
     if (inputRef) inputRef.current.click();
@@ -42,6 +115,8 @@ function Accessories(props) {
                         data-tip=""
                         data-for="_extends_popup_error"
                         name="name"
+                        style={isInvalidName ? { border: "1px solid red" } : {}}
+                        onBlur={() => onBlurName()}
                         value={product.name || ""}
                         onChange={(e) => onchangeValue("name", e.target.value)}
                         placeholder="Nhập tên sản phẩm"
@@ -59,6 +134,10 @@ function Accessories(props) {
                         data-tip=""
                         data-for="_extends_popup_error"
                         name="pricePerUnit"
+                        style={
+                          isInvalidPrice ? { border: "1px solid red" } : {}
+                        }
+                        onBlur={() => onBlurPrice()}
                         value={product.pricePerUnit || ""}
                         onChange={(e) =>
                           onchangeValue("pricePerUnit", e.target.value)
@@ -80,6 +159,10 @@ function Accessories(props) {
                         data-tip=""
                         data-for="_extends_popup_error"
                         name="quantity"
+                        style={
+                          isInvalidQuantity ? { border: "1px solid red" } : {}
+                        }
+                        onBlur={() => onBlurQuantity()}
                         value={product.quantity || ""}
                         onChange={(e) =>
                           onchangeValue("quantity", e.target.value)
@@ -99,6 +182,8 @@ function Accessories(props) {
                         data-tip=""
                         data-for="_extends_popup_error"
                         name="unit"
+                        style={isInvalidUnit ? { border: "1px solid red" } : {}}
+                        onBlur={() => onBlurUnit()}
                         value={product.unit || ""}
                         onChange={(e) => onchangeValue("unit", e.target.value)}
                         placeholder="Nhập đơn vị"
@@ -108,7 +193,6 @@ function Accessories(props) {
                 </div>
                 <div className="col-md-4">
                   <div className="field form-group">
-                    <span style={{ color: "red", marginRight: "4px" }}>*</span>
                     <label className="control-label">Mã linh kiện</label>
                     <div className="controls">
                       <input
@@ -189,7 +273,7 @@ function Accessories(props) {
                   product.images.length &&
                   product.images.map((image, index) => {
                     return (
-                      <div className="wrapper-image">
+                      <div className="wrapper-image" key={index}>
                         <img
                           key={index}
                           className="image"
@@ -197,12 +281,15 @@ function Accessories(props) {
                           alt={image}
                           style={{}}
                         />
-                        <span style={{
-                          position: 'absolute',
-                          cursor: 'pointer'
-                        }}
-                        onClick={() => removeImage(index)}
-                        >x</span>
+                        <span
+                          style={{
+                            position: "absolute",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => removeImage(index)}
+                        >
+                          x
+                        </span>
                       </div>
                     );
                   })}

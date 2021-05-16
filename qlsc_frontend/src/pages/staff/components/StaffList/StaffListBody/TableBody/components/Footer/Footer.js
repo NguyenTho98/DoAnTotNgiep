@@ -28,15 +28,9 @@ function Footer(props) {
       return (currentPage + 1) * size;
     }
     if (currentPage === totalPage) {
-      return totalItem + 1;
+      return totalItem;
     }
     return currentPage * size + (totalItem % currentPage);
-  };
-
-  const onChangePage = (id) => {
-    const { onClick, resetSelected } = props;
-    onClick(id);
-    resetSelected();
   };
 
   return (
@@ -44,7 +38,7 @@ function Footer(props) {
       <div className="result-info">
         Hiển thị kết quả từ&nbsp;
         {calculateBegin()} -&nbsp;
-        {calculateEnd()} trên tổng {totalPage === 1 ? totalItem : (totalItem + 1)}
+        {calculateEnd()} trên tổng {totalItem}
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">

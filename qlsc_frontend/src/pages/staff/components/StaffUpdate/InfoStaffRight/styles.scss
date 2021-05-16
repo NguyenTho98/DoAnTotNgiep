@@ -7,6 +7,15 @@
         border-radius: 4px;
         padding-bottom: 0px;
 
+        .change-password {
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            color: #0088ff;
+        }
+
         .title {
             font-size: 20px;
             font-weight: 400;

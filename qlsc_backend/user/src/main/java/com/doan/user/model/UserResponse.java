@@ -6,13 +6,24 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class UserResponse {
 
+    private String code;
     private boolean success;
     private String message;
 
     public UserResponse(boolean success) {
         this.success = success;
+    }
+
+    public UserResponse(boolean success, String message) {
+        this.message = message;
+        this.success = success;
+    }
+
+    public UserResponse(boolean success, String message, String code) {
+        this.message = message;
+        this.success = success;
+        this.code = code;
     }
 }

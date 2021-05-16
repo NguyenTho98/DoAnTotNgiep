@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Pagination from "components/Pagination/Pagination";
+import Pagination from "../Pagination/Pagination";
 import { connect } from "react-redux";
 import "../../styles/footer.scss";
 
 function Footer(props) {
-  const { customer, onGetCustomer, onChangeFilter, isEmpty , fetching} = props;
+  const { customer, onChangeFilter, isEmpty , fetching} = props;
   const { currentPage, totalItems, totalPages, customers } = customer;
   const [size, setSize] = useState(10);
 
@@ -13,7 +13,7 @@ function Footer(props) {
       return 1;
     }
     if (currentPage === totalPages) {
-      return (size * (currentPage - 1) + customers.length);
+      return (size * (currentPage - 1) + 1);
     }
     return (size * currentPage) + 1;
   };
@@ -29,7 +29,7 @@ function Footer(props) {
       return ((currentPage + 1) * size);
     }
     if (currentPage === totalPages) {
-      return totalItems + 1;
+      return totalItems;
     }
     return (currentPage * size) + (totalItems%currentPage);
   };
@@ -39,7 +39,7 @@ function Footer(props) {
       <div className="result-info">
         Hiển thị kết quả từ&nbsp;
         {calculateBegin()} -&nbsp;
-        {calculateEnd()} trên tổng {totalItems + 1}
+        {calculateEnd()} trên tổng {totalItems}
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">
@@ -48,7 +48,6 @@ function Footer(props) {
           page={currentPage}
           totalItem={totalItems}
           size={size}
-          onGetCustomer={onGetCustomer}
           onChangeFilter={onChangeFilter}
         />
       </div>

@@ -7,6 +7,7 @@ import InfoStaffRight from "./InfoStaffRight/InfoStaffRight";
 import "./styles.scss";
 import { saveStaff } from "../../actions/staffAction";
 import pushstate from "utils/pushstate";
+import { toastError } from "../../../../utils/toast";
 
 const initialState = {
   name: null,
@@ -21,9 +22,12 @@ const initialState = {
 function StaffCreate(props) {
   const { onSaveStaff } = props;
   const [staff, setStaff] = useState(initialState);
+  const [isValidate, setIsValidate] = useState(true);
+  const [actionSave, setActionSave] = useState(false);
   useEffect(() => {}, []);
 
   const onChangeStaff = (type, value) => {
+    setActionSave(false);
     setStaff(() => {
       return {
         ...staff,
@@ -32,12 +36,20 @@ function StaffCreate(props) {
     });
   };
   const saveStaff = () => {
+    setActionSave(true);
+    if (isValidate) {
+      toastError("Vui lòng điền đầy đủ thông tin!");
+      return;
+    }
     onSaveStaff(staff).then((json) => {
       if (json && json.success) {
         setStaff(initialState);
         pushstate(props.history, "/staffs");
       }
     });
+  };
+  const onChangeStatusValidate = (status) => {
+    setIsValidate(status);
   };
   const cancel = () => {
     setStaff(initialState);
@@ -48,10 +60,20 @@ function StaffCreate(props) {
       <TitleAndAction />
       <div className="row">
         <div className="col-md-8">
-          <InfoStaffLeft onChangeStaff={onChangeStaff} staff={staff} />
+          <InfoStaffLeft
+            actionSave={actionSave}
+            onChangeStaff={onChangeStaff}
+            staff={staff}
+            onChangeStatusValidate={onChangeStatusValidate}
+          />
         </div>
         <div className="col-md-4">
-          <InfoStaffRight onChangeStaff={onChangeStaff} staff={staff} />
+          <InfoStaffRight
+            actionSave={actionSave}
+            onChangeStaff={onChangeStaff}
+            staff={staff}
+            onChangeStatusValidate={onChangeStatusValidate}
+          />
         </div>
         <InfoStaffFooter saveStaff={saveStaff} cancel={cancel} />
       </div>
@@ -67,4 +89,4 @@ const mapDispatchToProps = (dispatch) => ({
   onSaveStaff: (staff) => dispatch(saveStaff(staff)),
 });
 
-export default React.memo(connect(mapStateToProps, mapDispatchToProps)(StaffCreate));
+export default connect(mapStateToProps, mapDispatchToProps)(StaffCreate);

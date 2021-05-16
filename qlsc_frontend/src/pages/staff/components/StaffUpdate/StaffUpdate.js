@@ -8,6 +8,7 @@ import "./styles.scss";
 import { useParams } from "react-router-dom";
 import { updateStaff, getStaffById } from "../../actions/staffAction";
 import pushstate from "utils/pushstate";
+import { toastError } from "../../../../utils/toast";
 
 const initialState = {
   name: null,
@@ -17,12 +18,18 @@ const initialState = {
   address: null,
   description: null,
   password: null,
+  old_password: null,
+  new_password: null,
   role: 1,
 };
 function StaffUpdate(props) {
   const { onSaveStaff, onGetStaffById } = props;
   const { id } = useParams();
+  const [isChange, setIsChange] = useState(false);
   const [staff, setStaff] = useState(initialState);
+  const [isValidate, setIsValidate] = useState(true);
+  const [actionSave, setActionSave] = useState(false);
+
   useEffect(() => {
     if (id) {
       onGetStaffById(id).then((json) => {
@@ -32,6 +39,7 @@ function StaffUpdate(props) {
   }, []);
 
   const onChangeStaff = (type, value) => {
+    setActionSave(false);
     setStaff(() => {
       return {
         ...staff,
@@ -40,6 +48,11 @@ function StaffUpdate(props) {
     });
   };
   const saveStaff = () => {
+    setActionSave(true);
+    if (isValidate) {
+      toastError("Vui lòng điền đầy đủ thông tin!");
+      return;
+    }
     onSaveStaff(id, staff).then((json) => {
       if (json && json.success) {
         setStaff(initialState);
@@ -47,19 +60,41 @@ function StaffUpdate(props) {
       }
     });
   };
+
+  const onChangeStatus = () => {
+    setIsChange(!isChange);
+  };
+
   const cancel = () => {
     setStaff(initialState);
     pushstate(props.history, "/staffs");
   };
+
+  const onChangeStatusValidate = (status) => {
+    setIsValidate(status);
+  };
+
   return (
     <div className="staff-screen-wrapper-create">
       <TitleAndAction />
       <div className="row">
         <div className="col-md-8">
-          <InfoStaffLeft onChangeStaff={onChangeStaff} staff={staff} />
+          <InfoStaffLeft
+            onChangeStaff={onChangeStaff}
+            staff={staff}
+            actionSave={actionSave}
+            onChangeStatusValidate={onChangeStatusValidate}
+          />
         </div>
         <div className="col-md-4">
-          <InfoStaffRight onChangeStaff={onChangeStaff} staff={staff} />
+          <InfoStaffRight
+            onChangeStaff={onChangeStaff}
+            staff={staff}
+            isChange={isChange}
+            onChangeStatus={onChangeStatus}
+            actionSave={actionSave}
+            onChangeStatusValidate={onChangeStatusValidate}
+          />
         </div>
         <InfoStaffFooter saveStaff={saveStaff} cancel={cancel} />
       </div>

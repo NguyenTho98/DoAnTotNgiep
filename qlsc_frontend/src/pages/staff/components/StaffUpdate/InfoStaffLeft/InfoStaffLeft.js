@@ -1,8 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import "./styles.scss";
 function InfoStaffLeft(props) {
-  const { staff, onChangeStaff } = props;
+  const { staff, onChangeStaff, onChangeStatusValidate, actionSave } = props;
+  const [isInvalidName, setIsInvalidName] = useState(false);
+  const [isInvalidPhone, setIsInvalidPhone] = useState(false);
+  const [isInvalidAddress, setIsInvalidAddress] = useState(false);
+  useEffect(() => {
+    if (actionSave) {
+      if (!staff.name) setIsInvalidName(true);
+      if (!staff.phone) setIsInvalidPhone(true);
+      if (!staff.address) setIsInvalidAddress(true);
+    }
+  }, [actionSave]);
+
+  useEffect(() => {
+    if (staff.name) setIsInvalidName(false);
+  }, [staff.name]);
+
+  useEffect(() => {
+    if (staff.phone) setIsInvalidPhone(false);
+  }, [staff.phone]);
+
+  useEffect(() => {
+    if (staff.address) setIsInvalidAddress(false);
+  }, [staff.address]);
+
+  const onBlurName = () => {
+    if (!staff.name) {
+      onChangeStatusValidate(true);
+      setIsInvalidName(true);
+    } else {
+      onChangeStatusValidate(false);
+    }
+  };
+
+  const onBlurPhone = () => {
+    if (!staff.phone) {
+      onChangeStatusValidate(true);
+      setIsInvalidPhone(true);
+    } else {
+      onChangeStatusValidate(false);
+    }
+  };
+
+  const onBlurAddress = () => {
+    if (!staff.address) {
+      onChangeStatusValidate(true);
+      setIsInvalidAddress(true);
+    } else {
+      onChangeStatusValidate(false);
+    }
+  };
+
   return (
     <div className="info-staff-left">
       <div className="card info-staff-left-01">
@@ -19,6 +69,10 @@ function InfoStaffLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="name"
+                    style={
+                      isInvalidName ? { border: "1px solid red" } : {}
+                    }
+                    onBlur={() => onBlurName()}
                     value={staff.name || ""}
                     onChange={(e) => onChangeStaff("name", e.target.value)}
                     placeholder="Nhập tên nhân viên"
@@ -54,6 +108,10 @@ function InfoStaffLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="phone"
+                    style={
+                      isInvalidPhone ? { border: "1px solid red" } : {}
+                    }
+                    onBlur={() => onBlurPhone()}
                     value={staff.phone || ""}
                     onChange={(e) => onChangeStaff("phone", e.target.value)}
                     placeholder="Nhập số điện thoại"
@@ -73,6 +131,10 @@ function InfoStaffLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="address"
+                    style={
+                      isInvalidAddress ? { border: "1px solid red" } : {}
+                    }
+                    onBlur={() => onBlurAddress()}
                     value={staff.address || ""}
                     onChange={(e) => onChangeStaff("address", e.target.value)}
                     placeholder="Nhập địa chỉ"

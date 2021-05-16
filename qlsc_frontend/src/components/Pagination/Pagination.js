@@ -1,7 +1,7 @@
 import React from "react";
 
 function Pagination(props) {
-  const { totalPage, page, totalItem, size, onGetCustomer, onChangeFilter } = props;
+  const { totalPage, page, onChangeFilter } = props;
 
   const onSelectPageNumber = (pageNum) => {
     onChangeFilter("page", pageNum);
@@ -18,6 +18,7 @@ function Pagination(props) {
     }
     listPaginations.push({ page_num: totalPage + 1 });
   }
+  console.log("listPaginations", listPaginations);
   let pageElm = null;
   if (listPaginations.length > 3) {
     pageElm = listPaginations.map((pageInfo, index) => {
@@ -55,13 +56,13 @@ function Pagination(props) {
           </li>
         );
       }
-      if (index < page - 2 || index > page + 2) return null;
       return (
         <li
           key={index}
           className={
             pageInfo.page_num === page ? "page-item active" : "page-item"
           }
+          style={pageInfo.page_num === page ? { color: "#0084FF" } : {}}
           onClick={() => onSelectPageNumber(pageInfo.page_num)}
         >
           <a className="page-link">{pageInfo.page_num}</a>

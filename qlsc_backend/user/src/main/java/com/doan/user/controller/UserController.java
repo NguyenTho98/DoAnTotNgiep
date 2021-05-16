@@ -1,8 +1,8 @@
 package com.doan.user.controller;
 
+import com.doan.user.dto.PasswordRequest;
 import com.doan.user.model.UserResponse;
 import com.doan.user.service.UserService;
-import com.doan.user.dto.PasswordPoJo;
 import com.doan.user.dto.UserDTO;
 import com.doan.user.exception.commonException.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("users")
     public ResponseEntity<Map<String, Object>> getAllUsers(@RequestParam(name = "page", defaultValue = "1", required = false) int pageNum,
-                                                           @RequestParam(name = "size", defaultValue = "5", required = false) int pageSize,
+                                                           @RequestParam(name = "size", defaultValue = "10", required = false) int pageSize,
                                                            @RequestParam(value = "sortBy", defaultValue = "modifiedDate") String sortBy,
                                                            @RequestParam(value = "descending", defaultValue = "desc") String descending,
                                                            @RequestParam(value = "search", defaultValue = "") String param) {
@@ -69,12 +69,7 @@ public class UserController {
 
     @PostMapping("users/{id}")
     public UserResponse updateUser(@RequestBody UserDTO userDTO, @PathVariable("id") Long id) {
-        try {
-            userService.updateUser(userDTO, id);
-            return new UserResponse(Boolean.TRUE);
-        } catch (Exception e) {
-            return new UserResponse(Boolean.FALSE);
-        }
+        return userService.updateUser(userDTO, id);
     }
 
     @PostMapping("users/delete")
@@ -83,8 +78,8 @@ public class UserController {
     }
 
     @PutMapping("users/changePassword")
-    public ResponseEntity<UserDTO> changePassword(@RequestBody PasswordPoJo passwordPoJo) throws NotFoundException {
-        return new ResponseEntity<>(userService.changePassword(passwordPoJo), HttpStatus.OK);
+    public UserResponse changePassword(@RequestBody PasswordRequest request) throws NotFoundException {
+        return userService.changePassword(request);
     }
 
     @GetMapping("checkUser")
@@ -94,8 +89,4 @@ public class UserController {
         return userService.checkUserNameUser(authentication.getName());
     }
 
-    @GetMapping("test")
-    public String testApi() {
-        return "Success";
-    }
 }

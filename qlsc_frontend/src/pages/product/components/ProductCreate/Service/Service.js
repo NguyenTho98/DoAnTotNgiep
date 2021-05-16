@@ -2,8 +2,42 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import "./styles.scss";
 function Service(props) {
-  const { product, onchangeValue } = props;
-  useEffect(() => {}, []);
+  const { product, onchangeValue, actionSave, onChangeStatusValid } = props;
+  const [isInvalidName, setIsInvalidName] = useState(false);
+  const [isInvalidPrice, setIsInvalidPrice] = useState(false);
+
+  useEffect(() => {
+    if (actionSave) {
+      if (!product.name) setIsInvalidName(true);
+      if (!product.pricePerUnit) setIsInvalidPrice(true);
+    }
+  }, [actionSave]);
+  useEffect(() => {
+    if (product.name) setIsInvalidName(false);
+  }, [product.name]);
+
+  useEffect(() => {
+    if (product.pricePerUnit) setIsInvalidPrice(false);
+  }, [product.pricePerUnit]);
+
+  const onBlurPrice = () => {
+    if (!product.pricePerUnit) {
+      onChangeStatusValid(true);
+      setIsInvalidPrice(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+
+  const onBlurName = () => {
+    if (!product.name) {
+      onChangeStatusValid(true);
+      setIsInvalidName(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+
   return (
     <div className="col-md-12">
       <div className="info-product-left">
@@ -21,6 +55,8 @@ function Service(props) {
                       data-tip=""
                       data-for="_extends_popup_error"
                       name="name"
+                      style={isInvalidName ? { border: "1px solid red" } : {}}
+                      onBlur={() => onBlurName()}
                       value={product.name || ""}
                       onChange={(e) => onchangeValue("name", e.target.value)}
                       placeholder="Nhập tên dịch vụ"
@@ -38,6 +74,8 @@ function Service(props) {
                       data-tip=""
                       data-for="_extends_popup_error"
                       name="pricePerUnit"
+                      style={isInvalidPrice ? { border: "1px solid red" } : {}}
+                      onBlur={() => onBlurPrice()}
                       value={product.pricePerUnit || ""}
                       onChange={(e) =>
                         onchangeValue("pricePerUnit", e.target.value)
@@ -49,7 +87,6 @@ function Service(props) {
               </div>
               <div className="col-md-4">
                 <div className="field form-group">
-                  <span style={{ color: "red", marginRight: "4px" }}>*</span>
                   <label className="control-label">Mã dịch vụ</label>
                   <div className="controls">
                     <input

@@ -4,34 +4,34 @@ import { connect } from "react-redux";
 import "../../styles/footer.scss";
 
 function Footer(props) {
-  const { product, onGetProduct, onChangeFilter, isEmpty , fetching} = props;
-  const { currentPage, totalItems, totalPages, products } = product;
+  const { product, onChangeFilter, isEmpty , fetching} = props;
+  const { currentPage, totalItem, totalPage, productSerives } = product;
   const [size, setSize] = useState(10);
 
   const calculateBegin = () => {
     if (currentPage === 1) {
       return 1;
     }
-    if (currentPage === totalPages) {
-      return (size * (currentPage - 1) + products.length);
+    if (currentPage === totalPage) {
+      return (size * (currentPage - 1) + productSerives.length);
     }
     return (size * currentPage) + 1;
   };
 
   const calculateEnd = () => {
-    if (totalPages === 1) {
-      return totalItems + 1;
+    if (totalPage === 1 && totalItem > 0) {
+      return totalItem;
     }
     if (currentPage === 1) {
       return (currentPage * size);
     }
-    if (totalPages > currentPage) {
+    if (totalPage > currentPage) {
       return ((currentPage + 1) * size);
     }
-    if (currentPage === totalPages) {
-      return totalItems + 1;
+    if (currentPage === totalPage) {
+      return totalItem;
     }
-    return (currentPage * size) + (totalItems%currentPage);
+    return (currentPage * size) + (totalItem%currentPage);
   };
   if (fetching || isEmpty) return null;
   return (
@@ -39,16 +39,15 @@ function Footer(props) {
       <div className="result-info">
         Hiển thị kết quả từ&nbsp;
         {calculateBegin()} -&nbsp;
-        {calculateEnd()} trên tổng {totalItems + 1}
+        {calculateEnd()} trên tổng {totalItem}
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">
         <Pagination
-          totalPage={totalPages}
+          totalPage={totalPage}
           page={currentPage}
-          totalItem={totalItems}
+          totalItem={totalItem}
           size={size}
-          onGetProduct={onGetProduct}
           onChangeFilter={onChangeFilter}
         />
       </div>

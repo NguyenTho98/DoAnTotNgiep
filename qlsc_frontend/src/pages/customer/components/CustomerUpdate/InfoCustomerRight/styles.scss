@@ -6,6 +6,9 @@
         box-sizing: border-box;
         border-radius: 4px;
         padding-bottom: 0px;
+        &.info-customer-right-01 {
+            height: 235px;
+        }
         .title {
             font-size: 20px;
             font-weight: 400;

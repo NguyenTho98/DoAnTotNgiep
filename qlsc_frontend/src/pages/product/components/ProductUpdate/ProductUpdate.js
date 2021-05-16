@@ -12,6 +12,7 @@ import {
 } from "../../actions/ProductAction";
 import { useParams } from "react-router-dom";
 import pushstate from "utils/pushstate";
+import { toastError } from "../../../../utils/toast";
 
 const initialState = {
   name: null,
@@ -24,13 +25,12 @@ const initialState = {
   type: null,
 };
 function ProductUpdate(props) {
-  const {
-    onUpLoadImage,
-    onSaveProductService,
-    onGetProductServiceById,
-  } = props;
+  const { onUpLoadImage, onSaveProductService, onGetProductServiceById } =
+    props;
   const [product, setProduct] = useState(initialState);
   const [showContent, setShowContent] = useState(null);
+  const [isValid, setIsValid] = useState(true);
+  const [actionSave, setActionSave] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     if (id) {
@@ -42,13 +42,27 @@ function ProductUpdate(props) {
   }, []);
 
   const onchangeValue = (type, value) => {
+    setActionSave(false);
+    if (type === "quantity" && isNaN(value)) {
+      toastError("Số lượng không hợp lệ. Vui lòng nhập lại!");
+      return;
+    }
     setProduct({
       ...product,
       [type]: value,
     });
   };
 
+  const onChangeStatusValid = (status) => {
+    setIsValid(status);
+  };
+
   const saveProductService = () => {
+    setActionSave(true);
+    if (isValid) {
+      toastError("Vui lòng điền đầy đủ thông tin!");
+      return;
+    }
     onSaveProductService(id, product).then((json) => {
       if (json && json.success) {
         setProduct(initialState);
@@ -59,7 +73,7 @@ function ProductUpdate(props) {
   };
 
   const cancel = () => {
-    setUser(initialState);
+    setProduct(initialState);
     setShowContent(1);
     pushstate(props.history, "/products");
   };
@@ -80,8 +94,12 @@ function ProductUpdate(props) {
 
   const removeImage = (index) => {
     const images = product.images.filter((img, idx) => idx === index);
+    if (index === 0 && product && product.images.length === 1) {
+      onchangeValue("images", []);
+      return;
+    }
     onchangeValue("images", images);
-  }
+  };
 
   return (
     <React.Fragment>
@@ -90,13 +108,20 @@ function ProductUpdate(props) {
         <div className="row">
           {showContent === 1 ? (
             <Accessories
+              actionSave={actionSave}
+              onChangeStatusValid={onChangeStatusValid}
               product={product}
               onchangeValue={onchangeValue}
               handleUploadImage={handleUploadImage}
               removeImage={removeImage}
             />
           ) : (
-            <Service product={product} onchangeValue={onchangeValue} />
+            <Service
+              actionSave={actionSave}
+              onChangeStatusValid={onChangeStatusValid}
+              product={product}
+              onchangeValue={onchangeValue}
+            />
           )}
           <InfoProductFooter
             saveProductService={saveProductService}

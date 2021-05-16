@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 
 function Pagination(props) {
@@ -10,10 +8,7 @@ function Pagination(props) {
     }
   };
 
-  const { size, page } = props;
-  const total = 100;
-  if (total === 0) return null;
-  const totalPage = (total % size === 0) ? total / size : Math.floor(total / size) + 1;
+  const { size, page, totalPage } = props;
   const listPaginations = [];
   if (totalPage > 1) {
     listPaginations.push({ page_num: 0 });
@@ -25,6 +20,7 @@ function Pagination(props) {
     listPaginations.push({ page_num: totalPage + 1 });
   }
   let pageElm = null;
+  console.log('listPaginations', listPaginations);
   if (listPaginations.length > 3) {
     pageElm = listPaginations.map((pageInfo, index) => {
       if (index === 0) {

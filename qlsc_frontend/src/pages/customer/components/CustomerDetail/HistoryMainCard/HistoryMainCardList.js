@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import "./styles.scss";
+import { useParams } from "react-router-dom";
 import debounce from "utils/debounce";
 import HistoryMainCardListBody from "./HistoryMainCardListBody/HistoryMainCardListBody";
 import { getListHistoryMainCard } from "../../../actions/historyMainCardAction";
@@ -13,20 +14,21 @@ const initialState = {
   order: "",
 };
 function HistoryMainCardList(props) {
+  const { id } = useParams();
   const { onGetHistoryMainCard, customer } = props;
   const [filter, setFilter] = useState(initialState);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     if(customer) {
-      filter.id = customer.id
+      filter.id = id;
       onGetHistoryMainCard(search, filter);
+      setFilter({ ...filter, id: id });
     }
   }, []);
 
   useEffect(() => {
-    if(customer) {
-      filter.id = customer.id
+    if(id) {
       onGetHistoryMainCard(search, filter);
     }
   }, [filter]);

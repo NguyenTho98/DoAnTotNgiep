@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import pushstate from "utils/pushstate";
 import "./styles.scss";
 import TitleAndAction from "./TitleAndAction/TitleAndAction";
+import { toastError } from "../../../../utils/toast";
 
 const initialState = {
   name: null,
@@ -31,6 +32,8 @@ function CustomerUpdate(props) {
     wards,
   } = props;
   const [customer, setCustomer] = useState(initialState);
+  const [isValid, setIsValid] = useState(true);
+  const [actionSave, setActionSave] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     if (id) {
@@ -66,6 +69,7 @@ function CustomerUpdate(props) {
   }, []);
 
   const onChangeCustomer = (type, value) => {
+    setActionSave(false);
     if (type === "city") {
       setCustomer(() => {
         return {
@@ -85,6 +89,19 @@ function CustomerUpdate(props) {
   };
 
   const saveCustomer = () => {
+    setActionSave(true);
+    if (isValid) {
+      toastError("Vui lòng điền đầy đủ thông tin!");
+      return;
+    }
+    if (!customer.city) {
+      toastError("Vui lòng chọn khu vực!");
+      return;
+    }
+    if (!customer.ward) {
+      toastError("Vui lòng chọn phường xã!");
+      return;
+    }
     onSaveCustomer(id, customer).then((json) => {
       if (json && json.success) {
         setCustomer(initialState);
@@ -94,8 +111,12 @@ function CustomerUpdate(props) {
     });
   };
 
+  const onChangeStatusValid = (status) => {
+    setIsValid(status);
+  };
+
   const cancel = () => {
-    setUser(initialState);
+    setCustomer(initialState);
     onClearWards();
     pushstate(props.history, "/customers");
   };
@@ -106,6 +127,8 @@ function CustomerUpdate(props) {
       <div className="row">
         <div className="col-md-8">
           <InfoCustomerLeft
+            actionSave={actionSave}
+            onChangeStatusValid={onChangeStatusValid}
             onChangeCustomer={onChangeCustomer}
             customer={customer}
           />

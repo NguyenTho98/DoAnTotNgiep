@@ -1,14 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getWard, receiveWard } from "../../../actions/locationActions";
 import SelectDistricts from "../SelectAddress/SelectDistricts";
 import SelectWards from "../SelectAddress/SelectWards";
 import "./styles.scss";
 function InfoCustomerLeft(props) {
-  const { customer, onChangeCustomer, onGetWard, wards, cities } = props;
+  const {
+    customer,
+    onChangeCustomer,
+    onGetWard,
+    wards,
+    cities,
+    actionSave,
+    onChangeStatusValid,
+  } = props;
+  const [isInvalidName, setIsInvalidName] = useState(false);
+  const [isInvalidPhone, setIsInvalidPhone] = useState(false);
+  const [isInvalidAddress, setIsInvalidAddress] = useState(false);
+
+  useEffect(() => {
+    if (actionSave) {
+      if (!customer.name) setIsInvalidName(true);
+      if (!customer.phone) setIsInvalidPhone(true);
+      if (!customer.address) setIsInvalidAddress(true);
+    }
+  }, [actionSave]);
+
+  useEffect(() => {
+    if (customer.name) setIsInvalidName(false);
+  }, [customer.name]);
+
+  useEffect(() => {
+    if (customer.phone) setIsInvalidPhone(false);
+  }, [customer.phone]);
+
+  useEffect(() => {
+    if (customer.address) setIsInvalidAddress(false);
+  }, [customer.address]);
+
+  const onBlurName = () => {
+    if (!customer.name) {
+      onChangeStatusValid(true);
+      setIsInvalidName(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+  const onBlurPhone = () => {
+    if (!customer.phone) {
+      onChangeStatusValid(true);
+      setIsInvalidPhone(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
+  const onBlurAddress = () => {
+    if (!customer.address) {
+      onChangeStatusValid(true);
+      setIsInvalidAddress(true);
+    } else {
+      onChangeStatusValid(false);
+    }
+  };
 
   const onChangeSelectDistrict = (id) => {
-    if (id && customer && customer.city && (customer.city.id === id)) {
+    if (id && customer && customer.city && customer.city.id === id) {
       return;
     } else if (id) {
       const district = Object.values(cities).find(
@@ -28,7 +84,7 @@ function InfoCustomerLeft(props) {
       );
       if (ward) onChangeCustomer("ward", ward);
     }
-  }
+  };
 
   return (
     <div className="info-customer-left">
@@ -46,7 +102,9 @@ function InfoCustomerLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="name"
-                    value={customer.name || ''}
+                    style={isInvalidName ? { border: "1px solid red" } : {}}
+                    onBlur={() => onBlurName()}
+                    value={customer.name || ""}
                     onChange={(e) => onChangeCustomer("name", e.target.value)}
                     placeholder="Nhập tên khách hàng"
                   />
@@ -63,7 +121,7 @@ function InfoCustomerLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="code"
-                    value={customer.code || ''}
+                    value={customer.code || ""}
                     onChange={(e) => onChangeCustomer("code", e.target.value)}
                     placeholder="Nhập mã khách hàng"
                   />
@@ -82,7 +140,9 @@ function InfoCustomerLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="phone"
-                    value={customer.phone || ''}
+                    style={isInvalidPhone ? { border: "1px solid red" } : {}}
+                    onBlur={() => onBlurPhone()}
+                    value={customer.phone || ""}
                     onChange={(e) => onChangeCustomer("phone", e.target.value)}
                     placeholder="Nhập số điện thoại"
                   />
@@ -99,7 +159,7 @@ function InfoCustomerLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="email"
-                    value={customer.email || ''}
+                    value={customer.email || ""}
                     onChange={(e) => onChangeCustomer("email", e.target.value)}
                     placeholder="Nhập email"
                   />
@@ -122,8 +182,12 @@ function InfoCustomerLeft(props) {
                     data-tip=""
                     data-for="_extends_popup_error"
                     name="address"
-                    value={customer.address || ''}
-                    onChange={(e) => onChangeCustomer("address", e.target.value)}
+                    style={isInvalidAddress ? { border: "1px solid red" } : {}}
+                    onBlur={() => onBlurAddress()}
+                    value={customer.address || ""}
+                    onChange={(e) =>
+                      onChangeCustomer("address", e.target.value)
+                    }
                     placeholder="Nhập địa chỉ"
                   />
                 </div>
@@ -180,6 +244,4 @@ const mapDispatchToProps = (dispatch) => ({
   onClearWards: () => dispatch(receiveWard([])),
   onSaveCustomer: (customer) => dispatch(saveCustomer(customer)),
 });
-export default React.memo(
-  connect(mapStateToProps, mapDispatchToProps)(InfoCustomerLeft)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(InfoCustomerLeft);

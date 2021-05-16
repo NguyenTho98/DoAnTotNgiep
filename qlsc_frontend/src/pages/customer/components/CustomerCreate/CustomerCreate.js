@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router";
 import InfoCustomerLeft from "./InfoCustomerLeft/InfoCustomerLeft";
 import InfoCustomerRight from "./InfoCustomerRight/InfoCustomerRight";
-import InfoCustomerFooter from './InfoCustomerFooter/InfoCustomerFooter';
+import InfoCustomerFooter from "./InfoCustomerFooter/InfoCustomerFooter";
 import { saveCustomer, getCustomerById } from "../../actions/customerAction";
 import { receiveWard } from "../../actions/locationActions";
 import pushstate from "utils/pushstate";
 import "./styles.scss";
 import TitleAndAction from "./TitleAndAction/TitleAndAction";
+import { toastError } from "../../../../utils/toast";
 
 const initialState = {
   name: null,
@@ -23,12 +24,15 @@ const initialState = {
 function CustomerCreate(props) {
   const { onClearWards, onSaveCustomer, positionCallApi } = props;
   const [customer, setCustomer] = useState(initialState);
+  const [isValid, setIsValid] = useState(true);
+  const [actionSave, setActionSave] = useState(false);
 
   useEffect(() => {
     if (positionCallApi) setCustomer({ ...customer, ward: null });
   }, [positionCallApi]);
 
   const onChangeCustomer = (type, value) => {
+    setActionSave(false);
     setCustomer(() => {
       return {
         ...customer,
@@ -38,18 +42,35 @@ function CustomerCreate(props) {
   };
 
   const saveCustomer = () => {
+    setActionSave(true);
+    if (isValid) {
+      toastError("Vui lòng điền đầy đủ thông tin!");
+      return;
+    }
+    if (!customer.city) {
+      toastError("Vui lòng chọn khu vực!");
+      return;
+    }
+    if (!customer.ward) {
+      toastError("Vui lòng chọn phường xã!");
+      return;
+    }
     onSaveCustomer(customer).then((json) => {
       if (json && json.success) {
         setCustomer(initialState);
         onClearWards();
-        pushstate(props.history, "/customer");
+        pushstate(props.history, "/customers");
       }
     });
   };
 
+  const onChangeStatusValid = (status) => {
+    setIsValid(status);
+  };
+
   const cancel = () => {
     setCustomer(initialState);
-    pushstate(props.history, "/customer");
+    pushstate(props.history, "/customers");
   };
 
   return (
@@ -57,10 +78,18 @@ function CustomerCreate(props) {
       <TitleAndAction />
       <div className="row">
         <div className="col-md-8">
-          <InfoCustomerLeft onChangeCustomer={onChangeCustomer} customer={customer} />
+          <InfoCustomerLeft
+            actionSave={actionSave}
+            onChangeStatusValid={onChangeStatusValid}
+            onChangeCustomer={onChangeCustomer}
+            customer={customer}
+          />
         </div>
         <div className="col-md-4">
-          <InfoCustomerRight onChangeCustomer={onChangeCustomer} customer={customer} />
+          <InfoCustomerRight
+            onChangeCustomer={onChangeCustomer}
+            customer={customer}
+          />
         </div>
         <InfoCustomerFooter saveCustomer={saveCustomer} cancel={cancel} />
       </div>
@@ -83,4 +112,6 @@ const mapDispatchToProps = (dispatch) => ({
   onGetCustomerById: (id) => dispatch(getCustomerById(id)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CustomerCreate));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CustomerCreate)
+);

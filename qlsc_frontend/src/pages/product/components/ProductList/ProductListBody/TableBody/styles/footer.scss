@@ -9,10 +9,18 @@
     margin-left: 10px;
   }
 
+  .products-pagination {
+    position: absolute;
+    right: 35px;
+  }
+
+  .pagination-size-custom {
+    width: 250px;
+  }
+
   #pagination-size {
     width: -webkit-fill-available;
     display: flex;
-    margin-right: 180px;
 
     .pagination-size-text {
       padding-top: 7px;

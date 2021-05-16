@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PasswordPoJo {
+public class PasswordRequest {
     String oldPassword;
     String password;
     Long id;

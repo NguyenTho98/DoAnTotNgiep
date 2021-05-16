@@ -129,7 +129,6 @@ function CustomerUpdate(props) {
     pushstate(props.history, "/customers");
   };
 
-  console.log("check customer", customer);
   return (
     <div className="customer-screen-wrapper-create">
       <TitleAndAction />

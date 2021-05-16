@@ -43,20 +43,23 @@ function App(props) {
   }, []);
 
   const onConnected = () => {
-    console.log("Connected!!")
+    //window.alert("Connected!!")
   }
 
   const onMessageReceived = (msg) => {
-    console.log("check msg: ", msg);
+    window.alert("check msg: ", msg);
   }
 
+  const onDisconnect = () => {
+    //window.alert("Disconnected!");
+  }
   return (
     <Router history={createBrowserHistory()}>
       <SockJsClient
         url={SOCKET_URL_V2}
         topics={['/topic/message']}
         onConnect={onConnected}
-        onDisconnect={console.log("Disconnected!")}
+        onDisconnect={onDisconnect}
         onMessage={msg => onMessageReceived(msg)}
         debug={false}
       />

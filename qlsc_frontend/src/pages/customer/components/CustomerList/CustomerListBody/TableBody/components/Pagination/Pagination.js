@@ -18,7 +18,6 @@ function Pagination(props) {
     }
     listPaginations.push({ page_num: totalPage + 1 });
   }
-  console.log('listPaginations', listPaginations);
   let pageElm = null;
   if (listPaginations.length > 3) {
     pageElm = listPaginations.map((pageInfo, index) => {

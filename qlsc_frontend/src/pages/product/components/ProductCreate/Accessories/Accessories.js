@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
-import * as Icons from "pages/product/commons/Icons";
+import * as Icons from "../../../commons/Icons";
 import "./styles.scss";
 import { toastError } from "../../../../../utils/toast";
+
 function Accessories(props) {
   const {
     product,
@@ -54,9 +55,7 @@ function Accessories(props) {
     ) {
       toastError("Bạn chỉ được chọn tối đa 5 ảnh");
     } else {
-      uploadedFiles.forEach((file) => {
-        handleUploadImage(file);
-      });
+      handleUploadImage(uploadedFiles);
     }
     e.target.value = "";
   };
@@ -255,11 +254,7 @@ function Accessories(props) {
               </React.Fragment>
             ) : (
               <div className="preview-image">
-                <div
-                  className="image"
-                  style={{ background: "red" }}
-                  onClick={() => onOpenFile()}
-                >
+                <div className="image-input" onClick={() => onOpenFile()}>
                   <input
                     type="file"
                     className="display-none"
@@ -268,6 +263,7 @@ function Accessories(props) {
                     onChange={(e) => uploadFile(e)}
                     multiple
                   />
+                  <Icons.addImgIcon />
                 </div>
                 {product.images.map((image, index) => {
                   return (
@@ -277,13 +273,9 @@ function Accessories(props) {
                         className="image"
                         src={image}
                         alt={image}
-                        style={{}}
                       />
                       <span
-                        style={{
-                          position: "absolute",
-                          cursor: "pointer",
-                        }}
+                        className="remove-img"
                         onClick={() => removeImage(index)}
                       >
                         x

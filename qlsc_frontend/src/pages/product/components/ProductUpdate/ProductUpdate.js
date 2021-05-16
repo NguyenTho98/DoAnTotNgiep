@@ -28,18 +28,24 @@ function ProductUpdate(props) {
   const { onUpLoadImage, onSaveProductService, onGetProductServiceById } =
     props;
   const [product, setProduct] = useState(initialState);
+  const [images, setImages] = useState([]);
   const [showContent, setShowContent] = useState(null);
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
   const [actionSave, setActionSave] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     if (id) {
       onGetProductServiceById(id).then((json) => {
         if (json) setProduct(json);
+        if (json && json.images) setImages(json.images);
         if (json && json.type) setShowContent(json.type);
       });
     }
   }, []);
+
+  useEffect(() => {
+    onchangeValue("images", images);
+  }, [images])
 
   const onchangeValue = (type, value) => {
     setActionSave(false);
@@ -78,18 +84,19 @@ function ProductUpdate(props) {
     pushstate(props.history, "/products");
   };
 
-  const handleUploadImage = (file) => {
-    onUpLoadImage(file)
-      .then((json) => {
-        if (json && json.data) {
-          const images = [...product.images, json.data];
-          onchangeValue("images", images);
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-        return e;
-      });
+  const handleUploadImage = (files) => {
+    files.forEach((file) => {
+      onUpLoadImage(file)
+        .then((json) => {
+          if (json && json.data) {
+            setImages((state) => ([...state, json.data]));
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+          return e;
+        });
+    });
   };
 
   const removeImage = (index) => {

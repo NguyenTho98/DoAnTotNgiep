@@ -21,6 +21,7 @@ const initialState = {
 };
 function ProductCreate(props) {
   const { onUpLoadImage, onSaveProductService } = props;
+  const [images, setImages] = useState([]);
   const [product, setProduct] = useState(initialState);
   const [showContent, setShowContent] = useState(1);
   const [isValid, setIsValid] = useState(true);
@@ -29,6 +30,10 @@ function ProductCreate(props) {
   useEffect(() => {
     onchangeValue("type", 1);
   }, []);
+
+  useEffect(() => {
+    onchangeValue("images", images);
+  }, [images])
 
   useEffect(() => {
     setIsValid(true);
@@ -76,18 +81,19 @@ function ProductCreate(props) {
     pushstate(props.history, "/products");
   };
 
-  const handleUploadImage = (file) => {
-    onUpLoadImage(file)
-      .then((json) => {
-        if (json && json.data) {
-          const images = [...product.images, json.data];
-          onchangeValue("images", images);
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-        return e;
-      });
+  const handleUploadImage = (files) => {
+    files.forEach((file) => {
+      onUpLoadImage(file)
+        .then((json) => {
+          if (json && json.data) {
+            setImages((state) => ([...state, json.data]));
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+          return e;
+        });
+    });
   };
 
   const handleChange = () => {
@@ -99,11 +105,11 @@ function ProductCreate(props) {
   };
 
   const removeImage = (index) => {
-    const images = product.images.filter((img, idx) => idx === index);
     if (index === 0 && product && product.images.length === 1) {
       onchangeValue("images", []);
       return;
     }
+    const images = product.images.filter((img, idx) => idx !== index);
     onchangeValue("images", images);
   };
 

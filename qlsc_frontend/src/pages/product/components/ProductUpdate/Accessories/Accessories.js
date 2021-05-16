@@ -88,11 +88,9 @@ function Accessories(props) {
       product.images.length + uploadedFiles.length > 5 ||
       uploadedFiles.length > 5
     ) {
-      console.error("Bạn chỉ được chọn tối đa 5 ảnh");
+      toastError("Bạn chỉ được chọn tối đa 5 ảnh");
     } else {
-      uploadedFiles.forEach((file) => {
-        handleUploadImage(file);
-      });
+      handleUploadImage(uploadedFiles);
     }
     e.target.value = "";
   };
@@ -255,11 +253,7 @@ function Accessories(props) {
               </React.Fragment>
             ) : (
               <div className="preview-image">
-                <div
-                  className="image"
-                  style={{ background: "red" }}
-                  onClick={() => onOpenFile()}
-                >
+                <div className="image-input" onClick={() => onOpenFile()}>
                   <input
                     type="file"
                     className="display-none"
@@ -268,31 +262,26 @@ function Accessories(props) {
                     onChange={(e) => uploadFile(e)}
                     multiple
                   />
+                  <Icons.addImgIcon />
                 </div>
-                {product.images &&
-                  product.images.length &&
-                  product.images.map((image, index) => {
-                    return (
-                      <div className="wrapper-image" key={index}>
-                        <img
-                          key={index}
-                          className="image"
-                          src={image}
-                          alt={image}
-                          style={{}}
-                        />
-                        <span
-                          style={{
-                            position: "absolute",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => removeImage(index)}
-                        >
-                          x
-                        </span>
-                      </div>
-                    );
-                  })}
+                {product.images.map((image, index) => {
+                  return (
+                    <div className="wrapper-image" key={index}>
+                      <img
+                        key={index}
+                        className="image"
+                        src={image}
+                        alt={image}
+                      />
+                      <span
+                        className="remove-img"
+                        onClick={() => removeImage(index)}
+                      >
+                        x
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

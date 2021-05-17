@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { login } from "./actions/loginAction";
+import { login, checkInfoUser } from "./actions/loginAction";
 import "./login.scss";
 import logo from "../../images/logo_sapo.svg";
 import fb from "../../images/facebook-8-1-2020.svg";
@@ -18,9 +18,11 @@ function LoginPage(props) {
   };
   const handleSubmit = () => {
     props.onLogin(user).then((res) => {
-      if (res && res.status === 200) {
-        pushstate(props.history, "/report");
-      } 
+      if (res) {
+        props.onCheckInfoUser(res).then((json) => {
+          if (json) pushstate(props.history, "/maintenance-cards");
+        });
+      }
     });
   };
   return (
@@ -95,5 +97,6 @@ function LoginPage(props) {
 
 const mapDispatchToProps = (dispatch) => ({
   onLogin: (data) => dispatch(login(data)),
+  onCheckInfoUser: (token) => dispatch(checkInfoUser(token)),
 });
 export default connect(null, mapDispatchToProps)(LoginPage);

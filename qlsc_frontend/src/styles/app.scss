@@ -2,7 +2,7 @@
     min-height: 100vh;
     width: calc(100% - 230px);
     margin-left: 230px;
-    background-color: #f4f6f8;
+    background: rgb(255, 255, 255);
 
     .top-bar-body {
         padding-left: 10px;
@@ -12,6 +12,6 @@
 .content-dashboard-active {
     width: calc(100% - 57px);
     margin-left: 57px;
-    background-color: #f4f6f8;
+    background: rgb(255, 255, 255);
     min-height: 635px;
 }

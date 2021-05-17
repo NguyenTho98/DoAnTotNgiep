@@ -22,7 +22,6 @@ function StaffList(props) {
   }, []);
 
   useEffect(() => {
-    console.log('filter', filter);
     onGetStaff(search, filter);
   }, [filter]);
 

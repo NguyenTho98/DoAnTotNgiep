@@ -2,7 +2,7 @@ import { API_MAINTENANCECARD } from "constants/api";
 import { fetch } from "utils/fetchMiddleware";
 import { toastError } from "../../../utils/toast";
 
-export const getDataForReport = (from = "01/05/2021", to = "12/05/2021") => (dispatch, getState) => {
+export const getDataForReport = (from, to) => (dispatch, getState) => {
     return dispatch(
       fetch(`${API_MAINTENANCECARD}/business/report?from=${from}&to=${to}`, {
         method: "GET",

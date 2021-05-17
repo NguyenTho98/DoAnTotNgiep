@@ -3,6 +3,7 @@ import * as Icons from 'common/icons'
 
 export default {
   menuLinkFull,
+  menuLinkRepairer,
   menuLinkCoordinator,
 };
 
@@ -16,12 +17,12 @@ export const menuLinkCoordinator = [
       {
         id: 0,
         url: '/maintenance-card/create',
-        title: 'Thêm mới phiếu sửa chữa'
+        title: 'Thêm mới phiếu'
       },
       {
         id: 1,
         url: '/maintenance-cards',
-        title: 'Danh sách phiếu sửa chữa'
+        title: 'Danh sách phiếu'
       }
     ]
   },
@@ -50,11 +51,6 @@ export const menuLinkCoordinator = [
     title: 'Sản phẩm',
     submenu: [
       {
-        id: 0,
-        url: '/product/create',
-        title: 'Thêm mới sản phẩm'
-      },
-      {
         id: 1,
         url: '/products',
         title: 'Danh sách sản phẩm'
@@ -68,14 +64,38 @@ export const menuLinkCoordinator = [
     title: 'Nhân viên',
     submenu: [
       {
-        id: 0,
-        url: '/staff/create',
-        title: 'Thêm mới nhân viên'
-      },
-      {
         id: 1,
         url: '/staffs',
         title: 'Danh sách nhân viên'
+      }
+    ]
+  },
+];
+
+export const menuLinkRepairer = [
+  {
+    id: 0,
+    url: '/maintenance-card',
+    icon: <Icons.CustomerIcon />,
+    title: 'Phiếu sửa chữa',
+    submenu: [
+      {
+        id: 1,
+        url: '/maintenance-cards',
+        title: 'Danh sách phiếu'
+      }
+    ]
+  },
+  {
+    id: 2,
+    url: '/product',
+    icon: <Icons.ProductIcon />,
+    title: 'Sản phẩm',
+    submenu: [
+      {
+        id: 1,
+        url: '/products',
+        title: 'Danh sách sản phẩm'
       }
     ]
   },
@@ -83,13 +103,6 @@ export const menuLinkCoordinator = [
 
 
 export const menuLinkFull = [
-  {
-    id: 5,
-    url: '/',
-    icon: <Icons.ReportIcon />,
-    title: 'Tổng quan',
-    submenu: []
-  },
   {
     id: 0,
     url: '/maintenance-card',
@@ -99,12 +112,12 @@ export const menuLinkFull = [
       {
         id: 0,
         url: '/maintenance-card/create',
-        title: 'Thêm mới phiếu sửa chữa'
+        title: 'Thêm mới phiếu'
       },
       {
         id: 1,
         url: '/maintenance-cards',
-        title: 'Danh sách phiếu sửa chữa'
+        title: 'Danh sách phiếu'
       },
       {
         id: 3,

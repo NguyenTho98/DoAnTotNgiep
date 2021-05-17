@@ -9,12 +9,6 @@ function ReportMain(props) {
   const { onGetDataForReport } = props;
   const [data, setData] = useState({});
 
-  useEffect(() => {
-    onGetDataForReport().then((json) => {
-      if (json) setData(json);
-    });
-  }, []);
-
   const onGetDataByFilter = (from, to) => {
     onGetDataForReport(from, to).then((json) => {
       if (json) setData(json);

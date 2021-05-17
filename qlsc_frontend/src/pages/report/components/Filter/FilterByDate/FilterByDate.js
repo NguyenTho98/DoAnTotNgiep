@@ -66,7 +66,7 @@ function FilterByDate(props) {
   const [startDate, setStartDate] = useState(startTime ? convertDateToMoment(s) : moment().subtract(6, 'days'));
   const [endDate, setEndDate] = useState(endTime ? convertDateToMoment(e) : moment());
 
-  const onApply = (event, picker) => {
+  const onApply = (picker) => {
     const newParams = getNewParams(history.location.search, 's', picker.startDate.unix());
     const lastParams = getNewParams(`?${newParams}`, 'e', picker.endDate.unix());
     pushstate(history, `/report?${lastParams}`);
@@ -99,7 +99,6 @@ function FilterByDate(props) {
         locale={locale}
         alwaysShowCalendars
         className="date-picker-wrapper"
-        // disabled
         utc
         minDate={moment().subtract(1, 'year')}
       >

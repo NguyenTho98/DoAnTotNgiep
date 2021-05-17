@@ -15,10 +15,11 @@ import Modals from "./components/modal/modal";
 import "./styles/app.scss";
 import LoginPage from "./pages/login/login";
 import DashBoard from "pages/dashboard/DashBoard";
-import PrivateRoute from "./components/router/PrivateRoute";
+import NotFoundComponent from "./components/notfound/NotFoundComponent";
 import storage from "./utils/storage";
 import { checkInfoUser } from "./pages/login/actions/loginAction";
 import pushstate from "utils/pushstate";
+import PrivateRoute from "./components/router/PrivateRoute";
 import { SOCKET_URL_V2 } from "./constants/api";
 import { getStaffsByRepairman } from "./actions/commons";
 
@@ -27,10 +28,16 @@ function App(props) {
 
   useEffect(() => {
     const token = storage.get("token", false);
+    console.log('token', token);
     if (token) {
       props.onCheckInfoUser(token).then((json) => {
         if (json && json.role) {
-          pushstate(props.history, window.location.pathname);
+          pushstate(props.history, "/maintenance-cards");
+          // if (window.location.pathname === '/not-found') {
+          //   pushstate(props.history, "/login");
+          // } else {
+          //   pushstate(props.history, window.location.pathname);
+          // }
         } else {
           pushstate(props.history, "/login");
         }
@@ -78,8 +85,9 @@ function App(props) {
       />
       <Modals />
       <Switch>
+        <Route path="/not-found" component={NotFoundComponent} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/" component={() => <DashBoard showMenu={showMenu} />} />
+        <PrivateRoute path="/" component={() => <DashBoard showMenu={showMenu} />} />
       </Switch>
     </Router>
   );

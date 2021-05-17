@@ -19,11 +19,8 @@ export const login = (user = {}) => (dispatch, getState) => {
         const { headers } = res;
         const token = Object.values(headers)[4];
         dispatch(receiveAccessToken(token));
-        dispatch(checkInfoUser());
-      } else {
-        //
+        return token;
       }
-      return res;
     })
     .catch((err) => {
       return err;
@@ -39,6 +36,7 @@ export const checkInfoUser = (token) => (dispatch, getState) => {
   }))
     .then((json) => {
       if (json && json.role) {
+        if (token) dispatch(receiveAccessToken(token));
         dispatch(receiveAccount(json));
       }
       return json;

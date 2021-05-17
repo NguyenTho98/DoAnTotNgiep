@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
   Switch,
   withRouter,
@@ -22,29 +22,28 @@ import pushstate from "utils/pushstate";
 import PrivateRoute from "./components/router/PrivateRoute";
 import { SOCKET_URL_V2 } from "./constants/api";
 import { getStaffsByRepairman } from "./actions/commons";
+import history from './utils/history';
 
 function App(props) {
   const { showMenu } = props;
-
   useEffect(() => {
     const token = storage.get("token", false);
     console.log('token', token);
     if (token) {
       props.onCheckInfoUser(token).then((json) => {
         if (json && json.role) {
-          pushstate(props.history, "/maintenance-cards");
-          // if (window.location.pathname === '/not-found') {
-          //   pushstate(props.history, "/login");
-          // } else {
-          //   pushstate(props.history, window.location.pathname);
-          // }
+          if (window.location.pathname && window.location.pathname !== '/not-found') {
+            history.push(window.location.pathname);
+          } else {
+            history.push("/maintenance-cards");
+          }
         } else {
-          pushstate(props.history, "/login");
+          history.push("/login");
         }
       });
-    } else {
-      pushstate(props.history, "/login");
-    }
+    } else if (window.location.pathname !== '/login') {
+      history.push("/not-found");
+    } else history.push("/login");
     props.onGetCity();
     props.getStaffsByRepairman();
   }, []);
@@ -61,7 +60,7 @@ function App(props) {
     //window.alert("Disconnected!");
   }
   return (
-    <Router history={createBrowserHistory()}>
+    <Router history={history}>
       <SockJsClient
         url={SOCKET_URL_V2}
         topics={['/topic/message']}

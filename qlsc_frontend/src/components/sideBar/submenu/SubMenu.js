@@ -20,10 +20,9 @@ function SubMenu(props) {
   useEffect(() => {
     if (user && user.role === 1) {
       setMenuLink(menuLinkCoordinator);
-    }
-    if (user && user.role === 2) {
+    } else if (user && user.role === 2) {
       setMenuLink(menuLinkRepairer);
-    }
+    } else setMenuLink(menuLinkFull);
   }, [user]);
   const arrTmp = url.split("/");
   const check = arrTmp[2] === "detail" ? true : false;

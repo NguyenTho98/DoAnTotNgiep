@@ -51,7 +51,7 @@ export const menuLinkCoordinator = [
     title: 'Sản phẩm',
     submenu: [
       {
-        id: 1,
+        id: 0,
         url: '/products',
         title: 'Danh sách sản phẩm'
       }
@@ -64,7 +64,7 @@ export const menuLinkCoordinator = [
     title: 'Nhân viên',
     submenu: [
       {
-        id: 1,
+        id: 0,
         url: '/staffs',
         title: 'Danh sách nhân viên'
       }
@@ -80,7 +80,7 @@ export const menuLinkRepairer = [
     title: 'Phiếu sửa chữa',
     submenu: [
       {
-        id: 1,
+        id: 0,
         url: '/maintenance-cards',
         title: 'Danh sách phiếu'
       }
@@ -93,7 +93,7 @@ export const menuLinkRepairer = [
     title: 'Sản phẩm',
     submenu: [
       {
-        id: 1,
+        id: 0,
         url: '/products',
         title: 'Danh sách sản phẩm'
       }
@@ -120,7 +120,7 @@ export const menuLinkFull = [
         title: 'Danh sách phiếu'
       },
       {
-        id: 3,
+        id: 2,
         url: '/maintenance-card/detail/',
       }
     ]
@@ -142,7 +142,7 @@ export const menuLinkFull = [
         title: 'Danh sách khách hàng'
       },
       {
-        id: 3,
+        id: 2,
         url: '/customer/detail/',
       }
     ]
@@ -182,7 +182,7 @@ export const menuLinkFull = [
         title: 'Danh sách nhân viên'
       },
       {
-        id: 3,
+        id: 2,
         url: '/staff/detail/',
       }
     ]

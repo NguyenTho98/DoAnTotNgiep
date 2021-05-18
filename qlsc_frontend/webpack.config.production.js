@@ -22,9 +22,9 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(__dirname, 'bundle'),
+    path: path.resolve(__dirname, 'build'),
     publicPath: '/',
-    filename: 'js/[name].bundle.js',
+    filename: 'js/index.js',
   },
   module: {
     rules: [
@@ -42,17 +42,8 @@ module.exports = {
         test: /\.css?$/,
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader'],
-        // test: /\.css$/,
-        // exclude: /node_modules/,
-        // use: ExtractTextPlugin.extract({
-        //   fallback: 'style-loader',
-        //   use: 'css-loader',
-        // }),
       },
       {
-        // test: /\.scss?$/,
-        // exclude: /node_modules/,
-        // use: ['style-loader', 'css-loader', 'sass-loader'],
         test: /\.scss$/,
         exclude: /node_modules/,
         use: ExtractTextPlugin.extract({
@@ -64,6 +55,9 @@ module.exports = {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         exclude: /node_modules/,
         loader: 'url-loader',
+        options: {
+          limit: 100000
+        }
       },
       {
         test: /\.(png|jpg|gif)$/,

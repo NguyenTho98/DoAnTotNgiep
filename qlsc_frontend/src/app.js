@@ -9,7 +9,6 @@ import SockJsClient from 'react-stomp';
 import { getCity } from "./pages/customer/actions/locationActions";
 import { createBrowserHistory } from "history";
 import { connect } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Modals from "./components/modal/modal";
 import "./styles/app.scss";

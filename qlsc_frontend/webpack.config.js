@@ -36,7 +36,8 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: './src/index.html',
+      filename: "index.html"
     }),
     // new CopyWebpackPlugin(
     //   {
@@ -48,28 +49,51 @@ const config = {
   ],
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, exclude: /node_modules/, loader: 'babel-loader' },
       {
-        test: /\.(scss|css)$/,
+        test: /\.json?$/,
+        exclude: /node_modules/,
+        use: ['json-loader'],
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+      {
+        test: /\.css?$/,
+        exclude: /node_modules/,
         use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
+          "style-loader",
+          { loader: "css-loader", options: { modules: true } }
         ]
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        test: /\.scss?$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+        // test: /\.scss$/,
+        // exclude: /node_modules/,
+        // use: ExtractTextPlugin.extract({
+        //   fallback: 'style-loader',
+        //   use: ['css-loader', 'sass-loader'],
+        // }),
       },
       {
-        test: /\.js$/,
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader',
-        options: {
-          emitWarning: true,
-        },
+        loader: 'url-loader?limit=100000',
       },
-    ]
+      {
+        test: /\.(png|jpg|gif)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {},
+          },
+        ],
+      },
+    ],
   }
 }
 

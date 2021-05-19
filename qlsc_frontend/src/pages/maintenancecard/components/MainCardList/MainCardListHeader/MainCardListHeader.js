@@ -30,7 +30,7 @@ function MainCardListHeader(props) {
             >
               <Icons.Create />
             </span>
-            Tạo mới phiếu đối soát
+            Tạo mới phiếu sửa chữa
           </button>
         </div>
       </div>

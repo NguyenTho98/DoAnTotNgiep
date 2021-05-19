@@ -2,6 +2,8 @@ import * as actionTypes from "actions/actionTypes";
 import { API_USER_AUTH, API_USER } from "constants/api";
 import { fetch } from "utils/fetchMiddleware";
 import callApi from "utils/callApi";
+import storage from "../../../utils/storage";
+import history from '../../../utils/history';
 
 export const login = (user = {}) => (dispatch, getState) => {
   const data = {
@@ -38,6 +40,9 @@ export const checkInfoUser = (token) => (dispatch, getState) => {
       if (json && json.role) {
         if (token) dispatch(receiveAccessToken(token));
         dispatch(receiveAccount(json));
+      } else {
+        history.push("/login");
+        storage.clear();
       }
       return json;
     })

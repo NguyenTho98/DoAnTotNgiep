@@ -29,10 +29,10 @@ export const isLogin = () => {
   if (!user) return;
   const role = user.role;
   if (role === 1 && !coordinator.includes(handlePathname(pathname))) {
-    return "not-found";
+    return "404";
   }
   if (role === 2 && !repairStaff.includes(pathname)) {
-    return "not-found";
+    return "404";
   }
   return role;
 };
@@ -42,10 +42,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isLogin() === "not-found" ? (
+        isLogin() === "404" ? (
           <Redirect
             to={{
-              pathname: "/not-found",
+              pathname: "/404",
               state: { from: props.location },
             }}
           />

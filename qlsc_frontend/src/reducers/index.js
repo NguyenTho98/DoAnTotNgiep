@@ -9,6 +9,7 @@ import mainCard from './maintenancecard';
 import historyMainCard from './historyMainCard/historyMainCard';
 import staffHistoryMainCard from './staffHistoryMainCard/staffHistoryMainCard';
 import staff from './staff/staff';
+import notification from './notification';
 
 export default combineReducers({
   auth,
@@ -20,5 +21,6 @@ export default combineReducers({
   mainCard,
   staff,
   historyMainCard,
-  staffHistoryMainCard
+  staffHistoryMainCard,
+  notification
 })

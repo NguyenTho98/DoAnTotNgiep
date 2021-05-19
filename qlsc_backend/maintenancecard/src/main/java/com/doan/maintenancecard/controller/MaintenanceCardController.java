@@ -59,7 +59,7 @@ public class MaintenanceCardController {
 
     // NV quan li, NV dieu phoi, NV sua chua
     @GetMapping("maintenanceCards/{id}")
-    public ResponseEntity<MaintenanceCardDTO> searchMaintenanceCard(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<MaintenanceCardDTO> getMaintenanceCardById(@PathVariable Long id) throws NotFoundException {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         List<String> roles = authentication.getAuthorities().stream()

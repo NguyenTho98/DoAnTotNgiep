@@ -57,19 +57,6 @@ export const menuLinkCoordinator = [
       }
     ]
   },
-  {
-    id: 3,
-    url: '/staff',
-    icon: <Icons.ReportIcon />,
-    title: 'Nhân viên',
-    submenu: [
-      {
-        id: 0,
-        url: '/staffs',
-        title: 'Danh sách nhân viên'
-      }
-    ]
-  },
 ];
 
 export const menuLinkRepairer = [

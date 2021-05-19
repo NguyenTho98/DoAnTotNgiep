@@ -61,15 +61,18 @@ public class MaintenanceCardConverter {
     public MaintenanceCard convertToEntity(MaintenanceCardDTO maintenanceCardDTO) {
         MaintenanceCard maintenanceCard = new MaintenanceCard();
         UserDTO repairman = maintenanceCardDTO.getRepairman();
+        //thông tin nhân viên sửa chữa
         if (repairman != null && repairman.getId() != null) {
             maintenanceCard.setRepairmanName(repairman.getName());
             maintenanceCard.setRepairmanId(repairman.getId());
             maintenanceCard.setRepairmanEmail(repairman.getEmail());
         }
+        //thông tin khách hàng
         CustomerDTO customerDTO = maintenanceCardDTO.getCustomer();
         maintenanceCard.setCustomerPhone(customerDTO.getPhone());
         maintenanceCard.setCustomerName(customerDTO.getName());
         maintenanceCard.setCustomerId(customerDTO.getId());
+        //thông tin trên phiếu
         UserDTO coordinator = maintenanceCardDTO.getCoordinator();
         maintenanceCard.setCoordinatorName(coordinator.getName());
         maintenanceCard.setCoordinatorId(coordinator.getId());
@@ -83,23 +86,26 @@ public class MaintenanceCardConverter {
         maintenanceCard.setColor(maintenanceCardDTO.getColor());
         maintenanceCard.setDescription(maintenanceCardDTO.getDescription());
         maintenanceCard.setExpectedReturnDate(maintenanceCardDTO.getExpectedReturnDate());
+        //chi tiết phiếu
         List<MaintenanceCardDetail> maintenanceCardDetails = new ArrayList<>();
-        for (MaintenanceCardDetailDTO maintenanceCardDetailDTO : maintenanceCardDTO.getMaintenanceCardDetails()) {
-            MaintenanceCardDetail maintenanceCardDetail = new MaintenanceCardDetail();
-            ProductDTO productDTO = maintenanceCardDetailDTO.getProduct();
-            maintenanceCardDetail.setProductCode(productDTO.getCode());
-            maintenanceCardDetail.setMaintenanceCard(maintenanceCard);
-            maintenanceCardDetail.setStatus(maintenanceCardDetailDTO.getStatus());
-            maintenanceCardDetail.setPrice(maintenanceCardDetailDTO.getPrice());
-            maintenanceCardDetail.setProductId(productDTO.getId());
-            maintenanceCardDetail.setProductImage(productDTO.getImage());
-            maintenanceCardDetail.setProductName(productDTO.getName());
-            maintenanceCardDetail.setProductType(productDTO.getType());
-            maintenanceCardDetail.setProductUnit(productDTO.getUnit());
-            maintenanceCardDetail.setQuantity(maintenanceCardDetailDTO.getQuantity());
-            maintenanceCardDetail.setId(maintenanceCardDetailDTO.getId());
-            maintenanceCardDetail.setProductPricePerUnit(productDTO.getPricePerUnit());
-            maintenanceCardDetails.add(maintenanceCardDetail);
+        if (!maintenanceCardDTO.getMaintenanceCardDetails().isEmpty()) {
+            maintenanceCardDTO.getMaintenanceCardDetails().forEach(maintenanceCardDetailDTO -> {
+                MaintenanceCardDetail maintenanceCardDetail = new MaintenanceCardDetail();
+                ProductDTO productDTO = maintenanceCardDetailDTO.getProduct();
+                maintenanceCardDetail.setProductCode(productDTO.getCode());
+                maintenanceCardDetail.setMaintenanceCard(maintenanceCard);
+                maintenanceCardDetail.setStatus(maintenanceCardDetailDTO.getStatus());
+                maintenanceCardDetail.setPrice(maintenanceCardDetailDTO.getPrice());
+                maintenanceCardDetail.setProductId(productDTO.getId());
+                maintenanceCardDetail.setProductImage(productDTO.getImage());
+                maintenanceCardDetail.setProductName(productDTO.getName());
+                maintenanceCardDetail.setProductType(productDTO.getType());
+                maintenanceCardDetail.setProductUnit(productDTO.getUnit());
+                maintenanceCardDetail.setQuantity(maintenanceCardDetailDTO.getQuantity());
+                maintenanceCardDetail.setId(maintenanceCardDetailDTO.getId());
+                maintenanceCardDetail.setProductPricePerUnit(productDTO.getPricePerUnit());
+                maintenanceCardDetails.add(maintenanceCardDetail);
+            });
         }
         maintenanceCard.setMaintenanceCardDetails(maintenanceCardDetails);
         maintenanceCard.setModel(maintenanceCardDTO.getModel());

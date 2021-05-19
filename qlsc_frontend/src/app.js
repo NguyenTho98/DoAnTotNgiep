@@ -19,20 +19,23 @@ import { checkInfoUser } from "./pages/login/actions/loginAction";
 import PrivateRoute from "./components/router/PrivateRoute";
 import { SOCKET_URL_V2 } from "./constants/api";
 import { getStaffsByRepairman } from "./actions/commons";
+import { notificationMaintenanceCard } from "./actions/notificationAction";
 import storage from "./utils/storage";
 import history from './utils/history';
 
 function App(props) {
-  const { showMenu } = props;
+  const { showMenu, onCheckInfoUser, onNotificationMaintenanceCard, user } = props;
   useEffect(() => {
     const token = storage.get("token", false);
     if (!token) history.push("/login");
-    if (token && window.location.pathname) {
-      history.push(window.location.pathname);
-    }
     if (token) {
+      onCheckInfoUser(token);
       props.onGetCity();
       props.getStaffsByRepairman();
+    }
+    if (token && window.location.pathname === "/login") history.push("/maintenance-cards");
+    if (token && window.location.pathname) {
+      history.push(window.location.pathname);
     }
   }, []);
 
@@ -41,11 +44,11 @@ function App(props) {
   }
 
   const onMessageReceived = (msg) => {
-    window.alert("check msg: ", msg);
+    onNotificationMaintenanceCard(msg, user);
   }
 
   const onDisconnect = () => {
-    //window.alert("Disconnected!");
+    window.alert("Disconnected!");
   }
   return (
     <Router history={history}>
@@ -72,7 +75,7 @@ function App(props) {
       />
       <Modals />
       <Switch>
-
+        <Route path="/404" component={NotFoundComponent} />
         <Route path="/login" component={LoginPage} />
         <PrivateRoute path="/" component={() => <DashBoard showMenu={showMenu} />} />
         <Route component={NotFoundComponent} />
@@ -84,15 +87,18 @@ function App(props) {
 const mapStateToProps = (state) => {
   const {
     globalUI: { showMenuTopBar },
+    auth: { user }, 
   } = state;
   const showMenu = showMenuTopBar;
   return {
     showMenu,
+    user,
   };
 };
 const mapDispatchToProps = (dispatch) => ({
   onCheckInfoUser: (token) => dispatch(checkInfoUser(token)),
   onGetCity: () => dispatch(getCity()),
   getStaffsByRepairman: () => dispatch(getStaffsByRepairman()),
+  onNotificationMaintenanceCard: (notification, user) => dispatch(notificationMaintenanceCard(notification, user)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

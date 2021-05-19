@@ -17,7 +17,7 @@ function TitleAndAction(props) {
     <div className="main-card-create-tilte-action">
       <div className="d-flex list-header">
         <div className="header-title">
-          <div style={{ fontSize: '22px' }}>Thêm mới phiếu sửa chữa</div>
+          {/* <div style={{ fontSize: '22px' }}>Thêm mới phiếu sửa chữa</div> */}
         </div>
         <div className="header-action">
           <button

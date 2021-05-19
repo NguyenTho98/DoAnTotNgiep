@@ -258,7 +258,9 @@ function TopBar(props) {
     if (url.includes("/")) {
       return (
         <React.Fragment>
-          <span className="header-top-bar-text">Tổng quan</span>
+          <span className="header-top-bar-text">
+            {/* Tổng quan */}
+          </span>
         </React.Fragment>
       );
     }

@@ -24,12 +24,12 @@ const auth = (state = initState, action) => {
           ...action.account,
         },
       };
-      case actionTypes.LOGOUT:
-        storage.clear();
-        return {
-          accessToken: null,
-          user: null,
-        };  
+    case actionTypes.LOGOUT:
+      storage.clear();
+      return {
+        accessToken: null,
+        user: null,
+      };
     default:
       return state;
   }

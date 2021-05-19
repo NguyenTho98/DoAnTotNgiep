@@ -15,12 +15,12 @@ const listStatus = [
   {
     status: 1,
     name: "Đang sửa",
-    color: '#F19403',
+    color: "#F19403",
   },
   {
     status: 2,
     name: "Hoàn thành",
-    color: '#20A917',
+    color: "#20A917",
   },
 ];
 const listPayment = [
@@ -32,7 +32,7 @@ const listPayment = [
   {
     status: 1,
     name: "Đã thanh toán",
-    color: '#20A917',
+    color: "#20A917",
   },
 ];
 function Item(props) {
@@ -51,9 +51,7 @@ function Item(props) {
 
   return (
     <div className="main-card-item-wrapper">
-      <div
-        className="d-flex main-card-listing-item"
-      >
+      <div className="d-flex main-card-listing-item">
         <div
           role="presentation"
           className="checkbox header-checkbox"
@@ -85,8 +83,23 @@ function Item(props) {
             </a>
           </span>
         </div>
-        <div className="margin-right20 item-list text-ellipsis">
+        <div
+          className="margin-right20 item-list text-ellipsis"
+          data-tip
+          data-for={`order_collation_number_id_${
+            mainCard.customer_name || "name"
+          }`}
+        >
           {(mainCard && mainCard.customer_name) || ""}
+          <ReactTooltip
+            place="top"
+            type="dark"
+            effect="solid"
+            isMultiline
+            id={`order_collation_number_id_${mainCard.customer_name || "name"}`}
+          >
+            {(mainCard && mainCard.customer_name) || ""}
+          </ReactTooltip>
         </div>
         <div
           className="margin-right20 delivery-collation-location"
@@ -105,7 +118,7 @@ function Item(props) {
           {(mainCard && mainCard.repairman_name) || ""}
         </div>
         <div className="margin-right20 item-list">
-        {listPayment.map((item) => {
+          {listPayment.map((item) => {
             if (item.status === mainCard.pay_status) {
               return (
                 <div
@@ -118,7 +131,7 @@ function Item(props) {
                 </div>
               );
             } else {
-              return ''
+              return "";
             }
           })}
         </div>
@@ -144,7 +157,7 @@ function Item(props) {
           {convertSecondToDateV1(mainCard && mainCard.return_date) || ""}
         </div>
         <div className="margin-right20 item-list">
-          {moneyFormat(mainCard && mainCard.price) || ""}đ
+          {moneyFormat(mainCard && mainCard.price) || 0} đ
         </div>
       </div>
     </div>

@@ -78,7 +78,7 @@ function InfoMainCard(props) {
       </div>
 
       <div className=" field">
-        <div className="label">Nhân viên đồi phối</div>
+        <div className="label">Nhân viên điều phối</div>
         <input
           className="customer-name"
           type="text"

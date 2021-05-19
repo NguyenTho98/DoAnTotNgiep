@@ -22,6 +22,7 @@ import StaffCreate from "../staff/components/StaffCreate/StaffCreate";
 import StaffDetail from "../staff/components/StaffDetail/StaffDetail";
 import StaffUpdate from "../staff/components/StaffUpdate/StaffUpdate";
 import StaffList from "../staff/components/StaffList/StaffList";
+import NotFoundComponent from "../../components/notfound/NotFoundComponent";
 import PrivateRoute from "../../components/router/PrivateRoute";
 import "./styles.scss";
 import MainCardUpdate from "../maintenancecard/components/MainCardUpdate/MainCardUpdate";
@@ -97,6 +98,7 @@ function Dashboard(props) {
           path="/staff/update/:id([1-9]+[0-9]*)"
           component={StaffUpdate}
         />
+        <Route component={NotFoundComponent} />
       </Switch>
     </div>
   );

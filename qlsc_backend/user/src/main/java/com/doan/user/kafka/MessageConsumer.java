@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.doan.user.repository.MessageRepository;
 import com.doan.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,11 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class MessageConsumer {
 
-    @Autowired
     private MessageRepository messageRepository;
-
-    @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
-
-    @Autowired
     private UserRepository userRepository;
 
     @KafkaListener(topics = {"dk3w4sws-message"}, groupId = "repair-manager")

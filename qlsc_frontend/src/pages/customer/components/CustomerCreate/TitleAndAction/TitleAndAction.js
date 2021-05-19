@@ -10,7 +10,7 @@ import pushstate from '../../../../../utils/pushstate';
 function TitleAndAction(props) {
   const history = useHistory();
   const onClick = () => {
-    pushstate(history, `/staff/create`);
+    pushstate(history, `/customer/create`);
   };
   return (
     <div className="tilte-action">

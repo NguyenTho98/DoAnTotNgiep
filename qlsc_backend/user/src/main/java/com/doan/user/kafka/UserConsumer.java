@@ -19,17 +19,15 @@ public class UserConsumer {
 
     private final UserRepository userRepository;
 
-    @KafkaListener(topics = {"dk3w4sws-user"},groupId = "repair-manager")
-    @Transactional
-    public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) throws JsonProcessingException {
-        User user = userRepository.getOne(Long.parseLong(key));
-        user.setTotalMaintenanceCard(user.getTotalMaintenanceCard()+Integer.parseInt(message));
-        userRepository.save(user);
+    @KafkaListener(topics = {"dk3w4sws-user"}, groupId = "repair-manager")
+    public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
+        try {
+            User user = userRepository.getOne(Long.parseLong(key));
+            user.setTotalMaintenanceCard(user.getTotalMaintenanceCard()+Integer.parseInt(message));
+            userRepository.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-//    @KafkaListener(topics = {"Kafka_json5"},groupId = "Group_json",containerFactory = "productDTOKafkaListenerContainerFactory")
-//    public void consumeJson(ProductDTO productDTO){
-//        System.out.println(productDTO);
-////        productService.insertProduct(productDTO);
-//    }
 
 }

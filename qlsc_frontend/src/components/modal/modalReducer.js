@@ -11,6 +11,11 @@ const initState = {
   deleteCustomer: defaultState,
   deleteStaffModal: defaultState,
   deleteProductModal: defaultState,
+  progressBar: {
+    show: true,
+    isCallingApi: false,
+    data: {},
+  },
 };
 
 const modal = (state = initState, action) => {

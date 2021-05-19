@@ -75,7 +75,7 @@ function CustomerCreate(props) {
 
   return (
     <div className="customer-screen-wrapper-create">
-      <TitleAndAction />
+      <TitleAndAction saveCustomer={saveCustomer} cancel={cancel}/>
       <div className="row">
         <div className="col-md-8">
           <InfoCustomerLeft
@@ -91,7 +91,7 @@ function CustomerCreate(props) {
             customer={customer}
           />
         </div>
-        <InfoCustomerFooter saveCustomer={saveCustomer} cancel={cancel} />
+        {/* <InfoCustomerFooter saveCustomer={saveCustomer} cancel={cancel} /> */}
       </div>
     </div>
   );

@@ -6,8 +6,6 @@ import Pagination from "../Pagination/Pagination";
 function Footer(props) {
   const { mainCards, fetchMainCard, isEmpty , fetching} = props;
   const { currentPage, totalItems, totalPages, mainCardList } = mainCards;
-
-
   const onChangePage = (id) => {
     fetchMainCard(null, id);
   };

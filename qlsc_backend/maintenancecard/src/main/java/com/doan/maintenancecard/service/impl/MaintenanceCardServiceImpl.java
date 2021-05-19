@@ -461,9 +461,10 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
         Page<MaintenanceCard> page;
         Pageable pageable;
         if (user.isDescending()) {
-            pageable = PageRequest.of(user.getPage() - 1, user.getPage(), Sort.by(user.getSortBy().length() == 0 ? "id" : user.getSortBy()).descending());
+            pageable = PageRequest.of(user.getPage() - 1, user.getSize(),
+                Sort.by(user.getSortBy().length() == 0 ? "id" : user.getSortBy()).descending());
         } else {
-            pageable = PageRequest.of(user.getPage() - 1, user.getPage(), Sort.by(user.getSortBy().length() == 0 ? "id" : user.getSortBy()).ascending());
+            pageable = PageRequest.of(user.getPage() - 1, user.getSize(), Sort.by(user.getSortBy().length() == 0 ? "id" : user.getSortBy()).ascending());
         }
         if ((user.getPayStatus() != null && user.getPayStatus().length > 0) || (user.getWorkStatus() != null && user.getWorkStatus().length > 0)) {
             page = maintenanceCardRepository.filterByWsandPs(pageable, user.getId(), user.getWorkStatus(), user.getPayStatus(), user.getCode());

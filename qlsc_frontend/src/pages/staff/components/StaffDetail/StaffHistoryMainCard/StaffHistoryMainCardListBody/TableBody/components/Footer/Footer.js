@@ -1,37 +1,33 @@
 import React, { useState } from "react";
-import Pagination from "components/Pagination/Pagination";
 import { connect } from "react-redux";
 import "../../styles/footer.scss";
-
+import Pagination from "../Pagination/Pagination";
 function Footer(props) {
   const { staffHistoryMainCard, onGetStaffHistoryMainCard, onChangeFilter, isEmpty , fetching} = props;
   const { currentPage, totalItems, totalPages, staffHistoryMainCards } = staffHistoryMainCard;
-  const [size, setSize] = useState(10);
-
+  console.log("currentPage", currentPage);
+  console.log("totalItems", totalItems);
+  console.log("totalPages", totalPages);
+  const onChangePage = (id) => {
+    onChangeFilter("page", id);
+  };
   const calculateBegin = () => {
-    if (currentPage === 1) {
+    const pageTmp = currentPage - 1;
+    if (pageTmp === 0) {
       return 1;
-    }
-    if (currentPage === totalPages) {
-      return (size * (currentPage - 1) + staffHistoryMainCards.length);
-    }
-    return (size * currentPage) + 1;
+    } return totalItems * pageTmp + 1;
   };
 
   const calculateEnd = () => {
-    if (totalPages === 1) {
-      return totalItems + 1;
+    const pageTmp = currentPage - 1;
+    const per = totalPages / totalItems;
+    if (per <= 1) {
+      return totalPages;
     }
-    if (currentPage === 1) {
-      return (currentPage * size);
+    if (pageTmp < Math.floor(per)) {
+      return (pageTmp + 1) * totalItems;
     }
-    if (totalPages > currentPage) {
-      return ((currentPage + 1) * size);
-    }
-    if (currentPage === totalPages) {
-      return totalItems + 1;
-    }
-    return (currentPage * size) + (totalItems%currentPage);
+    return totalPages;
   };
   if (fetching || isEmpty) return null;
   return (
@@ -39,17 +35,15 @@ function Footer(props) {
       <div className="result-info">
         Hiển thị kết quả từ&nbsp;
         {calculateBegin()} -&nbsp;
-        {calculateEnd()} trên tổng {totalItems + 1}
+        {calculateEnd()} trên tổng {totalPages}
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">
-        <Pagination
-          totalPage={totalPages}
+      <Pagination
+          total={totalPages}
           page={currentPage}
-          totalItem={totalItems}
-          size={size}
-          onGetStaffHistoryMainCard={onGetStaffHistoryMainCard}
-          onChangeFilter={onChangeFilter}
+          size={totalItems}
+          onClick={onChangePage}
         />
       </div>
     </div>
@@ -60,6 +54,5 @@ Footer.defaultProps = {
   size: 10,
 };
 
-
-
 export default connect(null, null)(Footer);
+

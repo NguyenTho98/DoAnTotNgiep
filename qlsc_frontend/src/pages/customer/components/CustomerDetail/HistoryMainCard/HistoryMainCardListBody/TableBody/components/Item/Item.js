@@ -5,6 +5,35 @@ import { withRouter } from "react-router-dom";
 import "../../styles/item.scss";
 import ReactTooltip from "react-tooltip";
 import pushstate from "utils/pushstate";
+import { convertSecondToDateV1 } from "../../../../../../../../../utils/datetimeUtil";
+const listStatus = [
+  {
+    status: 0,
+    name: "Đang chờ",
+  },
+  {
+    status: 1,
+    name: "Đang sửa",
+    color: '#F19403',
+  },
+  {
+    status: 2,
+    name: "Hoàn thành",
+    color: '#20A917',
+  },
+];
+const listPayment = [
+  {
+    status: 0,
+    name: "Chưa thanh toán",
+    color: "red",
+  },
+  {
+    status: 1,
+    name: "Đã thanh toán",
+    color: '#20A917',
+  },
+];
 function Item(props) {
   const { checked, historyMainCard } = props;
   const history = useHistory();
@@ -40,7 +69,7 @@ function Item(props) {
               target="_blank"
               style={{ textDecoration: "none", color: '#007bff' }}
             >
-              {(historyMainCard && historyMainCard.code) || ''}
+              {(historyMainCard && historyMainCard.code) || '---'}
               <ReactTooltip
                 place="top"
                 type="dark"
@@ -48,26 +77,66 @@ function Item(props) {
                 isMultiline
                 id={`order_collation_number_id_${1}`}
               >
-                {(historyMainCard && historyMainCard.code) || ''}
+                {(historyMainCard && historyMainCard.code) || '---'}
               </ReactTooltip>
             </a>
           </span>
         </div>
         <div className="margin-right20 item-list text-ellipsis">
-        {(historyMainCard && historyMainCard.name) || ''}
+        {(historyMainCard && historyMainCard.platesNumber) || '---'}
         </div>
         <div
           className="margin-right20 delivery-collation-location"
           data-tip
           data-for={`delivery-collation-location_${1}`}
         >
-         {(historyMainCard && historyMainCard.phone) || ''}
+         {(historyMainCard && historyMainCard.coordinator && historyMainCard.coordinator.name) || '---'}
         </div>
         <div
-          className="margin-right20 item-list"
-          style={{ color: status.color }}
+          className="margin-right20 delivery-collation-location"
+          data-tip
+          data-for={`delivery-collation-location_${1}`}
         >
-          {(historyMainCard && historyMainCard.email) || ''}
+         {(historyMainCard && historyMainCard.repairman && historyMainCard.repairman.name) || '---'}
+        </div>
+        <div className="margin-right20 item-list text-ellipsis">
+        {historyMainCard && historyMainCard.payStatus && listPayment.map((item) => {
+            if (item.status === historyMainCard.payStatus) {
+              return (
+                <div
+                  className="text"
+                  style={{
+                    color: `${item.color}`,
+                  }}
+                >
+                  {item.name}
+                </div>
+              );
+            } else {
+              return ''
+            }
+          }) || '---'}
+        </div>
+        <div className="margin-right20 item-list text-ellipsis">
+        {historyMainCard && historyMainCard.workStatus && listStatus.map((item) => {
+            if (item.status === historyMainCard.workStatus) {
+              return (
+                <div
+                  className="text"
+                  style={{
+                    color: `${item.color}`,
+                  }}
+                >
+                  {item.name}
+                </div>
+              );
+            } else {
+              return ''
+            }
+          }) || '---'}
+        </div>
+        <div className="margin-right20 item-list text-ellipsis">
+        {(historyMainCard && historyMainCard.returnDate && convertSecondToDateV1(historyMainCard.returnDate)) || '---'}
         </div>
       </div>
     </div>

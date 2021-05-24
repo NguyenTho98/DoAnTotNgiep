@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductMainCardList from './ProductMainCardList/ProductMainCardList';
-
 import './styles.scss';
 
 function ProductMainCard(props) {

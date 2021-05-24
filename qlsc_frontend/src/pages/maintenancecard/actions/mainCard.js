@@ -97,22 +97,23 @@ export const getMainCardById = (id) => (dispatch, getState) => {
     });
 };
 
-export const mainCardPaymentHistory = (paymentHistoryDTOs) => (dispatch, getState) => {
-  const endpoint = `${API_MAINTENANCECARD}/paymentHistories`;
-  return dispatch(
-    fetch(endpoint, {
-      method: "POST",
-      body: JSON.stringify(paymentHistoryDTOs),
-    })
-  )
-    .then((json) => {
-      return json;
-    })
-    .catch((e) => {
-      console.error(e);
-      return e;
-    });
-};
+export const mainCardPaymentHistory =
+  (paymentHistoryDTOs) => (dispatch, getState) => {
+    const endpoint = `${API_MAINTENANCECARD}/paymentHistories`;
+    return dispatch(
+      fetch(endpoint, {
+        method: "POST",
+        body: JSON.stringify(paymentHistoryDTOs),
+      })
+    )
+      .then((json) => {
+        return json;
+      })
+      .catch((e) => {
+        console.error(e);
+        return e;
+      });
+  };
 
 export const updateMainCard =
   (id, mainCard = {}) =>
@@ -213,4 +214,23 @@ export const updateMainCardIsEmpty = (bool) => ({
 export const updateMainCardFetching = (bool) => ({
   type: actionTypes.MAIN_CARD_FETCHING,
   bool,
+});
+
+export const customerIsValid = (status) => ({
+  type: "CUSTOMER_VALID",
+  status,
+});
+
+export const serviceIsValid = (status) => ({
+  type: "SERVICE-VALID",
+  status,
+});
+
+export const maintenanceCardIsValid = (status) => ({
+  type: "MAINTENAN-CARD-VALID",
+  status,
+});
+
+export const clearValid = () => ({
+  type: "CLEAR-VALID",
 });

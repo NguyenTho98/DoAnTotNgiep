@@ -1,10 +1,9 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable consistent-return */
 import React, { useState, useRef, useEffect } from "react";
 import Input from "components/input/Input";
 import debounce from "utils/debounce";
 import "./styles.scss";
 import { connect } from "react-redux";
+import { toastError } from "../../../../../../../utils/toast";
 import OrderListSearch from "./OrderListSearch/OrderListSearch";
 import * as Icons from "pages/maintenancecard/commons/Icons";
 import { getFilterProductService } from "../../../../../../product/actions/ProductAction";
@@ -44,6 +43,10 @@ function Search(props) {
   };
 
   const onFocus = () => {
+    if (!props.validate.customerIsValid) {
+      toastError("Vui lòng chọn khách hàng!");
+      return;
+    }
     setFetching(true);
     getListProductAction(search || "", undefined, 1);
     setFocus(true);
@@ -98,19 +101,19 @@ function Search(props) {
     return (
       <div className="position-absolute product-list-search-wrapper">
         <div
-          onMouseDown={(e)=>{
+          onMouseDown={(e) => {
             e.persist();
             e.stopPropagation();
-            props.setShowModalProduct(true)
+            props.setShowModalProduct(true);
           }}
           className="d-flex align-items-center head"
-          style={{ borderBottom: "1px solid #e3e3e3", cursor: 'pointer' }}
+          style={{ borderBottom: "1px solid #e3e3e3", cursor: "pointer" }}
         >
           <div className="content-info-image">
             <Icons.IconCustomerIsEmpty />
           </div>
           <div className="content-info" style={{ marginLeft: 10 }}>
-              Thêm mới dịch vụ - linh kiện
+            Thêm mới dịch vụ - linh kiện
           </div>
         </div>
         <div
@@ -150,8 +153,17 @@ function Search(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapStateToProps = (state) => {
+  const {
+    mainCard: { validate },
+  } = state;
+  return {
+    validate,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
   getFilterProducts: (search, page) =>
     dispatch(getFilterProductService(search, page)),
 });
-export default connect(null, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

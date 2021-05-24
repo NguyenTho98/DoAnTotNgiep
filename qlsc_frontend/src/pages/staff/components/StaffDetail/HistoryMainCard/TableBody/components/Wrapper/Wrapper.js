@@ -9,7 +9,7 @@ import * as Icons from 'pages/maintenancecard/commons/Icons';
 
 function Wrapper(props) {
   const {
-    selectedIds, selectedMainCardIds, fetching, isEmpty
+    selectedIds, selectedMainCardIds, fetching, isEmpty, historyMainCard
   } = props;
   const listRef = React.useRef();
 
@@ -35,7 +35,7 @@ function Wrapper(props) {
     return (
       <div className="count-check">
         <span className="details">
-          Đã chọn ({selectedIds.length} đơn hàng)
+          Đã chọn ({selectedIds.length} phiếu sửa chữa)
         </span>
       </div>
     );
@@ -89,11 +89,9 @@ Wrapper.defaultProps = {
   selectedMainCardIds: () => {}
 };
 const mapStateToProps = (state) => {
-  const { products: { ui: { fetching, isEmpty }, product: { selectedIds } } } = state;
+  const { historyMainCard } = state;
   return {
-    fetching,
-    isEmpty,
-    selectedIds,
+    historyMainCard,
   };
 };
 const mapDispatchToProps = (dispatch) => ({

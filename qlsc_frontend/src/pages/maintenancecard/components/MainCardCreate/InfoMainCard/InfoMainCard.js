@@ -15,6 +15,12 @@ function InfoMainCard(props) {
   const [focusStartDate, setFocusStartDate] = useState(true);
   const calendar1 = useRef();
   const calendar2 = useRef();
+  const [valid, setValid] = useState({
+    platesNumber: false,
+    staff: false,
+    color: false,
+    model: false,
+  });
 
   const onClickFocusEndDate = () => {
     setFocusEndDate(!focusEndDate);

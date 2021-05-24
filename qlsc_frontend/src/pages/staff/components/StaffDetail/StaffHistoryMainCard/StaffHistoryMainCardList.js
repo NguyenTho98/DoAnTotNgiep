@@ -8,7 +8,7 @@ import StaffHistoryMainCardListBody from "./StaffHistoryMainCardListBody/StaffHi
 
 const initialState = {
   page: 1,
-  size: 10,
+  size: 5,
   nameField: "",
   order: "",
 };
@@ -57,6 +57,7 @@ function StaffHistoryMainCardList(props) {
         onGetStaffHistoryMainCard={onGetStaffHistoryMainCard}
         handleInputOnchange={handleInputOnchange}
         onChangeFilter={onChangeFilter}
+        filter={filter}
       />
     </div>
   );

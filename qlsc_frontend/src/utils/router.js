@@ -48,12 +48,12 @@ export const menuLinkCoordinator = [
     id: 2,
     url: '/product',
     icon: <Icons.ProductIcon />,
-    title: 'Sản phẩm',
+    title: 'Linh kiện - Dịch vụ',
     submenu: [
       {
         id: 0,
         url: '/products',
-        title: 'Danh sách sản phẩm'
+        title: 'Danh sách linh kiện - dịch vụ'
       }
     ]
   },
@@ -77,12 +77,12 @@ export const menuLinkRepairer = [
     id: 2,
     url: '/product',
     icon: <Icons.ProductIcon />,
-    title: 'Sản phẩm',
+    title: 'Linh kiện - Dịch vụ',
     submenu: [
       {
         id: 0,
         url: '/products',
-        title: 'Danh sách sản phẩm'
+        title: 'Danh sách linh kiện - dịch vụ'
       }
     ]
   },
@@ -138,17 +138,17 @@ export const menuLinkFull = [
     id: 2,
     url: '/product',
     icon: <Icons.ProductIcon />,
-    title: 'Sản phẩm',
+    title: 'Linh kiện - Dịch vụ',
     submenu: [
       {
         id: 0,
         url: '/product/create',
-        title: 'Thêm mới sản phẩm'
+        title: 'Thêm mới'
       },
       {
         id: 1,
         url: '/products',
-        title: 'Danh sách sản phẩm'
+        title: 'Danh sách'
       },
     ]
   },

@@ -53,7 +53,7 @@ const processOption = (search, option) => {
   if (option && option.page) {
     filter += `&page=${option.page}`;
     filter += `&id=${option.id}`;
-    filter += `&size=10`;
+    filter += `&size=5`;
   }
   return filter;
 };

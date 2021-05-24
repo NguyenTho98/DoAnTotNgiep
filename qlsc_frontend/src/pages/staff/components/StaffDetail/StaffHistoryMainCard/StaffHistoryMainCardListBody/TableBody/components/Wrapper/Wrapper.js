@@ -8,7 +8,7 @@ import "../../styles/wrapper.scss";
 import * as Icons from "pages/customer/commons/Icons";
 
 function Wrapper(props) {
-  const { staffHistoryMainCard, onGetStaffHistoryMainCard, onChangeFilter } = props;
+  const { staffHistoryMainCard, onGetStaffHistoryMainCard, onChangeFilter, filter } = props;
   const [selectedIds, setSelectedIds] = useState([]);
   const { staffHistoryMainCards } = staffHistoryMainCard
   const listRef = React.useRef();
@@ -47,7 +47,7 @@ function Wrapper(props) {
       <div className="delivery-collations-list-wrapper">
         <div id="delivery-collations-filter-empty-wrapper">
           <div id="delivery-collations-filter-empty-text">
-            Không có phiếu sửa chữa
+            Chưa có phiếu sửa chữa nào được tạo
           </div>
           <div id="delivery-collations-filter-empty-icon">
             <Icons.OrderCollationFilterEmpty />
@@ -80,6 +80,7 @@ function Wrapper(props) {
           isEmpty={isEmpty}
           onGetStaffHistoryMainCard={onGetStaffHistoryMainCard}
           fetching={fetching}
+          size={filter.size}
         />
       </div>
     </React.Fragment>

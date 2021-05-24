@@ -15,7 +15,7 @@ function Footer(props) {
     if (currentPage === totalPages) {
       return (size * (currentPage - 1) + 1);
     }
-    return (size * currentPage) + 1;
+    return (size * (currentPage - 1)) + 1;
   };
 
   const calculateEnd = () => {
@@ -26,12 +26,12 @@ function Footer(props) {
       return (currentPage * size);
     }
     if (totalPages > currentPage) {
-      return ((currentPage + 1) * size);
+      return ((currentPage) * size);
     }
     if (currentPage === totalPages) {
       return totalItems;
     }
-    return (currentPage * size) + (totalItems%currentPage);
+    return ((currentPage - 1) * size) + (totalItems%currentPage);
   };
   const selectSize = (size) => {
     onChangeFilter("size", size);

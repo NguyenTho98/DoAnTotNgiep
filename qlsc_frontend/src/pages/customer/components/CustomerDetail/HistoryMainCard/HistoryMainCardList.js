@@ -55,6 +55,7 @@ function HistoryMainCardList(props) {
     <div className="history-main-card-screen-wrapper">
       <HistoryMainCardListBody
         search={search}
+        filter={filter}
         onGetHistoryMainCard={onGetHistoryMainCard}
         handleInputOnchange={handleInputOnchange}
         onChangeFilter={onChangeFilter}

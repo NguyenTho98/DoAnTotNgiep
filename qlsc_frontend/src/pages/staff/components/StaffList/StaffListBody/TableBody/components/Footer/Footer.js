@@ -12,7 +12,7 @@ function Footer(props) {
       return 1;
     }
     if (currentPage === totalPage) {
-      return size * (currentPage - 1) + staffs.length;
+      return size * (currentPage - 1) + 1;
     }
     return size * currentPage + 1;
   };
@@ -25,7 +25,7 @@ function Footer(props) {
       return currentPage * size;
     }
     if (totalPage > currentPage) {
-      return (currentPage + 1) * size;
+      return (currentPage) * size;
     }
     if (currentPage === totalPage) {
       return totalItem;

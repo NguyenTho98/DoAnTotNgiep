@@ -1,58 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import "../../styles/footer.scss";
-import Pagination from "../Pagination/Pagination";
+import Pagination from "components/Pagination/Pagination";
 function Footer(props) {
-  const { staffHistoryMainCard, onGetStaffHistoryMainCard, onChangeFilter, isEmpty , fetching} = props;
+  const { staffHistoryMainCard, size, onChangeFilter, isEmpty , fetching} = props;
   const { currentPage, totalItems, totalPages, staffHistoryMainCards } = staffHistoryMainCard;
-  console.log("currentPage", currentPage);
-  console.log("totalItems", totalItems);
-  console.log("totalPages", totalPages);
-  const onChangePage = (id) => {
-    onChangeFilter("page", id);
-  };
+
   const calculateBegin = () => {
-    const pageTmp = currentPage - 1;
-    if (pageTmp === 0) {
+    if (currentPage === 1) {
       return 1;
-    } return totalItems * pageTmp + 1;
+    }
+    if (currentPage === totalPages) {
+      return (size * (currentPage - 1) + 1);
+    }
+    console.log('check size', size);
+    console.log('check currentPage', currentPage);
+    return ((size  - 1)* currentPage) + 1;
   };
 
   const calculateEnd = () => {
-    const pageTmp = currentPage - 1;
-    const per = totalPages / totalItems;
-    if (per <= 1) {
-      return totalPages;
+    if (totalPages === 1) {
+      return totalItems;
     }
-    if (pageTmp < Math.floor(per)) {
-      return (pageTmp + 1) * totalItems;
+    if (currentPage === 1) {
+      return (currentPage * size);
     }
-    return totalPages;
+    if (totalPages > currentPage) {
+      return ((currentPage) * size);
+    }
+    if (currentPage === totalPages) {
+      return totalItems;
+    }
+    return (currentPage * size) + (totalItems%currentPage);
   };
+
   if (fetching || isEmpty) return null;
   return (
     <div className="d-flex delivery-collations-footer">
       <div className="result-info">
         Hiển thị kết quả từ&nbsp;
         {calculateBegin()} -&nbsp;
-        {calculateEnd()} trên tổng {totalPages}
+        {calculateEnd()} trên tổng {totalItems}
       </div>
       <div className="margin-left-auto" />
       <div className="products-pagination">
       <Pagination
-          total={totalPages}
+          totalPage={totalPages}
           page={currentPage}
-          size={totalItems}
-          onClick={onChangePage}
+          totalItem={totalItems}
+          size={size}
+          onChangeFilter={onChangeFilter}
         />
       </div>
     </div>
   );
 }
-
-Footer.defaultProps = {
-  size: 10,
-};
 
 export default connect(null, null)(Footer);
 

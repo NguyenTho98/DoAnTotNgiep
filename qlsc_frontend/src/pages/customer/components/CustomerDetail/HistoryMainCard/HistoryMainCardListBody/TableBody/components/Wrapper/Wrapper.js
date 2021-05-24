@@ -8,7 +8,7 @@ import "../../styles/wrapper.scss";
 import * as Icons from "pages/customer/commons/Icons";
 
 function Wrapper(props) {
-  const { historyMainCard, onGetHistoryMainCard, onChangeFilter } = props;
+  const { historyMainCard, onGetHistoryMainCard, onChangeFilter, filter } = props;
   const [selectedIds, setSelectedIds] = useState([]);
   const { historyMainCards } = historyMainCard
   const listRef = React.useRef();
@@ -47,7 +47,7 @@ function Wrapper(props) {
       <div className="delivery-collations-list-wrapper">
         <div id="delivery-collations-filter-empty-wrapper">
           <div id="delivery-collations-filter-empty-text">
-            Không có khách hàng
+            Chưa có phiếu sửa chữa nào được tạo
           </div>
           <div id="delivery-collations-filter-empty-icon">
             <Icons.OrderCollationFilterEmpty />
@@ -74,6 +74,7 @@ function Wrapper(props) {
           onCheckBoxListClick={onCheckBoxListClick}
         />
         <Footer
+          size={filter.size}
           onChangeFilter={onChangeFilter}
           historyMainCard={historyMainCard}
           resetSelected={resetSelected}

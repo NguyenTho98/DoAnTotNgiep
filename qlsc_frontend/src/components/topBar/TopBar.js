@@ -158,10 +158,10 @@ function TopBar(props) {
             className="header-top-bar-text"
             onClick={() => pushstate(history, "/products")}
           >
-            Sản phẩm
+            Linh kiện - Dịch vụ
           </span>
           <span>&nbsp;{">"}&nbsp;</span>
-          <span>Danh sách sản phẩm</span>
+          <span>Danh sách Linh kiện - Dịch vụ</span>
         </React.Fragment>
       );
     }
@@ -188,10 +188,10 @@ function TopBar(props) {
             className="header-top-bar-text"
             onClick={() => pushstate(history, "/products")}
           >
-            Sản phẩm
+            Linh kiện - Dịch vụ
           </span>
           <span>&nbsp;{">"}&nbsp;</span>
-          <span>Cập nhật sản phẩm</span>
+          <span>Cập nhật Linh kiện - Dịch vụ</span>
         </React.Fragment>
       );
     }

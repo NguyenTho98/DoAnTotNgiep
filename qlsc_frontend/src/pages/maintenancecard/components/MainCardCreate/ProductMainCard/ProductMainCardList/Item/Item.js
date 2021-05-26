@@ -43,7 +43,7 @@ function Item(props) {
       <div className="d-flex justify-content-center item-status-main-card">
       {
         listStatus.map((item)=>{
-          if(item.status===product.status && product.product.type === 2){
+          if(item.status===product.status){
             return(
               <div className="text" style={{color: `${item.color}`, border: `1px solid ${item.color}` }}>
                 {item.name}

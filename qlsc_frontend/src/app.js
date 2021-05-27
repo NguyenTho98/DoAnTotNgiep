@@ -22,6 +22,7 @@ import { getStaffsByRepairman } from "./actions/commons";
 import { notificationMaintenanceCard } from "./actions/notificationAction";
 import storage from "./utils/storage";
 import history from './utils/history';
+import FeedBack from "./components/topBar/feedback/FeedBack";
 
 function App(props) {
   const { onCheckInfoUser, onNotificationMaintenanceCard, user } = props;
@@ -74,6 +75,7 @@ function App(props) {
         limit={1}
       />
       <Modals />
+      <FeedBack />
       <Switch>
         <Route path="/404" component={NotFoundComponent} />
         <Route path="/login" component={LoginPage} />

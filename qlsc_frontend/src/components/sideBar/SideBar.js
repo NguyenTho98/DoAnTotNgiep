@@ -4,14 +4,13 @@ import { Link, withRouter } from "react-router-dom";
 import * as Icons from "common/icons";
 import "./sideBar.scss";
 import SubMenu from "./submenu/SubMenu";
-import { changeShowMenuTopBar } from "../../actions/globalUiActions";
 import { logout } from "../../pages/login/actions/loginAction";
 import { menuLinkFull } from "utils/router.js";
 import pushstate from "../../utils/pushstate";
 var randomColor = require("randomcolor"); // import the script
 var color = randomColor();
 function SideBar(props) {
-  const { showMenu, setShowMenu, changeShowMenuTopBar, user, onLogout } = props;
+  const { showMenu, setShowMenu, user, onLogout } = props;
   const [init, setInit] = useState({
     menu: 99,
     submenu: "",
@@ -124,7 +123,6 @@ function SideBar(props) {
 }
 SideBar.defaultProps = {
   showMenu: "",
-  changeShowMenuTopBar: () => {},
 };
 const mapStateToProps = (state) => {
   const {
@@ -137,7 +135,6 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
-  changeShowMenuTopBar: () => dispatch(changeShowMenuTopBar()),
   onLogout: () => dispatch(logout()),
 });
 export default withRouter(

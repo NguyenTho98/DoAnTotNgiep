@@ -1,5 +1,6 @@
 import * as globalUiActionTypes from 'actions/actionTypes';
 
-export const changeShowMenuTopBar = () => ({
-  type: globalUiActionTypes.SHOW_MENU_TOPBAR
+export const changeShowFeedBack = (show) => ({
+  type: globalUiActionTypes.SHOW_FEED_BACK,
+  show
 })

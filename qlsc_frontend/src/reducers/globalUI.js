@@ -1,14 +1,14 @@
 // sản phẩm
 import * as actionTypes from 'actions/actionTypes'
 const initState = {
-  showMenuTopBar: false
+  showFeedback: false,
 }
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case actionTypes.SHOW_MENU_TOPBAR:
+    case actionTypes.SHOW_FEED_BACK:
       return {
-        ...state, showMenuTopBar: !state.showMenuTopBar
+        ...state, showFeedback: action.show
       }
     default:
       return state

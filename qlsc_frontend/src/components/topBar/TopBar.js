@@ -1,7 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import pushstate from "utils/pushstate";
+import { changeShowFeedBack } from "../../actions/globalUiActions";
+import * as Icons from "./Icons";
 import "./styles.scss";
 
 function TopBar(props) {
@@ -173,7 +176,7 @@ function TopBar(props) {
             className="header-top-bar-text"
             onClick={() => pushstate(history, "/products")}
           >
-            Linh kiện 
+            Linh kiện
           </span>
           <span>&nbsp;{">"}&nbsp;</span>
           <span>Thêm mới Linh kiện</span>
@@ -218,7 +221,7 @@ function TopBar(props) {
             className="header-top-bar-text"
             onClick={() => pushstate(history, "/services")}
           >
-            Dịch vụ 
+            Dịch vụ
           </span>
           <span>&nbsp;{">"}&nbsp;</span>
           <span>Thêm mới Dịch vụ</span>
@@ -311,9 +314,7 @@ function TopBar(props) {
     if (url.includes("/")) {
       return (
         <React.Fragment>
-          <span className="header-top-bar-text">
-            {/* Tổng quan */}
-          </span>
+          <span className="header-top-bar-text">{/* Tổng quan */}</span>
         </React.Fragment>
       );
     }
@@ -322,7 +323,7 @@ function TopBar(props) {
   };
 
   return (
-    <div id="top-bar-market-place">
+    <div className="d-flex top-bar-market-place">
       {/* <div className="top-bar-text">
         <span
           className="top_bar_focus"
@@ -334,8 +335,46 @@ function TopBar(props) {
         {' >'}
       </div> */}
       <div className="top-bar-text">{getTopBarText()}</div>
+      <div className="d-flex top-bar-action">
+        <div className="icon-help">
+          <Icons.iconHelp />
+          <span>Trợ giúp</span>
+        </div>
+        <div
+          className="icon-feed-back"
+          onClick={() => props.changeShowFeedBack(true)}
+        >
+          <Icons.iconFeedback />
+          <span>Góp ý</span>
+        </div>
+        {/* <div className="icon-update">
+            <Icons.iconUpdate />
+            <span>Thông báo</span>
+          </div> */}
+        <ul className="nav menu-bottom">
+          <li className="user">
+            <a href="#" data-toggle="dropdown">
+              <Icons.iconUpdate />
+              <span>Thông báo</span>
+            </a>
+            <div className="dropdown-menu">
+              <div className="info d-flex align-items-center">
+                aaaaaaaaaaaaaaaaa
+                aaaaaaaaaaaaaaaaa
+                aaaaaaaaaaaaaaaaa
+                aaaaaaaaaaaaaaaaa
+
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }
-
-export default withRouter(TopBar);
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  changeShowFeedBack: (show) => dispatch(changeShowFeedBack(show)),
+});
+export default withRouter(connect(null, mapDispatchToProps)(TopBar));

@@ -1,0 +1,71 @@
+.modal-feed-back{
+    .modal-header {
+      background-color: #263A53;
+      .modal-title{
+        color: white;
+        text-transform: uppercase;
+        font-size: 20px;
+      }
+      .close{
+        color: white;
+        display: none;
+      }
+  
+    }
+    .modal-footer{
+      border-top: 0px;
+    }
+    .modal-body{
+      padding: 5px;
+      overflow-y: auto;
+      .content{
+        .icon-thank-you{
+          margin: 0 auto;
+          width: 170px;
+          height: 170px;
+          background: rgba(215, 236, 255, 0.3);
+          border-radius: 50%;
+          text-align: center;
+          svg{
+            align-items: center;
+            margin-top: 37px;
+          }
+        }
+        .text{
+          margin-top: 20px;
+          font-size: 16px;
+          font-weight: 500;
+        }
+        textarea{
+          width: 100%;
+          padding: 8px;
+          outline: none;
+          resize: none;
+          min-height: 200px;
+          border: 1px solid #e0e0e0;
+          border-radius: 4px;
+  
+          overflow-y: auto;
+          max-height: 350px;
+          &::-webkit-scrollbar {
+            height: 5px;
+            background: #FFF;
+            width: 7px;
+            cursor: pointer;
+            //border-radius: 5px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: #C4C4C4;
+            border-radius: 5px;
+            width: 5px;
+            cursor: pointer;
+          }
+          &:focus{
+            border: 1px solid #0084FF;
+          }
+        }
+      }
+    }
+  
+  }
+  

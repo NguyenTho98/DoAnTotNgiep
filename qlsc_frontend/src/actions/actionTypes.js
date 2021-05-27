@@ -1,5 +1,5 @@
 export const TEST = 'TEST'
-export const SHOW_MENU_TOPBAR = 'SHOW_MENU_TOPBAR'
+export const SHOW_FEED_BACK = 'SHOW_FEED_BACK'
 
 //customer
 export const RECEIVE_CUSTOMER = 'RECEIVE_CUSTOMER';

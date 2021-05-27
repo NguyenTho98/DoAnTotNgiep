@@ -20,4 +20,5 @@ public class MaintenanceCardsFilterRequest {
     private Set<Integer> payStatus;
     private Long from;
     private Long to;
+    private Long tenantId;
 }

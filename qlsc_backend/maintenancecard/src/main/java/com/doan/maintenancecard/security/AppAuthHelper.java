@@ -16,20 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class AppAuthHelper {
 
-    private final JwtConfig jwtConfig;
-
-    public AppAuthHelper(JwtConfig jwtConfig) {
-        this.jwtConfig = jwtConfig;
-    }
-
     public AppCredential httpCredential() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes instanceof ServletRequestAttributes) {
             HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
             String header = request.getHeader("X-APP-PAGE-TOKEN");
-            String token = header.replace(jwtConfig.getPrefix(), "");
+            String token = header.replace("Bearer ", "");
             Claims claims = Jwts.parser()
-                .setSigningKey(jwtConfig.getSecret().getBytes())
+                .setSigningKey("JwtSecretKey".getBytes())
                 .parseClaimsJws(token)
                 .getBody();
             AppCredential credential = new AppCredential();

@@ -39,6 +39,6 @@ public interface MaintenanceCardService {
 
     MaintenanceCardDTO setReturnDate(long id);
 
-    // update mơi ekko
+    // filter by stored procedure
     MaintenanceCardsResponse getMaintenanceCard(MaintenanceCardsFilterRequest request, String tenantId);
 }

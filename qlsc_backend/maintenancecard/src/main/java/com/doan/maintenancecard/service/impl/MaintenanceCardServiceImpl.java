@@ -121,7 +121,7 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
     }
 
     @Override
-    public Map<String, Object> searchMaintenanceCard(MaintenanceCardFilter maintenanceCardFilter, String email, int role) {
+    public Map<String, Object> searchMaintenanceCard(MaintenanceCardFilter maintenanceCardFilter, String email, int role, String tenantId) {
         int page = maintenanceCardFilter.getPage();
         int size = maintenanceCardFilter.getSize();
         String search = maintenanceCardFilter.getSearch();
@@ -129,7 +129,6 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
         String order = maintenanceCardFilter.getOrder();
         byte[] workStatus = maintenanceCardFilter.getWorkStatus();
         byte[] payStatus = maintenanceCardFilter.getPayStatus();
-        Long tenantId = maintenanceCardFilter.getTenantId();
         Pageable paging = PageRequest.of(page - 1, size, Sort.by("modifiedDate").descending());
 
         if (!nameField.equals("")) {
@@ -138,7 +137,7 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
                 paging = PageRequest.of(page - 1, size, Sort.by(nameField).descending());
             }
         }
-        Page<MaintenanceCard> maintenanceCardPage = maintenanceCardRepository.search(paging, search, workStatus, payStatus, email, role, tenantId);
+        Page<MaintenanceCard> maintenanceCardPage = maintenanceCardRepository.search(paging, search, workStatus, payStatus, email, role, Long.parseLong(tenantId));
         List<MaintenanceCardDTO> maintenanceCardDTOList = new ArrayList<>();
         HashMap<String, Object> map = new HashMap<>();
         List<MaintenanceCard> maintenanceCards = maintenanceCardPage.getContent();
@@ -502,8 +501,6 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
             if (!result) {
                 getMaxCode = null;
                 index++;
-            } else {
-                getMaxCode = getMaxCode;
             }
         }
         while (getMaxCode == null) {
@@ -515,13 +512,11 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
                 if (!result) {
                     getMaxCode = null;
                     index++;
-                } else {
-                    getMaxCode = getMaxCode;
                 }
             }
         }
         codeNumber = Long.parseLong(getMaxCode) + 1;
-        newCodeString = "mc00" + Long.toString(codeNumber);
+        newCodeString = "mc00" + codeNumber;
         return newCodeString;
     }
 
@@ -570,12 +565,13 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
     }
 
     @Override
-    public MaintenanceCardsResponse getMaintenanceCard(MaintenanceCardsFilterRequest filter){
+    public MaintenanceCardsResponse getMaintenanceCard(MaintenanceCardsFilterRequest filter, String tenantId){
         MaintenanceCardsResponse maintenanceCardsResponse = new MaintenanceCardsResponse();
         maintenanceCardsResponse.getMetadata().setPage(filter.getPage());
         maintenanceCardsResponse.getMetadata().setLimit(filter.getLimit());
         filter.setPage(maintenanceCardsResponse.getMetadata().getPage());
         filter.setLimit(maintenanceCardsResponse.getMetadata().getLimit());
+        filter.setTenantId(Long.parseLong(tenantId));
         List<MaintenanceCardsModel> maintenanceCardsModels = getMaintenanceCards(filter);
         maintenanceCardsResponse.setMaintenanceCardsModels(maintenanceCardsModels);
         maintenanceCardsResponse.getMetadata().setTotal(setFilterCount(filter));
@@ -586,21 +582,21 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
         int offset = (filter.getPage() - 1) * filter.getLimit();
         String payStatusIds = StringUtils.join(filter.getPayStatus(), ",");
         String workStatusIds = StringUtils.join(filter.getWorkStatus(), ",");
-        List<MaintenanceCard> maintenanceCards = filter(offset, filter.getLimit(), filter.getQuery(), payStatusIds, workStatusIds, filter.getFrom(), filter.getTo());
+        List<MaintenanceCard> maintenanceCards = filter(offset, filter.getLimit(), filter.getQuery(), payStatusIds, workStatusIds, filter.getFrom(), filter.getTo(), filter.getTenantId());
         if (maintenanceCards.isEmpty()) return new ArrayList<>();
         return maintenanceCardsMapper.getMaintenanceCardsModels(maintenanceCards);
     }
 
-    private List<MaintenanceCard> filter(int offset, int size, String query, String payStatusIds, String workStatusIds, Long from, Long to) {
+    private List<MaintenanceCard> filter(int offset, int size, String query, String payStatusIds, String workStatusIds, Long from, Long to, Long tenantId) {
 
         try {
             if (from != null){
                 Date dateFrom = getDateFromTimestamp(from);
                 Date dateTo = getDateFromTimestamp(to);
-                return maintenanceCardRepository.filter(query, payStatusIds, workStatusIds, dateFrom, dateTo, size, offset);
+                return maintenanceCardRepository.filter(query, payStatusIds, workStatusIds, dateFrom, dateTo, size, offset, tenantId);
             } else {
                 return maintenanceCardRepository.filter(query, payStatusIds, workStatusIds, null, null
-                    , size, offset);
+                    , size, offset, tenantId);
             }
 
         } catch (Exception e) {
@@ -617,10 +613,10 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
                 Date dateFrom = getDateFromTimestamp(filterRequest.getFrom());
                 Date dateTo = getDateFromTimestamp(filterRequest.getTo());
                 return maintenanceCardRepository.filterCount(filterRequest.getQuery(), workStatusIds,
-                    payStatusIds,dateFrom, dateTo);
+                    payStatusIds,dateFrom, dateTo, filterRequest.getTenantId());
             }else {
                 return maintenanceCardRepository.filterCount(filterRequest.getQuery(), workStatusIds,
-                    payStatusIds,null, null);
+                    payStatusIds,null, null, filterRequest.getTenantId());
             }
 
         } catch (Exception e) {

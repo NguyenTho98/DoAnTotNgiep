@@ -70,7 +70,7 @@ public interface MaintenanceCardRepository extends JpaRepository<MaintenanceCard
         "AND (m.payStatus  In :paystatus  )")
     Page<MaintenanceCard> filterByWsandPs(Pageable pageable, @Param("userId") Long userId, @Param("workstatus") byte[] workstatus, @Param("paystatus") byte[] paystatus, @Param("code") String code);
 
-    @Query(value = "{call maintenance_cards_filter(:_query, :_work_status_ids, :_pay_status_ids, :_from, :_to, :_limit, :_offset)}", nativeQuery = true)
+    @Query(value = "{call maintenance_cards_filter(:_query, :_work_status_ids, :_pay_status_ids, :_from, :_to, :_limit, :_offset, :_tenantId)}", nativeQuery = true)
     List<MaintenanceCard> filter(
         @Param("_query") String _query,
         @Param("_work_status_ids") String _work_status_ids,
@@ -78,13 +78,15 @@ public interface MaintenanceCardRepository extends JpaRepository<MaintenanceCard
         @Param("_from") Date _from,
         @Param("_to") Date _to,
         @Param("_limit") int _limit,
-        @Param("_offset") int _offset);
+        @Param("_offset") int _offset,
+        @Param("_tenantId") long _tenantId);
 
-    @Query(value = "{call maintenance_cards_filter_count(:_query, :_work_status_ids, :_pay_status_ids, :_from, :_to)}", nativeQuery = true)
+    @Query(value = "{call maintenance_cards_filter_count(:_query, :_work_status_ids, :_pay_status_ids, :_from, :_to, :_tenantId)}", nativeQuery = true)
     int filterCount(
         @Param("_query") String _query,
         @Param("_work_status_ids") String _work_status_ids,
         @Param("_pay_status_ids") String _pay_status_ids,
         @Param("_from") Date _from,
-        @Param("_to") Date _to);
+        @Param("_to") Date _to,
+        @Param("_tenantId") long _tenantId);
 }

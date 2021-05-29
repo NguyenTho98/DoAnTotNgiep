@@ -80,6 +80,7 @@ function Footer(props) {
           <div className="pagination-size-text">kết quả</div>
         </div>
       </div> */}
+      <div className="margin-left-auto" />
       <div className="products-pagination">
         <Pagination
           totalPage={totalPage}

@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import TitleAndAction from "./TitleAndAction/TitleAndAction";
 import "./styles.scss";
-import Accessories from "./Accessories/Accessories";
 import Service from "./Service/Service";
-import InfoProductFooter from "./InfoProductFooter/InfoProductFooter";
 import {
   upLoadImage,
   updateProductService,
@@ -45,7 +43,7 @@ function ServiceUpdate(props) {
 
   useEffect(() => {
     onchangeValue("images", images);
-  }, [images])
+  }, [images]);
 
   const onchangeValue = (type, value) => {
     setActionSave(false);
@@ -70,10 +68,10 @@ function ServiceUpdate(props) {
       return;
     }
     onSaveProductService(id, product).then((json) => {
-      if (json ) {
+      if (json) {
         setProduct(initialState);
         setShowContent(1);
-        pushstate(props.history, "/products");
+        pushstate(props.history, "/services");
       }
     });
   };
@@ -81,46 +79,24 @@ function ServiceUpdate(props) {
   const cancel = () => {
     setProduct(initialState);
     setShowContent(1);
-    pushstate(props.history, "/products");
-  };
-
-  const handleUploadImage = (files) => {
-    files.forEach((file) => {
-      onUpLoadImage(file)
-        .then((json) => {
-          if (json && json.data) {
-            setImages((state) => ([...state, json.data]));
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-          return e;
-        });
-    });
-  };
-
-  const removeImage = (index) => {
-    const images = product.images.filter((img, idx) => idx === index);
-    if (index === 0 && product && product.images.length === 1) {
-      onchangeValue("images", []);
-      return;
-    }
-    onchangeValue("images", images);
+    pushstate(props.history, "/services");
   };
 
   return (
     <React.Fragment>
       <div className="product-screen-wrapper-create">
-        <TitleAndAction showContent={showContent}  saveProductService={saveProductService}
-            cancel={cancel}/>
+        <TitleAndAction
+          showContent={showContent}
+          saveProductService={saveProductService}
+          cancel={cancel}
+        />
         <div className="row">
-            <Service
-              actionSave={actionSave}
-              onChangeStatusValid={onChangeStatusValid}
-              product={product}
-              onchangeValue={onchangeValue}
-            />
-
+          <Service
+            actionSave={actionSave}
+            onChangeStatusValid={onChangeStatusValid}
+            product={product}
+            onchangeValue={onchangeValue}
+          />
         </div>
       </div>
     </React.Fragment>

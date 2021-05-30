@@ -15,7 +15,7 @@ function Item(props) {
 
   const onRedirectDetail = (e) => {
     e.stopPropagation();
-    pushstate(props.history, `/product/update/${productService.id}`);
+    pushstate(props.history, `/service/update/${productService.id}`);
   };
 
   return (

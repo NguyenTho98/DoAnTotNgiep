@@ -59,6 +59,11 @@ export const menuLinkCoordinator = [
     submenu: [
       {
         id: 0,
+        url: '/product/create',
+        title: 'Thêm mới linh kiện'
+      },
+      {
+        id: 1,
         url: '/products',
         title: 'Danh sách linh kiện'
       }
@@ -72,6 +77,11 @@ export const menuLinkCoordinator = [
     submenu: [
       {
         id: 0,
+        url: '/service/create',
+        title: 'Thêm mới dịch vụ'
+      },
+      {
+        id: 1,
         url: '/services',
         title: 'Danh sách dịch vụ'
       }
@@ -189,6 +199,11 @@ export const menuLinkFull = [
     submenu: [
       {
         id: 0,
+        url: '/product/create',
+        title: 'Thêm mới linh kiện'
+      },
+      {
+        id: 1,
         url: '/products',
         title: 'Danh sách linh kiện'
       }
@@ -202,6 +217,11 @@ export const menuLinkFull = [
     submenu: [
       {
         id: 0,
+        url: '/service/create',
+        title: 'Thêm mới dịch vụ'
+      },
+      {
+        id: 1,
         url: '/services',
         title: 'Danh sách dịch vụ'
       }

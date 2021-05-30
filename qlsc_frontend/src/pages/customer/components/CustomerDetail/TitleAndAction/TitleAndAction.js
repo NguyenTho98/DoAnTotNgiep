@@ -13,9 +13,10 @@ function TitleAndAction(props) {
   };
   return (
     <React.Fragment>
-      <div className="go-back" onClick={()=>onClick()}>
+      <div style={{ marginLeft: 15 }} className="go-back" onClick={()=>onClick()}>
         <span>
           <svg
+            style={{ width: 10, height: 12, marginTop: 6 }}
             width="12"
             height="23"
             viewBox="0 0 12 23"
@@ -30,10 +31,10 @@ function TitleAndAction(props) {
         </span>
         <div style={{ marginTop: 4 }}>
           <span>
-            Quay lại&nbsp;
+            Danh sách&nbsp;
           </span>
           <span>
-            Khách hàng`
+            khách hàng
           </span>
         </div>
       </div>

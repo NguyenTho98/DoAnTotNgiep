@@ -91,7 +91,6 @@ function CustomerCreate(props) {
             customer={customer}
           />
         </div>
-        {/* <InfoCustomerFooter saveCustomer={saveCustomer} cancel={cancel} /> */}
       </div>
     </div>
   );

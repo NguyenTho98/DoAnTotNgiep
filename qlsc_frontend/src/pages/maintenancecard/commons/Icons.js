@@ -104,6 +104,7 @@ export const Search = () => {
 export const arrowLeft = () => {
   return (
     <svg
+      style={{ width: 10, height: 12, marginTop: 6 }}
       width="12"
       height="23"
       viewBox="0 0 12 23"

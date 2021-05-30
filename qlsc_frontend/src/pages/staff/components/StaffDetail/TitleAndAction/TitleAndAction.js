@@ -1,7 +1,7 @@
-import React from 'react';
-import { useHistory } from 'react-router';
-import pushstate from '../../../../../utils/pushstate';
-import './styles.scss';
+import React from "react";
+import { useHistory } from "react-router";
+import pushstate from "../../../../../utils/pushstate";
+import "./styles.scss";
 
 function TitleAndAction(props) {
   const history = useHistory();
@@ -10,9 +10,10 @@ function TitleAndAction(props) {
   };
   return (
     <React.Fragment>
-      <div className="go-back" onClick={()=>onClick()}>
+      <div style={{ marginLeft: 15 }} className="go-back" onClick={() => onClick()}>
         <span>
           <svg
+            style={{ width: 10, height: 12, marginTop: 6 }}
             width="12"
             height="23"
             viewBox="0 0 12 23"
@@ -26,26 +27,22 @@ function TitleAndAction(props) {
           </svg>
         </span>
         <div style={{ marginTop: 4 }}>
-          <span>
-            Quay lại&nbsp;
-          </span>
-          <span>
-            Nhân viên
-          </span>
+          <span>Danh sách&nbsp;</span>
+          <span>nhân viên</span>
         </div>
       </div>
-    <div className="staff-detail-tilte-action">
-      <div className="d-flex list-header">
-        <div className="header-title">
-          <div style={{ fontSize: '22px', fontWeight: 600, marginLeft: 17 }}>{props.staff.name || '---'}</div>
+      <div className="staff-detail-tilte-action">
+        <div className="d-flex list-header">
+          <div className="header-title">
+            <div style={{ fontSize: "22px", fontWeight: 600, marginLeft: 17 }}>
+              {props.staff.name || "---"}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </React.Fragment>
   );
 }
-TitleAndAction.defaultProps = {
-
-};
+TitleAndAction.defaultProps = {};
 
 export default React.memo(TitleAndAction);

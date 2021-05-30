@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import TitleAndAction from "./TitleAndAction/TitleAndAction";
 import "./styles.scss";
-import Accessories from "./Accessories/Accessories";
 import Service from "./Service/Service";
-import InfoProductFooter from "./InfoProductFooter/InfoProductFooter";
 import { upLoadImage, saveProductService } from "../../actions/ProductAction";
 import pushstate from "utils/pushstate";
 import { toastError } from "../../../../utils/toast";
@@ -33,7 +31,7 @@ function ServiceCreate(props) {
 
   useEffect(() => {
     onchangeValue("images", images);
-  }, [images])
+  }, [images]);
 
   useEffect(() => {
     setIsValid(true);
@@ -67,10 +65,10 @@ function ServiceCreate(props) {
       return;
     }
     onSaveProductService(product).then((json) => {
-      if (json ) {
+      if (json) {
         setProduct(initialState);
         setShowContent(1);
-        pushstate(props.history, "/products");
+        pushstate(props.history, "/services");
       }
     });
   };
@@ -78,22 +76,7 @@ function ServiceCreate(props) {
   const cancel = () => {
     setProduct(initialState);
     setShowContent(1);
-    pushstate(props.history, "/products");
-  };
-
-  const handleUploadImage = (files) => {
-    files.forEach((file) => {
-      onUpLoadImage(file)
-        .then((json) => {
-          if (json && json.data) {
-            setImages((state) => ([...state, json.data]));
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-          return e;
-        });
-    });
+    pushstate(props.history, "/services");
   };
 
   const handleChange = () => {
@@ -102,15 +85,6 @@ function ServiceCreate(props) {
     } else {
       setShowContent(1);
     }
-  };
-
-  const removeImage = (index) => {
-    if (index === 0 && product && product.images.length === 1) {
-      onchangeValue("images", []);
-      return;
-    }
-    const images = product.images.filter((img, idx) => idx !== index);
-    onchangeValue("images", images);
   };
 
   const renderContent = () => {
@@ -127,11 +101,12 @@ function ServiceCreate(props) {
   return (
     <React.Fragment>
       <div className="product-screen-wrapper-create">
-        <TitleAndAction setShowContent={handleChange} saveProductService={saveProductService}
-            cancel={cancel}/>
-        <div className="row">
-          {renderContent()}
-        </div>
+        <TitleAndAction
+          setShowContent={handleChange}
+          saveProductService={saveProductService}
+          cancel={cancel}
+        />
+        <div className="row">{renderContent()}</div>
       </div>
     </React.Fragment>
   );

@@ -1,19 +1,14 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { useHistory } from "react-router";
-import * as Icons from "pages/customer/commons/Icons";
 import "./styles.scss";
 import { connect } from "react-redux";
-import Action from './Action'
 function TitleAndAction(props) {
-  const history = useHistory();
   const { saveProductService, cancel, setShowContent } = props;
   return (
     <React.Fragment>
       <div className="go-back" onClick={()=>cancel()}>
         <span>
           <svg
+            style={{ width: 10, height: 12, marginTop: 6 }}
             width="12"
             height="23"
             viewBox="0 0 12 23"
@@ -28,17 +23,17 @@ function TitleAndAction(props) {
         </span>
         <div style={{ marginTop: 4 }}>
           <span>
-            Quay lại&nbsp;
+            Danh sách&nbsp;
           </span>
           <span>
-            Sản phẩm
+            linh kiện
           </span>
         </div>
       </div>
     <div className="product-create-tilte-action">
       <div className="d-flex list-header">
         <div className="header-title">
-          <div style={{ fontSize: "22px" }}>Thêm mới sản phẩm</div>
+          <div style={{ fontSize: "22px" }}>Thêm mới linh kiện</div>
         </div>
         <div className="d-flex justify-content-end header-action">
           <div className="dlv-button-cancel" onClick={()=>cancel()}>
@@ -66,8 +61,6 @@ function TitleAndAction(props) {
         </div>
       </div>
     </div>
-    <Action setShowContent={()=>setShowContent()}/>
-
     </React.Fragment>
   );
 }

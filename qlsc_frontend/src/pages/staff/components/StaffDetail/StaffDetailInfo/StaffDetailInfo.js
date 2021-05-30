@@ -62,7 +62,6 @@ function StaffDetailInfo(props) {
               </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col-4">
               <div className="d-flex item">
@@ -78,8 +77,7 @@ function StaffDetailInfo(props) {
             </div>
             <div className="col-4">
               <div className="d-flex item">
-                <div className="label">Số điện thoại:&nbsp;</div>
-                <div className="content-value">{(staff && staff.phone) || '---'}</div>
+                
               </div>
             </div>
           </div>
@@ -98,8 +96,7 @@ function StaffDetailInfo(props) {
             </div>
             <div className="col-4">
               <div className="d-flex item">
-                <div className="label">Tổng số phiếu:&nbsp;</div>
-                <div className="content-value">{(staff && staff.totalMaintenanceCard) || 0}</div>
+                
               </div>
             </div>
           </div>

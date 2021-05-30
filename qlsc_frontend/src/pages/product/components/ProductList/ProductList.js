@@ -11,7 +11,7 @@ const initialState = {
   size: 10,
   nameField: "",
   order: "",
-  type: [1, 2],
+  type: [1],
 };
 
 function ProductList(props) {

@@ -80,10 +80,10 @@ function Header(props) {
                 &nbsp;&nbsp;
               </div>
               <div className="margin-right20 header-item order-collations-code">
-                Mã sản phẩm
+                Mã dịch vụ
               </div>
               <div className="margin-right20 header-item order-collations-fulfillment">
-                Tên sản phẩm
+                Tên dịch vụ
               </div>
               <div className="margin-right20 header-item order-collations-loaction">
                 Loại

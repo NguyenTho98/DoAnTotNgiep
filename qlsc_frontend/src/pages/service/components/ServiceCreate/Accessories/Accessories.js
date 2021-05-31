@@ -263,23 +263,25 @@ function Accessories(props) {
                     onChange={(e) => uploadFile(e)}
                     multiple
                   />
-                  <Icons.addImgIcon />
+                  <div className="add-upload">
+                    <Icons.addImgIcon />
+                  </div>
+
                 </div>
                 {product.images.map((image, index) => {
                   return (
-                    <div className="wrapper-image" key={index}>
-                      <img
-                        key={index}
-                        className="image"
-                        src={image}
-                        alt={image}
-                      />
-                      <span
-                        className="remove-img"
-                        onClick={() => removeImage(index)}
-                      >
-                        x
-                      </span>
+                    <div className="div-send-img-file" key={index}>
+                      <div className="div_send_img">
+                        <button type="button" className="remove_image">
+                          <span onClick={() => removeImage(index)}>&times;</span>
+                        </button>
+                        <img
+                          className="img-file"
+                          id={`img-${index}`}
+                          alt="ảnh"
+                          src={image}
+                        />
+                      </div>
                     </div>
                   );
                 })}

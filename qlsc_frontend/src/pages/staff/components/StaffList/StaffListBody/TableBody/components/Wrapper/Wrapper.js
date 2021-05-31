@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "../../styles/wrapper.scss";
 import * as Icons from "pages/staff/commons/Icons";
+import imgNoCustomer from 'images/NoCustomer.png';
 
 function Wrapper(props) {
   const { staff, onChangeFilter, filter } = props;
@@ -49,10 +50,11 @@ function Wrapper(props) {
   if (isEmpty) {
     return (
       <div className="staff-list-wrapper">
-        <div id="staff-filter-empty-wrapper">
+        <div id="staff-filter-empty-wrapper" style={{ alignItems: 'center'}}>
           <div id="staff-filter-empty-text">Không có nhân viên</div>
           <div id="staff-filter-empty-icon">
-            <Icons.OrderCollationFilterEmpty />
+            {/* <Icons.OrderCollationFilterEmpty /> */}
+            <img style={{ height: '100%', marginTop: 30}} src={imgNoCustomer} alt=""></img>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import "../../styles/wrapper.scss";
 import * as Icons from "pages/customer/commons/Icons";
+import imgNoCustomer from 'images/NoCustomer.png';
 
 function Wrapper(props) {
   const { customer, onGetCustomer, onChangeFilter, filter } = props;
@@ -45,12 +46,13 @@ function Wrapper(props) {
   if (isEmpty) {
     return (
       <div className="delivery-collations-list-wrapper">
-        <div id="delivery-collations-filter-empty-wrapper">
+        <div id="delivery-collations-filter-empty-wrapper" style={{ alignItems: 'center'}}>
           <div id="delivery-collations-filter-empty-text">
             Không có khách hàng
           </div>
           <div id="delivery-collations-filter-empty-icon">
-            <Icons.OrderCollationFilterEmpty />
+            {/* <Icons.OrderCollationFilterEmpty /> */}
+            <img style={{ height: '100%', marginTop: 30}} src={imgNoCustomer} alt=""></img>
           </div>
         </div>
       </div>
@@ -63,7 +65,7 @@ function Wrapper(props) {
           onClick={onClick}
           checked={selectedIds.length && selectedIds.length === customers.length}
           minus={selectedIds.length && selectedIds.length < customers.length}
-          child={child} 
+          child={child}
           selectedIds={selectedIds}
           />
         <List

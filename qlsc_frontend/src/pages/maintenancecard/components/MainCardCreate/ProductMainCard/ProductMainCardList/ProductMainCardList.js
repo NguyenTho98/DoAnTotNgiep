@@ -5,6 +5,7 @@ import Total from "./Total/Total";
 import "./styles.scss";
 import Search from "./Search/Search";
 import * as Icons from 'pages/maintenancecard/commons/Icons'
+import imgNoProduct from 'images/NoProduct.png';
 
 function ProductMainCardList(props) {
   const { maintenanceCardDetails } = props;
@@ -27,7 +28,8 @@ function ProductMainCardList(props) {
             <div>
               <h4>Không có dịch vụ</h4>
             </div>
-            <Icons.iconNoProduct></Icons.iconNoProduct>
+            {/* <Icons.iconNoProduct /> */}
+            <img src={imgNoProduct} alt=""></img>
           </div>
         </React.Fragment>
       )}

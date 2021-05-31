@@ -86,7 +86,15 @@ function ProductCreate(props) {
       onUpLoadImage(file)
         .then((json) => {
           if (json && json.data) {
-            setImages((state) => ([...state, json.data]));
+            console.log("arrTRC", product.images);
+            console.log("json.data", json.data);
+            const arr = [...product.images];
+            arr.push(json.data);
+            setTimeout(() => {
+              onchangeValue("images", arr);
+            }, 1000);
+            console.log("arrSau", product.images);
+            // setImages((state) => ([...state, json.data]));
           }
         })
         .catch((e) => {

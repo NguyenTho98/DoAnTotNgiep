@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import "../../styles/wrapper.scss";
 import * as Icons from "pages/maintenancecard/commons/Icons";
 import { fetchMainCard } from "../../../../../../actions/mainCard";
+import imgNoMainCard from 'images/NoMainCard.png';
 
 function Wrapper(props) {
   const { mainCards, fetchMainCard, filterInfo, isEmpty, fetching } = props;
@@ -56,8 +57,9 @@ function Wrapper(props) {
           <div id="delivery-collations-filter-empty-text">
             Không có phiếu sửa chữa
           </div>
-          <div id="delivery-collations-filter-empty-icon">
-            <Icons.OrderCollationFilterEmpty />
+          <div id="delivery-collations-filter-empty-icon" style={{ height: '100%'}}>
+            {/* <Icons.OrderCollationFilterEmpty /> */}
+            <img style={{ height: '100%'}} src={imgNoMainCard} alt=""></img>
           </div>
         </div>
       </div>

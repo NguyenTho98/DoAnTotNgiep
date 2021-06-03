@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, String> {
 
-    @Query(value = "SELECT * FROM vehicles v WHERE v.customer_id = :customerId ;", nativeQuery = true)
+    @Query(value = "SELECT * FROM vehicles v WHERE v.customer_id = :customerId ORDER BY v.created_date DESC;", nativeQuery = true)
     List<Vehicle> getAllByCustomer(@Param("customerId") long customerId);
 
     Vehicle getVehicleByPlateNumber(String plateNumber);

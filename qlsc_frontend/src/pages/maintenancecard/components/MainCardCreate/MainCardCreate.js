@@ -11,7 +11,7 @@ import { saveCustomer } from "../../../customer/actions/customerAction";
 import { receiveWard } from "../../../customer/actions/locationActions";
 import ProductModal from "./Modal/ProductModal/ProductModal";
 import { saveProductService } from "../../../product/actions/ProductAction";
-import { maintenanceCardIsValid, clearValid, customerIsValid, serviceIsValid } from "../../actions/mainCard";
+import { maintenanceCardIsValid, clearValid, customerIsValid, serviceIsValid, getVehiclesByCustomerId } from "../../actions/mainCard";
 import { saveMainCard } from "../../actions/mainCard";
 import { useHistory } from "react-router";
 import pushstate from "../../../../utils/pushstate";
@@ -67,6 +67,7 @@ function MainCardCreate(props) {
     onClearValid,
     onCustomerIsValid,
     onServiceIsValid,
+    onGetVehiclesByCustomerId,
   } = props;
   const { isvalid, customerIsValid, serviceIsValid } = validate;
   const [customer, setCustomer] = useState({});
@@ -77,6 +78,7 @@ function MainCardCreate(props) {
   const [createProduct, setCreateProduct] = useState(initialStateProduct);
   const [showFilterCustomer, setShowFilterCustomer] = useState(false);
   const [showContent, setShowContent] = useState(1);
+  const [vehicles, setVehicles] = useState([]);
   useEffect(() => {
     onchangeProduct("type", showContent);
   }, [showContent]);
@@ -84,6 +86,20 @@ function MainCardCreate(props) {
   useEffect(() => {
     onChangeMainCard("coordinator", user);
   }, []);
+
+  useEffect(() => {
+    if (vehicles.length) {
+      const vehicle = vehicles[0];
+      setMainCard(() => {
+        return {
+          ...mainCard,
+          color: vehicle.color,
+          model: vehicle.model,
+          platesNumber: vehicle.plateNumber,
+        };
+      });
+    }
+  }, [vehicles])
 
   //customer
   const saveCustomer = () => {
@@ -110,6 +126,11 @@ function MainCardCreate(props) {
   };
 
   const onSetCustomerState = (cus) => {
+    if (cus && cus.id) {
+      onGetVehiclesByCustomerId(cus.id).then((json) => {
+        if (json) setVehicles(json);
+      });
+    }
     setCustomer(cus);
     onCustomerIsValid(true);
   }
@@ -126,7 +147,6 @@ function MainCardCreate(props) {
   const saveProductService = () => {
     onSaveProductService(createProduct).then((json) => {
       if (json) {
-        console.log("json", json.product);
         addProduct(json.product)
         setShowModalProduct(false);
         toastSuccess("Thêm sản phẩm thành công");
@@ -326,6 +346,7 @@ const mapDispatchToProps = (dispatch) => ({
   onClearValid: () => dispatch(clearValid()),
   onCustomerIsValid: (status) => dispatch(customerIsValid(status)),
   onServiceIsValid: (status) => dispatch(serviceIsValid(status)),
+  onGetVehiclesByCustomerId: (id) => dispatch(getVehiclesByCustomerId(id)),
 });
 
 export default React.memo(

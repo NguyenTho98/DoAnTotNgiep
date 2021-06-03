@@ -1,5 +1,5 @@
 import * as actionTypes from "actions/actionTypes";
-import { API_MAINTENANCECARD } from "constants/api";
+import { API_MAINTENANCECARD, API_CUSTOMER } from "constants/api";
 import { fetch } from "utils/fetchMiddleware";
 import { toastError } from "../../../utils/toast";
 
@@ -91,6 +91,16 @@ export const getMainCardById = (id) => (dispatch, getState) => {
         // dispatch(getMainCard(json));
       }
       return json;
+    })
+    .catch((e) => {
+      return e;
+    });
+};
+
+export const getVehiclesByCustomerId = (id) => (dispatch, getState) => {
+  return dispatch(fetch(`${API_CUSTOMER}/vehicles/${id}`))
+    .then((json) => {
+      if (json) return json;
     })
     .catch((e) => {
       return e;

@@ -77,14 +77,13 @@ public class MaintenanceCardDetailServiceImpl implements MaintenanceCardDetailSe
 
             MaintenanceCardDetail newMaintenanceCardDetail = maintenanceCardDetailRepository.save(maintenanceCardDetail);
             MaintenanceCard newMaintenanceCard = newMaintenanceCardDetail.getMaintenanceCard();
-            int typeMaintenanceCard;
             if (newMaintenanceCard.getWorkStatus() == 2 && newMaintenanceCard.getPayStatus() == 0) {
-                typeMaintenanceCard = 2;
+                CompletableFuture.runAsync(() -> sendToClient.sendNotificationToClient(newMaintenanceCard, 2, email));
             } else {
-                typeMaintenanceCard = 3;
+                CompletableFuture.runAsync(() -> sendToClient.sendNotificationToClient(newMaintenanceCard, 3, email));
             }
             // send notification to client
-            CompletableFuture.runAsync(() -> sendToClient.sendNotificationToClient(newMaintenanceCard, typeMaintenanceCard));
+
             return maintenanceCardConverter.convertAllToDTO(newMaintenanceCard);
         } else if (maintenanceCard.getRepairmanId() != 0) {
             throw new NotFoundException("Không tìm thấy chi tiết phiếu");

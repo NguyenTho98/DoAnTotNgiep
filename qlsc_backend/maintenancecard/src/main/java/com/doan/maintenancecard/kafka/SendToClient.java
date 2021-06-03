@@ -5,47 +5,30 @@ import com.doan.maintenancecard.model.MessageModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class SendToClient {
 
-    private final SimpMessagingTemplate template;
     private final ObjectMapper json;
-    private static final String BASE_URL = "http://localhost:8686/maintenance-card/detail/";
-    private static final String MC = "Phiếu sửa chữa";
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private static final String TOPIC_USER = "dk3w4sws-user";
 
-    public void sendNotificationToClient(MaintenanceCard maintenanceCard, int type) {
+    public void sendNotificationToClient(MaintenanceCard maintenanceCard, int type, String email) {
         MessageModel messageModel = new MessageModel();
-        messageModel.setRepairmanId(maintenanceCard.getRepairmanId());
-        messageModel.setId(maintenanceCard.getId());
         messageModel.setMaintenanceCardCode(maintenanceCard.getCode());
-        messageModel.setAuthor(maintenanceCard.getCoordinatorEmail());
+        messageModel.setAuthor(email);
         messageModel.setCoordinatorEmail(maintenanceCard.getCoordinatorEmail());
         messageModel.setRepairmanEmail(maintenanceCard.getRepairmanEmail());
-        if (type == 1) titleRepairman(messageModel, maintenanceCard.getCode());
-        if (type == 2) titleManager(messageModel, maintenanceCard.getCode());
-        messageModel.setUrl(BASE_URL + maintenanceCard.getId());
+        messageModel.setType(type);
         try {
-            template.convertAndSend("/topic/message", json.writeValueAsString(messageModel));
+            String message = json.writeValueAsString(messageModel);
+            kafkaTemplate.send(TOPIC_USER, String.valueOf(maintenanceCard.getId()), message);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
     }
 
-    private void titleManager(MessageModel model, String code) {
-        StringBuilder strTitle = new StringBuilder(MC).append(" ").append(code.toUpperCase());
-        StringBuilder strContent = new StringBuilder(MC).append(" ").append(code.toUpperCase());
-        model.setTitle(strTitle.append(" đang chờ thanh toán").toString());
-        model.setContent(strContent.append(" đã hoàn thành sửa chữa và đang chờ thanh toán").toString());
-    }
-
-    private void titleRepairman(MessageModel model, String code) {
-        StringBuilder strTitle = new StringBuilder(MC).append(" ").append(code.toUpperCase());
-        StringBuilder strContent = new StringBuilder(MC).append(" ").append(code.toUpperCase());
-        model.setTitle(strTitle.append(" đã được tạo mới").toString());
-        model.setContent(strContent.append(" đã được tạo mới. Hãy bắt đầu tiến hành sửa chữa").toString());
-    }
 }

@@ -8,13 +8,9 @@ import lombok.Setter;
 public class MessageModel {
 
     private String maintenanceCardCode;
-
     private String author;
-
     private int type;
-
     private String repairmanEmail;
-
     private String coordinatorEmail;
 
 }

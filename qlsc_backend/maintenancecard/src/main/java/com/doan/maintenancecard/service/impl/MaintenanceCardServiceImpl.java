@@ -106,7 +106,7 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
         MaintenanceCard newMC = maintenanceCardRepository.save(maintenanceCard);
         //gửi thông báo đến nhân viên
         if (newMC.getRepairmanId() != 0) {
-            CompletableFuture.runAsync(() -> sendToClient.sendNotificationToClient(newMC, 1));
+            CompletableFuture.runAsync(() -> sendToClient.sendNotificationToClient(newMC, 1, maintenanceCard.getCoordinatorEmail()));
         }
         //cập nhật xe, nhân viên
         CompletableFuture.runAsync(() -> {
@@ -337,7 +337,10 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
         }
         try {
             MaintenanceCard newMaintenanceCard = saveMaintenanceCard(maintenanceCard);
-            CompletableFuture.runAsync(() -> sendMessage.sendToCustomer(newMaintenanceCard));
+            CompletableFuture.runAsync(() -> {
+                sendMessage.sendToCustomer(newMaintenanceCard);
+                sendToClient.sendNotificationToClient(newMaintenanceCard, 3, email);
+            });
             return maintenanceCardConverter.convertAllToDTO(newMaintenanceCard);
         } catch (Exception e) {
             e.printStackTrace();
@@ -374,15 +377,10 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
 
             // Xử lý bắn thông báo và lưu lại message
             MaintenanceCard newMaintenanceCard = maintenanceCardRepository.save(maintenanceCard);
-            MessageModel messageModel = new MessageModel();
-            messageModel.setMaintenanceCardCode(newMaintenanceCard.getCode());
-            messageModel.setAuthor(email);
-            messageModel.setCoordinatorEmail(newMaintenanceCard.getCoordinatorEmail());
-            messageModel.setRepairmanEmail(newMaintenanceCard.getRepairmanEmail());
             if (newMaintenanceCard.getWorkStatus() == 2 && newMaintenanceCard.getPayStatus() == 0) {
-                messageModel.setType(2);
+                CompletableFuture.runAsync(() -> sendToClient.sendNotificationToClient(newMaintenanceCard, 2, email));
             } else {
-                messageModel.setType(3);
+                CompletableFuture.runAsync(() -> sendToClient.sendNotificationToClient(newMaintenanceCard, 3, email));
             }
             return maintenanceCardConverter.convertAllToDTO(newMaintenanceCard);
         } else {

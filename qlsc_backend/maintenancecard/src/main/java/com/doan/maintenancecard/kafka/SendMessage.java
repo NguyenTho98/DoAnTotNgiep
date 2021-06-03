@@ -1,7 +1,7 @@
 package com.doan.maintenancecard.kafka;
 
 import com.doan.maintenancecard.entity.MaintenanceCard;
-import com.doan.maintenancecard.model.Message;
+import com.doan.maintenancecard.model.MessageModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

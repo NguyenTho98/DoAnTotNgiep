@@ -16,7 +16,7 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    @GetMapping("vehicle/customer/{customerId}")
+    @GetMapping("vehicles/{customerId}")
     public ResponseEntity<Object> getAllByCustomer(
             @PathVariable("customerId") Long customerId) {
         List<VehicleDTO> vehicleDTOS = vehicleService.getListVehicleByCustomer(customerId);

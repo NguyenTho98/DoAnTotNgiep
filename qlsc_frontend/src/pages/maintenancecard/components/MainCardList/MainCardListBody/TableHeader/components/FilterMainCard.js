@@ -105,7 +105,7 @@ function FilterMainCard(props) {
           </div>
           <input
             id="filter-delivery-collations-search-input"
-            placeholder="Tìm kiếm phiếu sữa chưa theo mã phiếu sữa chữa"
+            placeholder="Tìm kiếm phiếu sữa chữa theo mã phiếu sữa chữa"
             value={filterText}
             onChange={(e) => onChangeText(e)}
           />

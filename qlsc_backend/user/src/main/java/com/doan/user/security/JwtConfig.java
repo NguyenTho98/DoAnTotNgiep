@@ -13,6 +13,9 @@ public class JwtConfig {
     @Value("${security.jwt.uri:/auth/**}")
     private String uri;
 
+    @Value("${security.jwt.uri:/admin/tenant}")
+    private String uriTenant;
+
     @Value("${security.jwt.header:X-APP-PAGE-TOKEN}")
     private String header;
 

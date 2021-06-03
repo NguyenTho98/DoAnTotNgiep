@@ -1,0 +1,83 @@
+.register-wapper{
+    position: relative;
+    height: 100vh;
+    .back-login {
+       margin-top: 50px;
+       margin-left: 10%;
+       border: 1px solid #c4cdd5;
+       padding: 8px;
+       border-radius: 20px;
+    }
+    .content-wapper{
+        width: 100%;
+        .logo{
+            width: 100%;
+            text-align: center;
+            margin-top: 5%;
+        }
+        .content{
+            width: 600px;
+            margin: 0 auto;
+            margin-top: 30px;
+            height: 400px;
+            .control-label{
+                margin-bottom: 10px;
+            }
+            input{
+                display: inline-block;
+                // vertical-align: baseline;
+                width: auto;
+                height: 50px;
+                padding: 1px;
+                margin: 0;
+                color: #000;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                padding: 4px 2px 4px 17px;
+                font-weight: 400;
+                text-transform: none;
+                letter-spacing: normal;
+                box-sizing: border-box;
+                display: block;
+                width: 100%;
+                font-size: 13px;
+                font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI,
+                Roboto, Helvetica Neue, sans-serif;
+                border-style: inset;
+                border: 1px solid #c4cdd5;
+                border-radius: 27px !important;
+                outline-color: #0088ff;
+                margin-bottom: 30px;
+                &:focus-visible{
+                    outline: none;
+                }
+            }
+            .btn-btn{
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px;
+                .btn-register{
+                    width: 200px;
+                    height: 50px;
+                    cursor: pointer;
+                    background-color: #1AB070;
+                    color: white;
+                    font-weight: 500;
+                    font-size: 18px;
+                    text-align: center;
+                    align-items: center;
+                    border-radius: 27px !important;
+                    .text{
+                        margin-top: 12px;
+                    }
+                }
+            }
+        }
+    }
+    .footer{
+        width: 100%;
+        position:fixed;
+        bottom: 0px;
+    }
+}

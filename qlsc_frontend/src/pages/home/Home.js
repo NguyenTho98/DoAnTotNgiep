@@ -12,6 +12,8 @@ import { getDataForReport } from "../report/actions/reportAction";
 import ReportLeft from "./ReportLeft/ReportLeft";
 import { moneyFormat } from "../../utils/moneyFormat";
 import moment from "moment";
+import { useHistory } from "react-router";
+import pushstate from "../../utils/pushstate";
 var randomColor = require("randomcolor"); // import the script
 const listAction = [
   {
@@ -22,6 +24,7 @@ const listAction = [
     subtitle: "Tạo mới và quản lý linh kiện của bạn",
     txtButton: "Thêm linh kiện",
     background: "#F2F9FF",
+    link: "/product/create",
   },
   {
     id: 2,
@@ -31,6 +34,7 @@ const listAction = [
     subtitle: "Tạo mới và quản lý khách hàng của bạn",
     txtButton: "Thêm khách hàng",
     background: "#FFFBF2",
+    link: "/customer/create",
   },
   {
     id: 3,
@@ -40,6 +44,7 @@ const listAction = [
     subtitle: "Tạo mới và quản lý phiếu sửa chữa của bạn",
     txtButton: "Thêm phiếu",
     background: "#F3FCF9",
+    link: "/maintenance-card/create",
   },
 ];
 const data2 = [
@@ -95,26 +100,26 @@ const convertUnixToDate = (unix) => {
 };
 
 function Home(props) {
-  const { onGetDataForReport } = props;
+  const { onGetDataForReport, user } = props;
   const [data, setData] = useState();
   const [show, setShow] = useState(false);
-
+  const history = useHistory();
   useEffect(() => {
     const s = convertUnixToDate(moment().subtract(6, "days").unix());
     const e = convertUnixToDate(moment().unix());
     onGetDataByFilter(s, e);
   }, []);
 
-  useEffect(() => {
-    if (data) setShow(true);
-  }, [data])
+  // useEffect(() => {
+  //   if (data) setShow(true);
+  // }, [data])
 
   const onGetDataByFilter = (from, to) => {
     onGetDataForReport(from, to).then((json) => {
       if (json) setData(json);
     });
   };
-  
+
 
   const getMoney = () => {
     const businessToday = data.businessToday;
@@ -285,11 +290,11 @@ function Home(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <Guard />
-                {/* <div className="card content-01">
+                {/* <Guard /> */}
+                <div className="card content-01">
                   <div className="header">
                     <div className="title">
-                      Chào mừng Nguyễn Thu Hà, bắt đầu sử dụng phần mềm Kiomo
+                      Chào mừng {user.name || 'Bạn'}, bắt đầu sử dụng phần mềm Kiomo
                       ngay nào!
                     </div>
                     <div className="sub-title">
@@ -307,7 +312,7 @@ function Home(props) {
                           <div className="icon">{item.icon}</div>
                           <div className="title">{item.title}</div>
                           <div className="sub-title">{item.subtitle}</div>
-                          <div className="d-flex dlv-button-save">
+                          <div className="d-flex dlv-button-save" onClick={()=>pushstate(history,item.link)}>
                             <div className="icon-button">
                               <svg
                                 width="14"
@@ -364,7 +369,7 @@ function Home(props) {
                       );
                     })}
                   </div>
-                </div> */}
+                </div>
               </React.Fragment>
             )}
           </div>
@@ -421,7 +426,13 @@ function Home(props) {
     </React.Fragment>
   );
 }
+const mapStateToProps = (state, ownProps) => {
+  const { auth : { user }} = state;
+  return {
+    user
+  }
+}
 const mapDispatchToProps = (dispatch) => ({
   onGetDataForReport: (from, to) => dispatch(getDataForReport(from, to)),
 });
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

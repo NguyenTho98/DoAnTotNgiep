@@ -23,6 +23,7 @@ import { notificationMaintenanceCard } from "./actions/notificationAction";
 import storage from "./utils/storage";
 import history from './utils/history';
 import FeedBack from "./components/topBar/feedback/FeedBack";
+import RegisterPage from "./pages/register/RegisterPage";
 
 function App(props) {
   const { onCheckInfoUser, onNotificationMaintenanceCard, user } = props;
@@ -79,6 +80,7 @@ function App(props) {
       <Switch>
         <Route path="/404" component={NotFoundComponent} />
         <Route path="/login" component={LoginPage} />
+        {/* <Route path="/register" component={RegisterPage} /> */}
         <PrivateRoute path="/" component={() => <DashBoard />} />
         <Route component={NotFoundComponent} />
       </Switch>

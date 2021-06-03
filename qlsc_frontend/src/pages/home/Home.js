@@ -14,7 +14,6 @@ import { moneyFormat } from "../../utils/moneyFormat";
 import moment from "moment";
 import { useHistory } from "react-router";
 import pushstate from "../../utils/pushstate";
-import ReportProduct from "./Report/Report";
 var randomColor = require("randomcolor"); // import the script
 const listAction = [
   {
@@ -370,9 +369,6 @@ function Home(props) {
                       );
                     })}
                   </div>
-                </div>
-                <div className="card">
-                  <ReportProduct/>
                 </div>
               </React.Fragment>
             )}

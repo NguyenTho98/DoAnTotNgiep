@@ -1,10 +1,9 @@
-import React from 'react';
-import ReactHighcharts from 'react-highcharts';
-import classname from 'classname';
-import { ChartConfig } from 'components/Chart/ChartConfig';
+import React from "react";
+import ReactHighcharts from "react-highcharts";
+import { ChartConfig } from "components/Chart/ChartConfig";
 
 const getName = (text) => {
-  return text ? `${text.slice(0, 20)}...` : '';
+  return text ? `${text.slice(0, 20)}...` : "";
 };
 
 const getXCategories = (data, type) => {
@@ -14,8 +13,8 @@ const getXCategories = (data, type) => {
         return {
           name: getName(item.variation_name),
           y: item.quantity,
-          color: index % 2 ? '#D9D9D9' : '#5CBFD1',
-          id: item.variation_name
+          color: index % 2 ? "#D9D9D9" : "#5CBFD1",
+          id: item.variation_name,
         };
       });
     }
@@ -24,7 +23,7 @@ const getXCategories = (data, type) => {
         return {
           name: getName(item.variation_name),
           y: item.cancelled_rate,
-          color: index % 2 ? '#D9D9D9' : '#5CBFD1',
+          color: index % 2 ? "#D9D9D9" : "#5CBFD1",
           id: item.variation_name,
         };
       });
@@ -34,7 +33,7 @@ const getXCategories = (data, type) => {
         return {
           name: getName(item.variation_name),
           y: item.cancelled_quantity,
-          color: index % 2 ? '#D9D9D9' : '#5CBFD1',
+          color: index % 2 ? "#D9D9D9" : "#5CBFD1",
           id: item.variation_name,
         };
       });
@@ -44,7 +43,7 @@ const getXCategories = (data, type) => {
         return {
           name: getName(item.variation_name),
           y: item.revenue,
-          color: index % 2 ? '#D9D9D9' : '#5CBFD1',
+          color: index % 2 ? "#D9D9D9" : "#5CBFD1",
           id: item.variation_name,
         };
       });
@@ -54,19 +53,27 @@ const getXCategories = (data, type) => {
 
 const getSeriesName = (type) => {
   switch (type) {
-    case 2: return 'Số lượng bán';
-    case 3: return 'Tỷ lệ hủy';
-    case 4: return 'Số lượng hủy';
-    default: return 'Giá trị'
+    case 2:
+      return "Số lượng bán";
+    case 3:
+      return "Tỷ lệ hủy";
+    case 4:
+      return "Số lượng hủy";
+    default:
+      return "Giá trị";
   }
 };
 
 const getSuffix = (type) => {
   switch (type) {
-    case 2: return ' sản phẩm';
-    case 3: return ' %';
-    case 4: return ' sản phẩm';
-    default: return ' đ'
+    case 2:
+      return " sản phẩm";
+    case 3:
+      return " %";
+    case 4:
+      return " sản phẩm";
+    default:
+      return " đ";
   }
 };
 
@@ -76,27 +83,25 @@ function Chart(props) {
   const configChart = {
     ...ChartConfig,
     chart: {
-      type: 'column'
+      type: "column",
     },
-    subtitle: {
-      // text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
-    },
+    subtitle: {},
     accessibility: {
       announceNewData: {
-        enabled: true
-      }
+        enabled: true,
+      },
     },
     xAxis: {
-      type: 'category',
-      uniqueNames: false
+      type: "category",
+      uniqueNames: false,
     },
     yAxis: {
       title: {
-        text: null
-      }
+        text: null,
+      },
     },
     legend: {
-      enabled: false
+      enabled: false,
     },
     plotOptions: {
       series: {
@@ -104,8 +109,8 @@ function Chart(props) {
         dataLabels: {
           enabled: false,
           // format: '{point.y:.1f}%'
-        }
-      }
+        },
+      },
     },
 
     tooltip: {
@@ -121,7 +126,7 @@ function Chart(props) {
           shared: true,
           valueSuffix: getSuffix(type),
         },
-      }
+      },
     ],
   };
   return (

@@ -1,13 +1,11 @@
 package com.doan.user.controller;
 
-import com.doan.user.exception.commonException.NotFoundException;
+import com.doan.user.model.UserResponse;
+import com.doan.user.security.AppAuthHelper;
 import com.doan.user.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -17,21 +15,20 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MessageController {
     private final MessageService messageService;
+    private final AppAuthHelper appAuthHelper;
 
     @GetMapping("messages")
-    public ResponseEntity getAllMessage(@RequestParam("size") int size,
-                                        @RequestParam("page") int page) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        Map<String, Object> map = messageService.getListMessage(authentication.getName(), page, size);
-        return new ResponseEntity(map, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getAllMessage(
+        @RequestParam(value = "size", defaultValue = "10") int size,
+        @RequestParam(value = "page", defaultValue = "1") int page) {
+        String userId = appAuthHelper.httpCredential().getUserId();
+        Map<String, Object> map = messageService.getListMessage(userId, page, size);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @PutMapping("messages/{id}")
-    public ResponseEntity readMessage(@PathVariable int id) throws NotFoundException {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        messageService.readMessage(id, authentication.getName());
-        return ResponseEntity.ok().build();
+    public UserResponse readMessage(@PathVariable int id) {
+        boolean success = messageService.readMessage(id);
+        return new UserResponse(success);
     }
 }

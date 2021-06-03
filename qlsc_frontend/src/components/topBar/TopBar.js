@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -8,6 +7,7 @@ import * as Icons from "./Icons";
 import "./styles.scss";
 
 function TopBar(props) {
+  const { totalItems, messages, currentPage, totalPages } = props.notification;
   const getTopBarText = () => {
     const { history } = props;
     const url = props.location ? props.location.pathname : "";
@@ -324,22 +324,8 @@ function TopBar(props) {
 
   return (
     <div className="d-flex top-bar-market-place">
-      {/* <div className="top-bar-text">
-        <span
-          className="top_bar_focus"
-          onClick={this.onClick}
-          style={!url.includes('settings/custom_init') && !url.includes('settings/init') ? {} : { pointerEvents: 'none' }}
-        >
-          Sàn TMĐT
-        </span>
-        {' >'}
-      </div> */}
       <div className="top-bar-text">{getTopBarText()}</div>
       <div className="d-flex top-bar-action">
-        {/* <div className="icon-help">
-          <Icons.iconHelp />
-          <span>Trợ giúp</span>
-        </div> */}
         <div
           className="icon-feed-back"
           onClick={() => props.changeShowFeedBack(true)}
@@ -353,7 +339,7 @@ function TopBar(props) {
               <Icons.iconUpdate />
               <span>Thông báo</span>
               <div className="noti">
-                <div className="count">3</div>
+                <div className="count">{totalItems || 0}</div>
               </div>
             </a>
             <div className="dropdown-menu">
@@ -405,7 +391,17 @@ function TopBar(props) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  const {
+    notification,
+  } = state;
+  return {
+    notification,
+  };
+};
+
 const mapDispatchToProps = (dispatch, ownProps) => ({
   changeShowFeedBack: (show) => dispatch(changeShowFeedBack(show)),
 });
-export default withRouter(connect(null, mapDispatchToProps)(TopBar));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopBar));

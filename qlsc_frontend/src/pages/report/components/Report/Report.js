@@ -186,34 +186,6 @@ const dataPro = [
 function ReportProduct(props) {
   // const { data, fetching } = props;
   // const [view, setView] = useState(1);
-  const history = useHistory();
-  // const { search } = history.location;
-  // const searchParams = new URLSearchParams(search);
-  // const sortType = searchParams.get('sort-type');
-  // const sortField = searchParams.get('sort-field');
-
-  // const onChange = (sortField, sortType) => {
-  //   const newParams = getNewParams(history.location.search, 'sort-type', sortType);
-  //   const lastParams = getNewParams(newParams, 'sort-field', sortField);
-  //   pushstate(history, `/home/report?${lastParams}`);
-  // };
-
-  // const getType = () => {
-  //   if (sortType === 'up' && sortField === 'revenue') {
-  //     return 1;
-  //   }
-  //   if (sortType === 'up' && sortField === 'quantity') {
-  //     return 2;
-  //   }
-  //   if (sortType === 'up' && sortField === 'cancelled_rate') {
-  //     return 3;
-  //   }
-  //   if (sortType === 'up' && sortField === 'cancelled_quantity') {
-  //     return 4;
-  //   }
-  //   return 1;
-  // };
-
   // if (fetching) {
   //   return (
   //     <div className="report-product-content" style={{ height: 483 }}>
@@ -229,13 +201,13 @@ function ReportProduct(props) {
   //   );
   // }
 
-  // if (!data.length) {
-  //   return (
-  //     <div className="report-product-content">
-  //       <ChartEmpty />
-  //     </div>
-  //   )
-  // }
+  if (!dataPro.length) {
+    return (
+      <div className="report-product-content">
+        <ChartEmpty />
+      </div>
+    )
+  }
 
   return (
     <React.Fragment>

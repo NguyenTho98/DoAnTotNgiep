@@ -11,7 +11,13 @@ import { saveCustomer } from "../../../customer/actions/customerAction";
 import { receiveWard } from "../../../customer/actions/locationActions";
 import ProductModal from "./Modal/ProductModal/ProductModal";
 import { saveProductService } from "../../../product/actions/ProductAction";
-import { maintenanceCardIsValid, clearValid, customerIsValid, serviceIsValid, getVehiclesByCustomerId } from "../../actions/mainCard";
+import {
+  maintenanceCardIsValid,
+  clearValid,
+  customerIsValid,
+  serviceIsValid,
+  getVehiclesByCustomerId,
+} from "../../actions/mainCard";
 import { saveMainCard } from "../../actions/mainCard";
 import { useHistory } from "react-router";
 import pushstate from "../../../../utils/pushstate";
@@ -99,7 +105,7 @@ function MainCardCreate(props) {
         };
       });
     }
-  }, [vehicles])
+  }, [vehicles]);
 
   //customer
   const saveCustomer = () => {
@@ -133,7 +139,7 @@ function MainCardCreate(props) {
     }
     setCustomer(cus);
     onCustomerIsValid(true);
-  }
+  };
   //end customer
 
   //product
@@ -147,7 +153,7 @@ function MainCardCreate(props) {
   const saveProductService = () => {
     onSaveProductService(createProduct).then((json) => {
       if (json) {
-        addProduct(json.product)
+        addProduct(json.product);
         setShowModalProduct(false);
         toastSuccess("Thêm sản phẩm thành công");
       } else {
@@ -159,10 +165,10 @@ function MainCardCreate(props) {
 
   //mainCard
   const onChangeMainCard = (type, value) => {
-    if (!customerIsValid && type !== 'coordinator') {
+    if (!customerIsValid && type !== "coordinator") {
       toastError("Vui lòng chọn khách hàng!");
       return;
-    } else if (!serviceIsValid && type !== 'coordinator') {
+    } else if (!serviceIsValid && type !== "coordinator") {
       toastError("Vui lòng chọn dịch vụ - linh kiện!");
       return;
     }
@@ -209,7 +215,6 @@ function MainCardCreate(props) {
       toastError("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
-    console.log("mainCard", mainCard);
     if (!mainCard.repairman.id) {
       toastError("Vui lòng nhập thông tin nhân viên sửa chữa!");
       return;
@@ -221,15 +226,15 @@ function MainCardCreate(props) {
     mainCard.maintenanceCardDetailStatusHistories =
       addMaintenanceCardDetailStatusHistories(mainCard.maintenanceCardDetails);
 
-    // saveMainCard(mainCard).then((json) => {
-    //   if (json) {
-    //     onClearValid();
-    //     pushstate(history, `/maintenance-card/detail/${json.id}`);
-    //     toastSuccess("Thêm phiếu sửa chữa thành công");
-    //   } else {
-    //     toastError("Có lỗi xảy ra khi thêm phiếu sửa chữa ");
-    //   }
-    // });
+    saveMainCard(mainCard).then((json) => {
+      if (json) {
+        onClearValid();
+        pushstate(history, `/maintenance-card/detail/${json.id}`);
+        toastSuccess("Thêm phiếu sửa chữa thành công");
+      } else {
+        toastError("Có lỗi xảy ra khi thêm phiếu sửa chữa ");
+      }
+    });
   };
   //end mainCard
 

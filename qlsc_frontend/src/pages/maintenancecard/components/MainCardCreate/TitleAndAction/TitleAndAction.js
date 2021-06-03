@@ -30,7 +30,10 @@ function TitleAndAction(props) {
             <div className="dlv-button-cancel" onClick={() => onClick()}>
               Hủy
             </div>
-            <div className="d-flex align-items-center justify-content-between dlv-button-save"  onClick={() => saveMaintenanceCard()}>
+            <div
+              className="d-flex align-items-center justify-content-between dlv-button-save"
+              onClick={() => saveMaintenanceCard()}
+            >
               <div className="icon-button">
                 <svg
                   width="22"

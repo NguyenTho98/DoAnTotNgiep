@@ -8,15 +8,13 @@ import com.doan.user.repository.MessageRepository;
 import com.doan.user.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,41 +24,33 @@ public class MessageServiceImpl implements MessageService {
     private final MessageConverter messageConverter;
 
     @Override
-    public int countMessageByUserId(Long userId) {
-        return messageRepository.countMessagesByUserId(userId);
-    }
-
-    @Override
-    public Map<String, Object> getListMessage(String email, int page, int size) {
-        Pageable paging = PageRequest.of(page - 1, size, Sort.by("created_date").descending());
-        List<Message> messages = messageRepository.getMessagesByEmail(email, paging);
+    public Map<String, Object> getListMessage(String userId, int page, int size) {
+        Pageable paging = PageRequest.of(page - 1, size, Sort.by("modifiedDate").descending());
+        Page<Message> pageMessages = messageRepository.getMessagesByUserId(paging, Long.parseLong(userId));
         List<MessageDTO> messageDTOS = new ArrayList<>();
-        for (Message message : messages) {
-            messageDTOS.add(messageConverter.convertToDTO(message));
-        }
-        int totalItems = messageRepository.countMessagesByEmail(email);
-        int totalPages = 0;
-        if (totalItems % size == 0) {
-            totalPages = totalItems / size;
-        } else {
-            totalPages = totalItems / size + 1;
-        }
+        List<Message> messages = pageMessages.getContent();
+        messages.forEach(message -> messageDTOS.add(messageConverter.convertToDTO(message)));
         HashMap<String, Object> map = new HashMap<>();
         map.put("messages", messageDTOS);
-        map.put("currentPage", page);
-        map.put("totalItems", totalItems);
-
-        map.put("totalPages", totalPages);
+        map.put("currentPage", pageMessages.getNumber() + 1);
+        map.put("totalItems", pageMessages.getTotalElements());
+        map.put("totalPages", pageMessages.getTotalPages());
         return map;
     }
 
     @Override
-    public void readMessage(int id, String email) throws NotFoundException {
-        Message message = messageRepository.getMessageByEmailAndId(email, id);
-        if (message == null) {
-            throw new NotFoundException("Not found message");
+    public boolean readMessage(int id) {
+        try {
+            Optional<Message> message = messageRepository.findById(Long.parseLong(String.valueOf(id)));
+            if (message.isPresent()) {
+                Message newMessage = message.get();
+                newMessage.setStatus((byte) 0);
+                messageRepository.save(newMessage);
+            }
+            return Boolean.TRUE;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Boolean.FALSE;
         }
-        message.setStatus((byte) 0);
-        messageRepository.save(message);
     }
 }

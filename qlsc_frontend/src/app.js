@@ -19,7 +19,7 @@ import { checkInfoUser } from "./pages/login/actions/loginAction";
 import PrivateRoute from "./components/router/PrivateRoute";
 import { SOCKET_URL_V2 } from "./constants/api";
 import { getStaffsByRepairman } from "./actions/commons";
-import { notificationMaintenanceCard } from "./actions/notificationAction";
+import { notificationMaintenanceCard, getMessages } from "./actions/notificationAction";
 import storage from "./utils/storage";
 import history from './utils/history';
 import FeedBack from "./components/topBar/feedback/FeedBack";
@@ -34,8 +34,10 @@ function App(props) {
     } else if (!token) history.push("/login");
     if (token) {
       onCheckInfoUser(token);
+      props.onGetMessages();
       props.onGetCity();
       props.getStaffsByRepairman();
+
     }
     if (token && window.location.pathname === "/login") history.push("/maintenance-cards");
     if (token && window.location.pathname) {
@@ -102,6 +104,7 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
+  onGetMessages: () => dispatch(getMessages()),
   onCheckInfoUser: (token) => dispatch(checkInfoUser(token)),
   onGetCity: () => dispatch(getCity()),
   getStaffsByRepairman: () => dispatch(getStaffsByRepairman()),

@@ -47,7 +47,7 @@ public class TenantServiceImpl implements TenantService {
         user.setCode("NV001");
         user.setStatus((byte) 1);
         if (StringUtils.isNotBlank(encoder.encode(request.getPassword()))) {
-            user.setPassword("admin");
+            user.setPassword(encoder.encode("123456"));
         } else {
             user.setPassword(encoder.encode(request.getPassword()));
         }

@@ -28,7 +28,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .and()
             .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET, "/admin/products/**").hasAnyRole("3", "1", "4")
+            .antMatchers(HttpMethod.GET, "/admin/products/**").hasAnyRole("3", "1", "4","2")
             .antMatchers(HttpMethod.POST, "/admin/products/**").hasAnyRole("3", "4")
             .antMatchers(HttpMethod.PUT, "/admin/products/**").hasAnyRole("3", "4")
             .antMatchers(HttpMethod.DELETE, "/admin/products/**").hasAnyRole("3", "4")

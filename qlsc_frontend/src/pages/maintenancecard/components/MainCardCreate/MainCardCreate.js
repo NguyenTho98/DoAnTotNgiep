@@ -126,10 +126,8 @@ function MainCardCreate(props) {
   const saveProductService = () => {
     onSaveProductService(createProduct).then((json) => {
       if (json) {
-        const newArr = [...mainCard.maintenanceCardDetails];
-        newArr.unshift(json.product);
-        setMainCard({ ...mainCard, maintenanceCardDetails: newArr });
-        setCreateProduct(initialStateProduct);
+        console.log("json", json.product);
+        addProduct(json.product)
         setShowModalProduct(false);
         toastSuccess("Thêm sản phẩm thành công");
       } else {

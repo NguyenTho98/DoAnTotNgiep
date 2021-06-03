@@ -9,7 +9,7 @@ function InfoProductFooter(props) {
         <div className="dlv-button-cancel" onClick={() => cancel()}>
           Hủy
         </div>
-        <div className="d-flex align-items-center justify-content-between dlv-button-save">
+        <div className="d-flex align-items-center justify-content-between dlv-button-save" onClick={() => saveProductService()}>
           <div className="icon-button">
             <svg
               width="20"
@@ -28,7 +28,7 @@ function InfoProductFooter(props) {
               />
             </svg>
           </div>
-          <div className="separate" onClick={() => saveProductService()}>
+          <div className="separate">
             <svg
               width="2"
               height="20"
@@ -39,7 +39,7 @@ function InfoProductFooter(props) {
               <rect x="0.228516" width="1" height="20" fill="#0088FF" />
             </svg>
           </div>
-          <span onClick={() => saveProductService()}>Lưu</span>
+          <span >Lưu</span>
         </div>
       </div>
     </div>

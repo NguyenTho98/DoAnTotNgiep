@@ -209,21 +209,27 @@ function MainCardCreate(props) {
       toastError("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
+    console.log("mainCard", mainCard);
+    if (!mainCard.repairman.id) {
+      toastError("Vui lòng nhập thông tin nhân viên sửa chữa!");
+      return;
+    }
     mainCard.customer = customer;
     mainCard.workStatus = 0;
     mainCard.payStatus = 0;
     mainCard.price = totalPriceMainCard(mainCard.maintenanceCardDetails);
     mainCard.maintenanceCardDetailStatusHistories =
       addMaintenanceCardDetailStatusHistories(mainCard.maintenanceCardDetails);
-    saveMainCard(mainCard).then((json) => {
-      if (json) {
-        onClearValid();
-        pushstate(history, `/maintenance-card/detail/${json.id}`);
-        toastSuccess("Thêm phiếu sửa chữa thành công");
-      } else {
-        toastError("Có lỗi xảy ra khi thêm phiếu sửa chữa ");
-      }
-    });
+
+    // saveMainCard(mainCard).then((json) => {
+    //   if (json) {
+    //     onClearValid();
+    //     pushstate(history, `/maintenance-card/detail/${json.id}`);
+    //     toastSuccess("Thêm phiếu sửa chữa thành công");
+    //   } else {
+    //     toastError("Có lỗi xảy ra khi thêm phiếu sửa chữa ");
+    //   }
+    // });
   };
   //end mainCard
 

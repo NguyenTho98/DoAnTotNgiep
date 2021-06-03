@@ -1,45 +1,45 @@
 import React, { useState } from "react";
 import "./styles.scss";
 import * as Icons from "./Icons";
-import { Icon } from "@material-ui/core";
 import { API_USER_AUTH, API_USER } from "constants/api";
 import callApi from "utils/callApi";
-function RegisterPage() {
-    const [tenant, setTenant] = useState({
-      email: '',
-      full_name: '',
-      name_tenant: '',
-      phone_number: '',
-      address: '',
-      password: '',
-    })
-    const onChangeTenant = () => {
-      const { name, value } = event.target;
-      setTenant({ ...tenant, [name]: value });
-    }
+import history from '../../utils/history';
 
-    const onSummit = () => {
-      const options = {
-        method: "POST",
-        data: tenant,
-      };
-      const url =API_USER + "/tenant";
-      callApi(url, options)
-        .then((res) => {
+function RegisterPage() {
+  const [tenant, setTenant] = useState({
+    email: "",
+    full_name: "",
+    name_tenant: "",
+    phone_number: "",
+    address: "",
+    password: "",
+  });
+  const onChangeTenant = () => {
+    const { name, value } = event.target;
+    setTenant({ ...tenant, [name]: value });
+  };
+
+  const onSummit = () => {
+    const options = {
+      method: "POST",
+      data: tenant,
+    };
+    const url = API_USER + "/tenant";
+    callApi(url, options)
+      .then((res) => {
+        console.log(res);
+        if (res && res.status === 200) {
           console.log(res);
-          if (res && res.status === 200
-          ) {
-            console.log(res);
-          }
-        })
-        .catch((err) => {
-          return err;
-        });
-    }
+        }
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
 
   return (
     <div className="register-wapper">
-      <div className="go-back back-login" >
+      <div className="go-back back-login">
         <span>
           <svg
             style={{ width: 10, height: 12, marginTop: 6 }}
@@ -56,7 +56,7 @@ function RegisterPage() {
           </svg>
         </span>
         <div style={{ marginTop: 4 }}>
-          <span>Quay lại Đăng nhập&nbsp;</span>
+          <span onClick={() => history.push("/login")}>Quay lại Đăng nhập&nbsp;</span>
         </div>
       </div>
       <div className="content-wapper">
@@ -156,7 +156,7 @@ function RegisterPage() {
               </div>
               <div className="row btn-btn">
                 <div className="btn-register" onClick={onSummit}>
-                    <div className="text">Đăng ký tài khoản</div>
+                  <div className="text">Đăng ký tài khoản</div>
                 </div>
               </div>
             </div>

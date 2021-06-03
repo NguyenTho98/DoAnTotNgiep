@@ -29,7 +29,9 @@ function App(props) {
   const { onCheckInfoUser, onNotificationMaintenanceCard, user } = props;
   useEffect(() => {
     const token = storage.get("token", false);
-    if (!token) history.push("/login");
+    if (!token && window.location.pathname === '/register') {
+      history.push(window.location.pathname);
+    } else if (!token) history.push("/login");
     if (token) {
       onCheckInfoUser(token);
       props.onGetCity();
@@ -80,7 +82,7 @@ function App(props) {
       <Switch>
         <Route path="/404" component={NotFoundComponent} />
         <Route path="/login" component={LoginPage} />
-        {/* <Route path="/register" component={RegisterPage} /> */}
+        <Route path="/register" component={RegisterPage} />
         <PrivateRoute path="/" component={() => <DashBoard />} />
         <Route component={NotFoundComponent} />
       </Switch>

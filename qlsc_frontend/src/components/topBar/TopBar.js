@@ -2,9 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import pushstate from "utils/pushstate";
+import debounce from "utils/debounce";
 import { changeShowFeedBack } from "../../actions/globalUiActions";
 import * as Icons from "./Icons";
+import { convertSecondToDateV1 } from "../../utils/datetimeUtil";
+import {
+  getMessages,
+  markRead,
+  removeMessage,
+} from "../../actions/notificationAction";
 import "./styles.scss";
+import history from "../../utils/history";
 
 function TopBar(props) {
   const { totalItems, messages, currentPage, totalPages } = props.notification;
@@ -322,6 +330,32 @@ function TopBar(props) {
     return `unknown: ${url}`;
   };
 
+  const countNoti = () => {
+    return totalItems;
+  };
+
+  const debounceScroll = debounce((e) => {
+    onScroll(e, false);
+  }, 500);
+
+  const onScroll = (e) => {
+    const height =
+      e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight;
+    if (height <= 500 && currentPage < totalPages) {
+      props.onGetMessages(currentPage + 1);
+    }
+  };
+
+  const onReadMessage = (message) => {
+    history.push(message.url);
+    props.onMarkRead(message.id);
+  };
+
+  const onRemoveMessage = (id, e) => {
+    e.stopPropagation();
+    props.onRemoveMessage(id);
+  };
+
   return (
     <div className="d-flex top-bar-market-place">
       <div className="top-bar-text">{getTopBarText()}</div>
@@ -338,159 +372,63 @@ function TopBar(props) {
             <a href="#" data-toggle="dropdown">
               <Icons.iconUpdate />
               <span>Thông báo</span>
-              <div className="noti">
-                <div className="count">{totalItems || 0}</div>
-              </div>
+              {countNoti() > 0 ? (
+                <div className="noti">
+                  <div className="count">{countNoti() || 0}</div>
+                </div>
+              ) : null}
             </a>
             <div className="dropdown-menu">
               <div className="info align-items-center">
                 <div className="header">
                   <div className="title">Thông báo</div>
                 </div>
-                <div className="content">
-                  <div
-                    className="d-flex item"
-                    style={{ background: "rgb(242, 249, 255)" }}
-                  >
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                        Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="sub-title">
-                        Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div className="d-flex item">
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                    Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="sub-title">
-                      Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div
-                    className="d-flex item"
-                    style={{ background: "rgb(242, 249, 255)" }}
-                  >
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                    Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="sub-title">
-                      Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div className="d-flex item">
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                    Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="sub-title">
-                      Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div
-                    className="d-flex item"
-                    style={{ background: "rgb(242, 249, 255)" }}
-                  >
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                    Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="sub-title">
-                      Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div className="d-flex item">
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                    Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="sub-title">
-                        pThông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div
-                    className="d-flex item"
-                    style={{ background: "rgb(242, 249, 255)" }}
-                  >
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                    Thông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="sub-title">
-                        pThông báo thông báo thông báo thông báo thông báo thông báo thông báo
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div className="d-flex item">
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                    <div className="title">
-                        Thông báo thông báo thông báoaaaaaaaaaaaaaaa
-                        dsadasdasdasdasdsadsa
-                      </div>
-                      <div className="sub-title">
-                        phiếu đang đang sửa rồi nhé ádsadasdasdsadasdW
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
-                  <div
-                    className="d-flex item"
-                    style={{ background: "rgb(242, 249, 255)" }}
-                  >
-                    <div className="icon">
-                      <Icons.IconNews />
-                    </div>
-                    <div className="content-noti">
-                      <div className="title">
-                        Thông báo thông báo thông báoaaaaaaaaaaaaaaa
-                        dsadasdasdasdasdsadsa
-                      </div>
-                      <div className="sub-title">
-                        phiếu đang đang sửa rồi nhé ádsadasdasdsadasdW
-                      </div>
-                      <div className="date">21/03/2021</div>
-                    </div>
-                  </div>
+                <div
+                  className="content"
+                  onScroll={(e) => {
+                    e.persist();
+                    e.stopPropagation();
+                    debounceScroll(e);
+                  }}
+                >
+                  {messages &&
+                    messages.length &&
+                    messages.map((message) => {
+                      return (
+                        <div
+                          className="d-flex item"
+                          style={{ background: "rgb(242, 249, 255)" }}
+                          key={message.id}
+                        >
+                          <div className="icon">
+                            <Icons.IconNews />
+                          </div>
+                          <div
+                            className="content-noti"
+                            onClick={() => onReadMessage(message)}
+                          >
+                            <div
+                              className="title"
+                              style={!message.unRead ? { fontWeight: 400 } : {}}
+                            >
+                              {message.title || ""}
+                            </div>
+                            <div className="sub-title">
+                              {message.content || ""}
+                            </div>
+                            <div
+                              className="remove"
+                              onMouseDown={(e) => onRemoveMessage(message.id, e)}
+                            >
+                              <span>x</span>
+                            </div>
+                            <div className="date">
+                              {convertSecondToDateV1(message.createdDate)}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>
@@ -502,9 +440,7 @@ function TopBar(props) {
 }
 
 const mapStateToProps = (state) => {
-  const {
-    notification,
-  } = state;
+  const { notification } = state;
   return {
     notification,
   };
@@ -512,5 +448,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   changeShowFeedBack: (show) => dispatch(changeShowFeedBack(show)),
+  onGetMessages: (page) => dispatch(getMessages(5, page)),
+  onMarkRead: (id) => dispatch(markRead(id)),
+  onRemoveMessage: (id) => dispatch(removeMessage(id)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TopBar));

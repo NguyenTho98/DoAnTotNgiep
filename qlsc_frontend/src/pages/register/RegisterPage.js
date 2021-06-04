@@ -27,9 +27,8 @@ function RegisterPage() {
     const url = API_USER + "/tenant";
     callApi(url, options)
       .then((res) => {
-        console.log(res);
         if (res && res.status === 200) {
-          console.log(res);
+          //
         }
       })
       .catch((err) => {

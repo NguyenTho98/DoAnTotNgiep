@@ -8,4 +8,6 @@ public interface MessageService {
 
     boolean readMessage(int id) ;
 
+    boolean removeMessage(int id) ;
+
 }

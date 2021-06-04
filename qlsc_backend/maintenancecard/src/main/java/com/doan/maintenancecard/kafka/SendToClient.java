@@ -14,7 +14,7 @@ public class SendToClient {
 
     private final ObjectMapper json;
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private static final String TOPIC_USER = "dk3w4sws-user";
+    private static final String TOPIC_MESSAGE = "dk3w4sws-message";
 
     public void sendNotificationToClient(MaintenanceCard maintenanceCard, int type, String email) {
         MessageModel messageModel = new MessageModel();
@@ -25,7 +25,7 @@ public class SendToClient {
         messageModel.setType(type);
         try {
             String message = json.writeValueAsString(messageModel);
-            kafkaTemplate.send(TOPIC_USER, String.valueOf(maintenanceCard.getId()), message);
+            kafkaTemplate.send(TOPIC_MESSAGE, String.valueOf(maintenanceCard.getId()), message);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

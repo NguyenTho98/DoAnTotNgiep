@@ -30,21 +30,32 @@ public class MessageServiceImpl implements MessageService {
         List<MessageDTO> messageDTOS = new ArrayList<>();
         List<Message> messages = pageMessages.getContent();
         messages.forEach(message -> messageDTOS.add(messageConverter.convertToDTO(message)));
+        int countMessage = messageRepository.countMessages(Long.parseLong(userId));
         HashMap<String, Object> map = new HashMap<>();
         map.put("messages", messageDTOS);
         map.put("currentPage", pageMessages.getNumber() + 1);
-        map.put("totalItems", pageMessages.getTotalElements());
+        map.put("totalItems", countMessage);
         map.put("totalPages", pageMessages.getTotalPages());
         return map;
     }
 
     @Override
     public boolean readMessage(int id) {
+        return update(id, false, true);
+    }
+
+    @Override
+    public boolean removeMessage(int id) {
+        return update(id, true,false);
+    }
+
+    private boolean update(int id, boolean remove, boolean unRead) {
         try {
             Optional<Message> message = messageRepository.findById(Long.parseLong(String.valueOf(id)));
             if (message.isPresent()) {
                 Message newMessage = message.get();
-                newMessage.setStatus((byte) 0);
+                if (remove) newMessage.setStatus((byte) 0);
+                if (unRead) newMessage.setUnRead((byte) 0);
                 messageRepository.save(newMessage);
             }
             return Boolean.TRUE;

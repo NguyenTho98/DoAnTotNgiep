@@ -11,7 +11,6 @@ import TimelineDot from "@material-ui/lab/TimelineDot";
 import { formatDate } from 'utils/datetimeUtil';
 function HistoryAction(props) {
   const { maintenanceCardDetailStatusHistories } = props;
-  console.log('check maintenanceCardDetailStatusHistories', maintenanceCardDetailStatusHistories);
   const showStatusHistory = () => {
     let result = [];
     if (maintenanceCardDetailStatusHistories !== undefined) {
@@ -21,7 +20,6 @@ function HistoryAction(props) {
         result = maintenanceCardDetailStatusHistories1.map((maintenanceCardDetailStatusHistory, index) => {
             let title = "";
             let color = ""
-            console.log('maintenanceCardDetailStatusHistory', maintenanceCardDetailStatusHistory);
             if (maintenanceCardDetailStatusHistory.status === 0) {
                 title = "Thêm mới dịch vụ"
                 color = "orange"

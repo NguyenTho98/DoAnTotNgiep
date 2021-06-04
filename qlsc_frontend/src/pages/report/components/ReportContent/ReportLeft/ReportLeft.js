@@ -14,7 +14,6 @@ function ReportLeft(props) {
   }, [data]);
 
   const isLoading = false;
-  console.log('dataState', dataState);
   return (
     <div className="report-revenue-component report-border ">
       <div className="report-title">Doanh thu cửa hàng</div>

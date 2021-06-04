@@ -23,7 +23,10 @@ public class Message extends BaseEntity {
     @Column(name = "status")
     private byte status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "un_read")
+    private byte unRead;
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 }

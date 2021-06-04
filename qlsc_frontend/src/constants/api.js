@@ -9,7 +9,8 @@ export const API_IMAGE = `${API_GATEWAY}/image/admin`;
 export const API_MAINTENANCECARD = `${API_GATEWAY}/maintenancecard/admin`;
 export const API_REPORT_V2 = `${API_GATEWAY}/maintenancecard/report_v2`;
 export const SOCKET_URL = `${API_GATEWAY}/maintenancecard/notification`;
-export const SOCKET_URL_V2 = `http://localhost:8086/notification`;
+// export const SOCKET_URL_V2 = `http://localhost:8086/notification`;
+export const SOCKET_URL_V2 = `http://localhost:8085/notification`;
 
 export const STATUS_CODE = {
     SUCCESS: 200,

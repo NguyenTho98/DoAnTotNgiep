@@ -8,7 +8,6 @@ function OrderItemSearch(props) {
   const { item, onClick } = props;
 
   const onChooseProduct = () => {
-    console.log('check item', item);
     if (item.type === 1&& !item.quantity) {
       toastError("Linh kiện hiện đang không còn")
     } else {

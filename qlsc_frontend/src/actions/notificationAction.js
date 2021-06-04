@@ -1,21 +1,61 @@
 import { API_USER } from "constants/api";
 import { fetch } from "utils/fetchMiddleware";
 
-export const getMessages = (size = 10, page = 1) => (dispatch) => {
+export const getMessages =
+  (size = 5, page = 1) =>
+  (dispatch) => {
+    return dispatch(
+      fetch(`${API_USER}/messages?size=${size}&page=${page}`, {
+        method: "GET",
+      })
+    )
+      .then((json) => {
+        if (json) {
+          const { messages, currentPage, totalItems, totalPages } = json;
+          dispatch({
+            type: "RECEIVE_MESSAGES",
+            messages,
+            currentPage,
+            totalItems,
+            totalPages,
+          });
+        }
+      })
+      .catch((e) => {
+        console.log("e", e);
+      });
+  };
+
+export const markRead = (id) => (dispatch) => {
   return dispatch(
-    fetch(`${API_USER}/messages?size=${size}&page=${page}`, {
-      method: "GET",
+    fetch(`${API_USER}/messages/${id}`, {
+      method: "PUT",
     })
   )
     .then((json) => {
-      if (json) {
-        const { messages, currentPage, totalItems, totalPages } = json;
+      if (json && json.success) {
         dispatch({
-          type: 'RECEIVE_MESSAGES',
-          messages,
-          currentPage,
-          totalItems,
-          totalPages,
+          type: "MARK_READ_MESSAGE",
+          id,
+        });
+      }
+    })
+    .catch((e) => {
+      console.log("e", e);
+    });
+};
+
+export const removeMessage = (id) => (dispatch) => {
+  return dispatch(
+    fetch(`${API_USER}/messages/${id}`, {
+      method: "DELETE",
+    })
+  )
+    .then((json) => {
+      if (json && json.success) {
+        dispatch({
+          type: "REMOVE_MESSAGE",
+          id,
         });
       }
     })
@@ -25,7 +65,7 @@ export const getMessages = (size = 10, page = 1) => (dispatch) => {
 };
 
 export const notificationMaintenanceCard = (notification, user) => ({
-  type: "LIVE_NOTIFICATION",
+  type: "LIVE_NOTIFICATION_MESSAGE",
   notification,
   user,
 });

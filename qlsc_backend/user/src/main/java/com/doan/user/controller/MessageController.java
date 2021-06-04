@@ -31,4 +31,10 @@ public class MessageController {
         boolean success = messageService.readMessage(id);
         return new UserResponse(success);
     }
+
+    @DeleteMapping("messages/{id}")
+    public UserResponse removeMessage(@PathVariable int id) {
+        boolean success = messageService.removeMessage(id);
+        return new UserResponse(success);
+    }
 }

@@ -41,7 +41,6 @@ class ExportMaintenanceCard extends React.Component {
   render() {
     const date = new Date();
     const { mainCard } = this.props;
-    console.log("check mainCard", mainCard);
     return (
       <div className="export-maintenance-card">
         <h1 className="herder">Hóa đơn sửa chữa</h1>

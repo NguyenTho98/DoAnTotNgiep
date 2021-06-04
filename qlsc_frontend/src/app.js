@@ -24,6 +24,7 @@ import storage from "./utils/storage";
 import history from './utils/history';
 import FeedBack from "./components/topBar/feedback/FeedBack";
 import RegisterPage from "./pages/register/RegisterPage";
+import { addMainCardSocket } from "./pages/maintenancecard/actions/mainCard";
 
 function App(props) {
   const { onCheckInfoUser, onNotificationMaintenanceCard, user } = props;
@@ -50,7 +51,9 @@ function App(props) {
   }
 
   const onMessageReceived = (msg) => {
+    console.log("arr", msg);
     onNotificationMaintenanceCard(msg, user);
+    props.addMainCardSocket(msg.maintenanceCard)
   }
 
   const onDisconnect = () => {
@@ -108,6 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
   onCheckInfoUser: (token) => dispatch(checkInfoUser(token)),
   onGetCity: () => dispatch(getCity()),
   getStaffsByRepairman: () => dispatch(getStaffsByRepairman()),
+  addMainCardSocket: (item) => dispatch(addMainCardSocket(item)),
   onNotificationMaintenanceCard: (notification, user) => dispatch(notificationMaintenanceCard(notification, user)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

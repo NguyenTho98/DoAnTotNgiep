@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Receiver {
 
-    private final SimpMessagingTemplate template;
+//    private final SimpMessagingTemplate template;
     private final ObjectMapper json;
 
 //    @KafkaListener(topics = "${cloudkarafka.topic}", groupId = "repair-manager")

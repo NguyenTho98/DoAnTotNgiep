@@ -92,7 +92,9 @@ function Search(props) {
   const renderSearch = () => {
     return (
       <div className="position-absolute product-list-search-wrapper">
-        <div
+        {
+         props.user && props.user.role === 3 ? (
+            <div
           onMouseDown={(e) => {
             e.persist();
             e.stopPropagation();
@@ -108,6 +110,8 @@ function Search(props) {
             Thêm mới dịch vụ - linh kiện
           </div>
         </div>
+          ) : ''
+        }
         <div
           className="list-item-search"
           onScroll={(e) => {
@@ -147,10 +151,11 @@ function Search(props) {
 
 const mapStateToProps = (state) => {
   const {
-    mainCard: { validate },
+    mainCard: { validate }, auth: { user }
   } = state;
   return {
     validate,
+    user,
   };
 };
 

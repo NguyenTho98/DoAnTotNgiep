@@ -29,7 +29,7 @@ public class MessageServiceImpl implements MessageService {
         Page<Message> pageMessages = messageRepository.getMessagesByUserId(paging, Long.parseLong(userId));
         List<MessageDTO> messageDTOS = new ArrayList<>();
         List<Message> messages = pageMessages.getContent();
-        messages.forEach(message -> messageDTOS.add(messageConverter.convertToDTO(message)));
+        messages.forEach(message -> messageDTOS.add(messageConverter.convertToMessageDTO(message)));
         int countMessage = messageRepository.countMessages(Long.parseLong(userId));
         HashMap<String, Object> map = new HashMap<>();
         map.put("messages", messageDTOS);

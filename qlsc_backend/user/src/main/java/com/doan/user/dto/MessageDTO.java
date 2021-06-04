@@ -1,5 +1,6 @@
 package com.doan.user.dto;
 
+import com.doan.user.entity.MaintenanceCard;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ public class MessageDTO extends BaseDTO {
     private String url;
     private byte status;
     private byte unRead;
+    private MaintenanceCardsModel maintenanceCard;
     private UserDTO user;
 
 }

@@ -23,12 +23,24 @@ export default (state = initState, action) => {
         ...state,
         mainCard: action.mainCard,
       };
-    // case actionTypes.UPDATE_MAIN_CARD: {
-    //   return {
-    //     ...state,
-    //     listOrderCollation: action.list,
-    //   };
-    // }
+    case actionTypes.ADD_MAIN_CARD_SOCKET: {
+      const arr = [...state.mainCardList];
+      if(arr.length === 0) {
+        arr.unshift(action.item)
+        return {
+          ...state,
+          mainCardList: arr,
+        };
+      }
+      const tmp = arr.find((i)=>i.id === action.item.id)
+      if(!tmp){
+        arr.unshift(action.item)
+        return {
+          ...state,
+          mainCardList: arr,
+        };
+      }
+    }
     // case actionTypes.ADD_ITEM_MAIN_CARD: {
     //   return {
     //     ...state,

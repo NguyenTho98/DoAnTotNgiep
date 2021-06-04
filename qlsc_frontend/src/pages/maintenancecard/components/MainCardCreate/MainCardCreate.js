@@ -215,11 +215,12 @@ function MainCardCreate(props) {
     //   toastError("Vui lòng nhập đầy đủ thông tin!");
     //   return;
     // }
+    mainCard.customer = customer;
     if (!mainCard.customer.id) {
       toastError("Vui lòng nhập thông tin khách hàng!");
       return;
     }
-    if (mainCard.maintenanceCardDetails.length > 0) {
+    if (mainCard.maintenanceCardDetails.length === 0) {
       toastError("Vui lòng nhập thông tin sản phẩm!");
       return;
     }

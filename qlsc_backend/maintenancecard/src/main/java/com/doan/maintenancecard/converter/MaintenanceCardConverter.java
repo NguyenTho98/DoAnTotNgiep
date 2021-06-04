@@ -13,6 +13,7 @@ import com.doan.maintenancecard.entity.MaintenanceCardDetail;
 import com.doan.maintenancecard.entity.MaintenanceCardDetailStatusHistory;
 import com.doan.maintenancecard.entity.PaymentHistory;
 import com.doan.maintenancecard.entity.PaymentMethod;
+import com.doan.maintenancecard.model.MaintenanceCardsModel;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

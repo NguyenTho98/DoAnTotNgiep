@@ -2,6 +2,7 @@ package com.doan.user.kafka;
 
 import com.doan.user.converter.MessageConverter;
 import com.doan.user.dto.MessageDTO;
+import com.doan.user.entity.MaintenanceCard;
 import com.doan.user.entity.Message;
 import com.doan.user.entity.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,6 +39,8 @@ public class MessageConsumer {
     public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         try {
             var messageModel = new ObjectMapper().readValue(message, MessageModel.class);
+            var aaa = new ObjectMapper().readValue(messageModel.getMaintenanceCard(),
+                MaintenanceCard.class);
             if (messageModel.getType() == 2) {
                 List<User> users = userRepository.getAllManager();
                 if (users.isEmpty()) return;
@@ -45,7 +48,8 @@ public class MessageConsumer {
                     if (!user.getEmail().equals(messageModel.getAuthor())) {
                         String title = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đang chờ thanh toán";
                         String content = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đã hoàn thành sửa chữa và đang chờ thanh toán";
-                        Message newMessage = setMessage(key, user, title, content);
+                        MessageTmp newMessage = setMessage(key, user, title, content,
+                            aaa);
                         sendToClient(newMessage);
                     }
                 });
@@ -56,14 +60,14 @@ public class MessageConsumer {
                 if (ObjectUtils.isEmpty(user)) return;
                 String title = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đã được tạo mới";
                 String content = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đã được tạo mới. Hãy bắt đầu tiến hành sửa chữa";
-                Message newMessage = setMessage(key, user, title, content);
+                MessageTmp newMessage = setMessage(key, user, title, content, aaa);
                 sendToClient(newMessage);
             } else if (messageModel.getType() == 3) {
                 User coordinator = userRepository.checkExistEmail(messageModel.getCoordinatorEmail());
                 if (ObjectUtils.isEmpty(coordinator)) return;
                 String title = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " vừa được cập nhật";
                 String content = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " vừa được cập nhật";
-                Message newMessage = setMessage(key, coordinator, title, content);
+                MessageTmp newMessage = setMessage(key, coordinator, title, content, aaa);
                 sendToClient(newMessage);
             }
         } catch (Exception e) {
@@ -72,7 +76,7 @@ public class MessageConsumer {
 
     }
 
-    private void sendToClient(Message message) {
+    private void sendToClient(MessageTmp message) {
         try {
             MessageDTO messageDTO = messageConverter.convertToDTO(message);
             template.convertAndSend("/topic/message", json.writeValueAsString(messageDTO));
@@ -81,8 +85,10 @@ public class MessageConsumer {
         }
     }
 
-    private Message setMessage(String key, User user, String title, String content) {
+    private MessageTmp setMessage(String key, User user, String title, String content,
+        MaintenanceCard maintenanceCard) {
         var newMessage = new Message();
+        var newMessageTmp = new MessageTmp();
         newMessage.setStatus((byte) 1);
         newMessage.setUrl("/maintenance-card/detail/" + key);
         newMessage.setTitle(title);
@@ -91,7 +97,18 @@ public class MessageConsumer {
         newMessage.setUnRead((byte) 1);
         newMessage.setCreatedDate(new Date());
         newMessage.setModifiedDate(new Date());
-        return messageRepository.save(newMessage);
+        messageRepository.save(newMessage);
+
+        newMessageTmp.setMaintenanceCard(messageConverter.getMaintenanceCardsModel(maintenanceCard));
+        newMessageTmp.setStatus((byte) 1);
+        newMessageTmp.setUrl("/maintenance-card/detail/" + key);
+        newMessageTmp.setTitle(title);
+        newMessageTmp.setContent(content);
+        newMessageTmp.setUser(user);
+        newMessageTmp.setUnRead((byte) 1);
+        newMessageTmp.setCreatedDate(new Date());
+        newMessageTmp.setModifiedDate(new Date());
+        return newMessageTmp;
     }
 
 }

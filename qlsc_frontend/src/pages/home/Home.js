@@ -6,7 +6,7 @@ import home2 from "images/Home2.png";
 import home3 from "images/home3.png";
 import home4 from "images/home4.png";
 import home5 from "images/home5.png";
-import Guard from 'components/Guard/Guard';
+import Guard from "components/Guard/Guard";
 import { connect } from "react-redux";
 import { getDataForReport } from "../report/actions/reportAction";
 import ReportLeft from "./ReportLeft/ReportLeft";
@@ -14,6 +14,7 @@ import { moneyFormat } from "../../utils/moneyFormat";
 import moment from "moment";
 import { useHistory } from "react-router";
 import pushstate from "../../utils/pushstate";
+import ChartEmpty from "../report/components/ReportContent/components/ChartEmpty";
 var randomColor = require("randomcolor"); // import the script
 const listAction = [
   {
@@ -120,7 +121,6 @@ function Home(props) {
     });
   };
 
-
   const getMoney = () => {
     const businessToday = data.businessToday;
     if (businessToday) {
@@ -220,8 +220,7 @@ function Home(props) {
                   <div className="card content-04-left">
                     <div className="header">Top linh kiện</div>
                     <div className="content">
-                      {data.topAccessories &&
-                        data.topAccessories.length &&
+                      {data.topAccessories && data.topAccessories.length ? (
                         data.topAccessories.map((item, index) => {
                           return (
                             <div className="d-flex item" key={index}>
@@ -248,14 +247,18 @@ function Home(props) {
                               </div>
                             </div>
                           );
-                        })}
+                        })
+                      ) : (
+                        <div className="no-data">
+                          <ChartEmpty text="Không đủ dữ liệu để hiển thị" />
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="card content-04-right">
                     <div className="header">Nhân viên nổi bật</div>
                     <div className="content">
-                      {data.topStaffs &&
-                        data.topStaffs.length &&
+                      {data.topStaffs && data.topStaffs.length ? (
                         data.topStaffs.map((item, index) => {
                           return (
                             <div className="d-flex item" key={index}>
@@ -283,7 +286,12 @@ function Home(props) {
                               )}
                             </div>
                           );
-                        })}
+                        })
+                      ) : (
+                        <div className="no-data">
+                          <ChartEmpty text="Không đủ dữ liệu để hiển thị" />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -294,8 +302,8 @@ function Home(props) {
                 <div className="card content-01">
                   <div className="header">
                     <div className="title">
-                      Chào mừng {user.name || 'Bạn'}, bắt đầu sử dụng phần mềm Kiomo
-                      ngay nào!
+                      Chào mừng {user.name || "Bạn"}, bắt đầu sử dụng phần mềm
+                      Kiomo ngay nào!
                     </div>
                     <div className="sub-title">
                       Hãy dành ít phút thực hiện các bước sau đây để làm quen
@@ -312,7 +320,10 @@ function Home(props) {
                           <div className="icon">{item.icon}</div>
                           <div className="title">{item.title}</div>
                           <div className="sub-title">{item.subtitle}</div>
-                          <div className="d-flex dlv-button-save" onClick={()=>pushstate(history,item.link)}>
+                          <div
+                            className="d-flex dlv-button-save"
+                            onClick={() => pushstate(history, item.link)}
+                          >
                             <div className="icon-button">
                               <svg
                                 width="14"
@@ -427,11 +438,13 @@ function Home(props) {
   );
 }
 const mapStateToProps = (state, ownProps) => {
-  const { auth : { user }} = state;
+  const {
+    auth: { user },
+  } = state;
   return {
-    user
-  }
-}
+    user,
+  };
+};
 const mapDispatchToProps = (dispatch) => ({
   onGetDataForReport: (from, to) => dispatch(getDataForReport(from, to)),
 });

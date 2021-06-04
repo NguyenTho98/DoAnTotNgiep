@@ -244,3 +244,8 @@ export const maintenanceCardIsValid = (status) => ({
 export const clearValid = () => ({
   type: "CLEAR-VALID",
 });
+
+export const addMainCardSocket = (item) => ({
+  type: actionTypes.ADD_MAIN_CARD_SOCKET,
+  item
+});

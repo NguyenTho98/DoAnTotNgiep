@@ -401,7 +401,11 @@ function TopBar(props) {
                           key={message.id}
                         >
                           <div className="icon">
-                            <Icons.IconNews />
+                            {!message.unRead ? (
+                              <Icons.IconNewsV2 />
+                            ) : (
+                              <Icons.IconNews />
+                            )}
                           </div>
                           <div
                             className="content-noti"
@@ -418,7 +422,9 @@ function TopBar(props) {
                             </div>
                             <div
                               className="remove"
-                              onMouseDown={(e) => onRemoveMessage(message.id, e)}
+                              onMouseDown={(e) =>
+                                onRemoveMessage(message.id, e)
+                              }
                             >
                               <span>x</span>
                             </div>

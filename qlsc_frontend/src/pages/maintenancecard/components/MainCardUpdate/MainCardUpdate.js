@@ -322,8 +322,8 @@ function MainCardUpdate(props) {
         finish={finish}
       />
       <div className="contatiner">
-        <div className="row">
-          <div className="col-md-8">
+        <div className="d-flex content-main-card-update">
+          <div className="content-left">
             <InfoCustomer
               showFilterCustomer={showFilterCustomer}
               setShowFilterCustomer={setShowFilterCustomer}
@@ -348,7 +348,7 @@ function MainCardUpdate(props) {
               mainCard={mainCard}
             />
           </div>
-          <div className="col-md-4">
+          <div className="content-right">
             <InfoMainCard
               onChangeMainCard={(type, value) => onChangeMainCard(type, value)}
               onChangeMainCardReairMan={(type, value) =>

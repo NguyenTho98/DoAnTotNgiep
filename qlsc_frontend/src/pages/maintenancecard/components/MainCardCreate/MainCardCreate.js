@@ -301,8 +301,8 @@ function MainCardCreate(props) {
     <div className="main-card-create-warpper">
       <TitleAndAction saveMaintenanceCard={saveMaintenanceCard} />
       <div className="contatiner">
-        <div className="row">
-          <div className="col-md-9">
+        <div className="d-flex content-main-card-create">
+          <div className="content-left">
             <InfoCustomer
               showFilterCustomer={showFilterCustomer}
               setShowFilterCustomer={setShowFilterCustomer}
@@ -319,7 +319,7 @@ function MainCardCreate(props) {
               saveMaintenanceCard={saveMaintenanceCard}
             />
           </div>
-          <div className="col-md-3">
+          <div className="content-right">
             <InfoMainCard
               onChangeMainCard={(type, value) => onChangeMainCard(type, value)}
               onChangeMainCardReairMan={(type, value) =>

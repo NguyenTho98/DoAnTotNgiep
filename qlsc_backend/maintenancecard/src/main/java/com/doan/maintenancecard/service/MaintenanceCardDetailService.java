@@ -9,4 +9,5 @@ public interface MaintenanceCardDetailService {
 
     MaintenanceCardDTO updateStatusMaintenanceCardDetail(Long id, String email) throws NotFoundException, NotFoundRepairmanException, JsonProcessingException;
 
+    MaintenanceCardDTO updateGuaranteeMaintenanceCardDetail(Long id, String email);
 }

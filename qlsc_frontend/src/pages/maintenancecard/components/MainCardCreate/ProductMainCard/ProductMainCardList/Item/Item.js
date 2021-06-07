@@ -40,6 +40,9 @@ function Item(props) {
       <div className="d-flex justify-content-start track-code">
       {moneyFormat(product.price)} đ
       </div>
+      <div className="d-flex justify-content-start track-code">
+      {product.price}
+      </div>
       <div className="d-flex justify-content-center item-status-main-card">
       {
         listStatus.map((item)=>{

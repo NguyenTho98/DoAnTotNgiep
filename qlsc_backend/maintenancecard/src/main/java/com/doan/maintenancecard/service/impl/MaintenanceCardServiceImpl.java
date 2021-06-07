@@ -28,12 +28,12 @@ import com.doan.maintenancecard.service.MaintenanceCardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -197,7 +197,6 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
             if (mainCardDetailUpdate == null) {
                 maintenanceCardDetail.setCreatedDate(new Date());
                 maintenanceCardDetail.setMaintenanceCard(maintenanceCard);
-
                 //nếu là linh kiện thì bắn kafka để giảm số lượng
                 if (maintenanceCardDetail.getProductId() != 0 && maintenanceCardDetail.getProductType() == 1) {
                     ProductModel productModel = new ProductModel();
@@ -226,6 +225,7 @@ public class MaintenanceCardServiceImpl implements MaintenanceCardService {
                 maintenanceCardDetail.setCreatedDate(mainCardDetailUpdate.getCreatedDate());
                 maintenanceCardDetail.setMaintenanceCard(maintenanceCard);
                 maintenanceCardDetail.setStatus(mainCardDetailUpdate.getStatus());
+                maintenanceCardDetail.setIsGuarantee(mainCardDetailUpdate.getIsGuarantee());
                 // so luong con lai = so luong trong kho - chenh lech giua phieu sua chua truoc va sau
                 if (maintenanceCardDetail.getProductId() != 0 && maintenanceCardDetail.getProductType() == 1
                 && maintenanceCardDetail.getQuantity() - mainCardDetailUpdate.getQuantity() != 0) {

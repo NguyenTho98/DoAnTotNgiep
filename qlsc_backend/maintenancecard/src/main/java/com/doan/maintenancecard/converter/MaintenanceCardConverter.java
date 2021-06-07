@@ -105,6 +105,7 @@ public class MaintenanceCardConverter {
                 maintenanceCardDetail.setProductUnit(productDTO.getUnit());
                 maintenanceCardDetail.setQuantity(maintenanceCardDetailDTO.getQuantity());
                 maintenanceCardDetail.setId(maintenanceCardDetailDTO.getId());
+                maintenanceCardDetail.setIsGuarantee(productDTO.getIsGuarantee());
                 maintenanceCardDetail.setProductPricePerUnit(productDTO.getPricePerUnit());
                 maintenanceCardDetails.add(maintenanceCardDetail);
             });

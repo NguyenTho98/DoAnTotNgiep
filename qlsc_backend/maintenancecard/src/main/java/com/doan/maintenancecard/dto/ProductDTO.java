@@ -2,6 +2,7 @@ package com.doan.maintenancecard.dto;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class ProductDTO extends BaseDTO {
     private int quantity;
     private String unit;
     private BigDecimal pricePerUnit;
+    private byte isGuarantee;
     private byte type;
 
 }

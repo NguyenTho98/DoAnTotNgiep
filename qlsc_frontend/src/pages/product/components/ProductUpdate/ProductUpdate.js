@@ -21,6 +21,7 @@ const initialState = {
   unit: null,
   pricePerUnit: null,
   description: null,
+  guarantee: null,
   images: [],
   type: null,
 };

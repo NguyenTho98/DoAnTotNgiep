@@ -21,7 +21,10 @@ function Item(props) {
 
   return (
     <div className="product-item-wrapper">
-      <div className="d-flex product-listing-item" onClick={(e) => onRedirectDetail(e)}>
+      <div
+        className="d-flex product-listing-item"
+        onClick={(e) => onRedirectDetail(e)}
+      >
         <div
           role="presentation"
           className="checkbox header-checkbox"
@@ -37,7 +40,7 @@ function Item(props) {
               data-tip
               data-for={`order_collation_number_id_${productService.id}`}
               target="_blank"
-              style={{ textDecoration: "none", color: '#007bff' }}
+              style={{ textDecoration: "none", color: "#007bff" }}
             >
               {productService.code.toUpperCase()}
               <ReactTooltip
@@ -70,6 +73,9 @@ function Item(props) {
         </div>
         <div className="margin-right20 item-list delivery-collation-code">
           {productService.unit}
+        </div>
+        <div className="margin-right20 item-list delivery-collation-code">
+          {productService.guarantee || '---'}
         </div>
         <div className="margin-right20 item-list order-collations-total-amount">
           {moneyFormat(productService.pricePerUnit)} đ

@@ -6,7 +6,7 @@
   flex-wrap: wrap;
 
   &:hover {
-    background: rgba(230,243,255,.7) !important;
+    background: rgba(230, 243, 255, .7) !important;
     cursor: pointer;
   }
 
@@ -19,13 +19,12 @@
   }
 
   .header-checkbox {
-    // margin-top: -4px;
     margin-left: 35px;
     padding-bottom: 0px !important;
   }
 
   .item-list {
-    width: calc((100% - 260px) / 6);
+    width: calc((100% - 260px) / 7);
   }
 
   .order-collations-total-amount {

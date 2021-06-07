@@ -39,6 +39,10 @@ public class Product extends BaseEntity {
     @Column(name = "status", nullable = false)
     private byte status;
 
+    // thời gian bảo hành
+    @Column(name = "guarantee")
+    private String guarantee;
+
     //type = 1 : product
     //type = 2 : service
     @Column(name = "type")

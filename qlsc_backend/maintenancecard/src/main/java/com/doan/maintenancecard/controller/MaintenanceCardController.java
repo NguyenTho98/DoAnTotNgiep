@@ -112,6 +112,17 @@ public class MaintenanceCardController {
     }
 
     // Cập nhật trạng thái phiếu
+    // Một phiếu
+    // Kiem tra quyen : NV quan ly
+    @PutMapping("maintenanceCards/guarantee/{id}")
+    public ResponseEntity<MaintenanceCardDTO> updateGuaranteeStatusMaintenanceCard(@PathVariable Long id) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        MaintenanceCardDTO maintenanceCardDTO = maintenanceCardDetailService.updateGuaranteeMaintenanceCardDetail(id, authentication.getName());
+        return new ResponseEntity<>(maintenanceCardDTO, HttpStatus.OK);
+    }
+
+    // Cập nhật trạng thái phiếu
     // Nhiều phiếu
     // Kiem tra quyen : NV sua chua
     @PutMapping(path = "maintenanceCards/workStatus", consumes = MediaType.ALL_VALUE)

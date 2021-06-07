@@ -103,6 +103,9 @@ function Header(props) {
           <div className="margin-right20 header-item order-collations-channel-code">
             Đơn vị
           </div>
+          <div className="margin-right20 header-item order-collations-channel-guarantee">
+            Thời gian BH
+          </div>
           <div className="margin-right20 header-item order-collations-total-amount">
             Giá mỗi đơn vị
           </div>

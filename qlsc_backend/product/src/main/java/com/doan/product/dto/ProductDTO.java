@@ -18,6 +18,7 @@ public class ProductDTO extends BaseDTO {
     private BigDecimal pricePerUnit;
     private String description;
     private byte status;
+    private String guarantee;
     private byte type;
 
 }

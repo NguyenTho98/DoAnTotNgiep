@@ -147,7 +147,7 @@ function Accessories(props) {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="field form-group">
                     <span style={{ color: "red", marginRight: "4px" }}>*</span>
                     <label className="control-label">Số lượng</label>
@@ -170,7 +170,7 @@ function Accessories(props) {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="field form-group">
                     <span style={{ color: "red", marginRight: "4px" }}>*</span>
                     <label className="control-label">Đơn vị</label>
@@ -189,7 +189,7 @@ function Accessories(props) {
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="field form-group">
                     <label className="control-label">Mã linh kiện</label>
                     <div className="controls">
@@ -201,6 +201,22 @@ function Accessories(props) {
                         value={product.code || ""}
                         onChange={(e) => onchangeValue("code", e.target.value)}
                         placeholder="Nhập mã linh kiện"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-3">
+                  <div className="field form-group">
+                    <label className="control-label">Thời gian bảo hành</label>
+                    <div className="controls">
+                      <input
+                        className="input"
+                        data-tip=""
+                        data-for="_extends_popup_error"
+                        name="guarantee"
+                        value={product.guarantee || ""}
+                        onChange={(e) => onchangeValue("guarantee", e.target.value)}
+                        placeholder="Nhập thời gian bảo hành"
                       />
                     </div>
                   </div>

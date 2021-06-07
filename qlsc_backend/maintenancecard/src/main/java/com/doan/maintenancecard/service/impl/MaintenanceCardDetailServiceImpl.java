@@ -13,6 +13,7 @@ import com.doan.maintenancecard.repository.MaintenanceCardDetailRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.doan.maintenancecard.service.MaintenanceCardDetailService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -90,5 +91,19 @@ public class MaintenanceCardDetailServiceImpl implements MaintenanceCardDetailSe
         } else {
             throw new NotFoundRepairmanException("Không tìm thấy nhân viên");
         }
+    }
+
+    @Override
+    public MaintenanceCardDTO updateGuaranteeMaintenanceCardDetail(Long id, String email) {
+        // kiểm tra chi tiết phiếu có tồn tại hay không
+        MaintenanceCardDetail maintenanceCardDetail = maintenanceCardDetailRepository.findById(id).orElse(null);
+        if (ObjectUtils.isEmpty(maintenanceCardDetail)) {
+            return new MaintenanceCardDTO();
+        }
+        maintenanceCardDetail.setIsGuarantee(maintenanceCardDetail.getIsGuarantee() == 0 ? (byte) 1 : (byte) 0);
+        MaintenanceCardDetail mCDetail = maintenanceCardDetailRepository.save(maintenanceCardDetail);
+        MaintenanceCard newMaintenanceCard = mCDetail.getMaintenanceCard();
+        return maintenanceCardConverter.convertAllToDTO(newMaintenanceCard);
+
     }
 }

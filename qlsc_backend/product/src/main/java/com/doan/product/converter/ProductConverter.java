@@ -20,6 +20,7 @@ public class ProductConverter {
         productDTO.setCreatedDate(product.getCreatedDate());
         productDTO.setModifiedDate(product.getModifiedDate());
         productDTO.setStatus(product.getStatus());
+        productDTO.setGuarantee(product.getGuarantee());
         productDTO.setType(product.getType());
         return productDTO;
     }

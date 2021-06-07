@@ -50,6 +50,9 @@ public class MaintenanceCardDetail extends BaseEntity {
     @Column(name = "is_delete")
     private byte isDelete;
 
+    @Column(name = "is_guarantee")
+    private byte isGuarantee;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "maintenanceCardDetail", fetch = FetchType.LAZY)
     private List<MaintenanceCardDetailStatusHistory> maintenanceCardDetailStatusHistories;
 

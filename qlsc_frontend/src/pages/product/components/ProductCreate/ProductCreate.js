@@ -4,7 +4,6 @@ import TitleAndAction from "./TitleAndAction/TitleAndAction";
 import "./styles.scss";
 import Accessories from "./Accessories/Accessories";
 import Service from "./Service/Service";
-import InfoProductFooter from "./InfoProductFooter/InfoProductFooter";
 import { upLoadImage, saveProductService } from "../../actions/ProductAction";
 import pushstate from "utils/pushstate";
 import { toastError } from "../../../../utils/toast";
@@ -17,6 +16,7 @@ const initialState = {
   pricePerUnit: null,
   description: null,
   images: [],
+  guarantee: null,
   type: 1,
 };
 function ProductCreate(props) {

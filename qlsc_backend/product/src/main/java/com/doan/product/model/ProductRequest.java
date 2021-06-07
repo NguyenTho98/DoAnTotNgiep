@@ -16,5 +16,6 @@ public class ProductRequest {
     private String code;
     private String description;
     private Byte type;
+    private String guarantee;
     private byte status;
 }

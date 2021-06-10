@@ -107,12 +107,11 @@ function MainCardUpdate(props) {
 
   useEffect(() => {
     if (id) onGetDataFromId(id);
-  }, [id])
+  }, [id]);
 
   useEffect(() => {
-    if (mainCard && mainCard.payStatus === 1
-      && mainCard.workStatus === 2) {
-        setFinish(true);
+    if (mainCard && mainCard.payStatus === 1 && mainCard.workStatus === 2) {
+      setFinish(true);
     }
   }, [mainCard]);
 
@@ -122,7 +121,7 @@ function MainCardUpdate(props) {
       setMoney(json.price);
       setCustomer(json.customer);
     });
-  }
+  };
 
   //product
   const onchangeProduct = (type, value) => {
@@ -156,7 +155,8 @@ function MainCardUpdate(props) {
         setMainCard({
           ...mainCard,
           maintenanceCardDetails: json.maintenanceCardDetails,
-          maintenanceCardDetailStatusHistories: json.maintenanceCardDetailStatusHistories,
+          maintenanceCardDetailStatusHistories:
+            json.maintenanceCardDetailStatusHistories,
           workStatus: json.workStatus,
         });
         toastSuccess("Cập nhật trạng thái thành công");

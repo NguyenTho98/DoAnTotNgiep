@@ -12,6 +12,7 @@
 
   .product-listing-item {
     align-items: center;
+    padding-right: 37px;
   }
 
   &:last-child {
@@ -24,7 +25,7 @@
   }
 
   .item-list {
-    width: calc((100% - 260px) / 7);
+    width: calc((100% - 220px) / 7);
   }
 
   .order-collations-total-amount {

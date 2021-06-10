@@ -48,9 +48,9 @@ function HistoryAction(props) {
                     <div className="d-flex" style={{justifyContent: 'space-between' }} key={title}>
                       <div>
                               <span style={{ fontWeight: 'bold' }}>{title}</span>
-                              <p>{maintenanceCardDetailStatusHistory.name}</p>
+                              <p style={{ marginTop: 5 }}>{maintenanceCardDetailStatusHistory.name}</p>
                           </div>
-                          <div style={{ textAlign: 'right', alignItems: 'center'}}>
+                          <div style={{ textAlign: 'right', alignItems: 'center', width: '100px'}}>
                               <span style={{ fontWeight: 'bold' }}>{formatDate(maintenanceCardDetailStatusHistory.createdDate)}</span>
                               {/* <p>
                                   {status}

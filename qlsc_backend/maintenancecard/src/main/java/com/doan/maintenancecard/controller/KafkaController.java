@@ -31,7 +31,7 @@ public class KafkaController {
         productModel.setCode("001");
         try {
             String message = json.writeValueAsString(productModel);
-            kafkaTemplate.send("dk3w4sws-product", "1", message);
+            kafkaTemplate.send("58ofg9e4-product", "1", message);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

@@ -34,7 +34,7 @@ public class MessageConsumer {
     private final UserRepository userRepository;
     private static final String MC = "Phiếu sửa chữa ";
 
-    @KafkaListener(topics = {"dk3w4sws-message"}, groupId = "repair-manager")
+    @KafkaListener(topics = {"58ofg9e4-message"}, groupId = "repair-manager")
     @Transactional
     public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         try {

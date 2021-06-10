@@ -24,7 +24,7 @@ public class ProductConsumer {
     private final ProductRepository productRepository;
     private final ProductHistoryRepository productHistoryRepository;
 
-    @KafkaListener(topics = {"dk3w4sws-product"}, groupId = "repair-manager")
+    @KafkaListener(topics = {"58ofg9e4-product"}, groupId = "repair-manager")
     public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) throws JsonProcessingException {
         try {
             ProductModel productModel = json.readValue(String.valueOf(message), ProductModel.class);

@@ -13,9 +13,9 @@ public class SendMessage {
 
     private final ObjectMapper json;
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private static final String TOPIC_PRODUCT = "dk3w4sws-product";
-    private static final String TOPIC_CUSTOMER = "dk3w4sws-customer";
-    private static final String TOPIC_USER = "dk3w4sws-user";
+    private static final String TOPIC_PRODUCT = "58ofg9e4-product";
+    private static final String TOPIC_CUSTOMER = "58ofg9e4-customer";
+    private static final String TOPIC_USER = "58ofg9e4-user";
 
     public void sendToProduct(ProductModel product, String key) {
         try {

@@ -17,7 +17,7 @@ public class SendToClient {
     private final ObjectMapper json;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final MaintenanceCardConverter maintenanceCardConverter;
-    private static final String TOPIC_MESSAGE = "dk3w4sws-message";
+    private static final String TOPIC_MESSAGE = "58ofg9e4-message";
 
     public void sendNotificationToClient(MaintenanceCard maintenanceCard, int type, String email) {
         try {

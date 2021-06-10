@@ -20,7 +20,7 @@ public class UserConsumer {
 
     private final UserRepository userRepository;
 
-    @KafkaListener(topics = {"dk3w4sws-user"}, groupId = "repair-manager")
+    @KafkaListener(topics = {"58ofg9e4-user"}, groupId = "repair-manager")
     public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         try {
             Optional<User> user = userRepository.findById(Long.parseLong(key));

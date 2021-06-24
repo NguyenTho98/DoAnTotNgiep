@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { login, checkInfoUser, logout } from "./actions/loginAction";
 import "./login.scss";
 import logo from "../../images/KIOMO.png";
+import { getMessages } from "../../actions/notificationAction";
 import pushstate from "utils/pushstate";
 
 function LoginPage(props) {
@@ -10,23 +11,24 @@ function LoginPage(props) {
     email: "",
     password: "",
   });
-  const [checkLogin, setCheckLogin] = useState(false)
+  const [error, setError] = useState({})
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
   };
   useEffect(() => {
     props.onLogout();
-  }, [])
+  }, []);
   const handleSubmit = () => {
     props.onLogin(user).then((res) => {
-      if (res) {
-        props.onCheckInfoUser(res).then((json) => {
-          if (json) pushstate(props.history, "/maintenance-cards");
-        });
-      }else{
-        setCheckLogin(true)
+      if (!res) {
+        setError({isError: true, message: '* Thông tin đăng nhập không chính xác'});
+        return;
       }
+      props.onGetMessages();
+      props.onCheckInfoUser(res).then((json) => {
+        if (json) pushstate(props.history, "/maintenance-cards");
+      });
     });
   };
   return (
@@ -39,7 +41,6 @@ function LoginPage(props) {
                 <div className="form-login">
                   <div className="div-logo">
                     <img src={logo} alt="" className="logo"></img>
-                    {/* <img src={`/images/logo-humg.png`} alt="" className="logo" /> */}
                   </div>
                   <input
                     onChange={(e) => handleChange(e)}
@@ -59,7 +60,7 @@ function LoginPage(props) {
                   />
                   {
                     <div style={{color:'#a94442'}}>
-                      {checkLogin ? '* Thông tin đăng nhập không chính xác': ''}
+                      {error && error.isError ? error.message : ''}
                     </div>
                   }
                   <div
@@ -67,7 +68,7 @@ function LoginPage(props) {
                     onClick={() => handleSubmit()}
                   >
                     <button className="btn btn-login" type="submit">
-                      Đăng nhập
+                      Đăng nhập 
                     </button>
                   </div>
                   <div
@@ -78,32 +79,6 @@ function LoginPage(props) {
                       Đăng ký
                     </button>
                   </div>
-                  {/* <div style={{ textAlign: "center", marginTop: 15 }}>
-                    <p
-                      variant="body1"
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 400,
-                        marginBottom: 17,
-                      }}
-                    >
-                      Hoặc đăng nhập bằng
-                    </p>
-                    <a className="login-more">
-                      <img
-                        src={fb}
-                        alt=""
-                        style={{ width: 125, height: 37 }}
-                      ></img>
-                    </a>
-                    <a className="login-more">
-                      <img
-                        src={google}
-                        style={{ width: 125, height: 37 }}
-                        alt=""
-                      ></img>
-                    </a>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -118,5 +93,6 @@ const mapDispatchToProps = (dispatch) => ({
   onLogin: (data) => dispatch(login(data)),
   onLogout: () => dispatch(logout()),
   onCheckInfoUser: (token) => dispatch(checkInfoUser(token)),
+  onGetMessages: () => dispatch(getMessages()),
 });
 export default connect(null, mapDispatchToProps)(LoginPage);

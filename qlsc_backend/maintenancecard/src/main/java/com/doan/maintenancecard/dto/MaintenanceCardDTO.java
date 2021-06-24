@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class MaintenanceCardDTO extends BaseDTO {
 
+    private String message;
     private String code;
     private String platesNumber;
     private CustomerDTO customer;
@@ -26,4 +27,10 @@ public class MaintenanceCardDTO extends BaseDTO {
     private List<MaintenanceCardDetailDTO> maintenanceCardDetails;
     private List<PaymentHistoryDTO> paymentHistories;
     private List<MaintenanceCardDetailStatusHistoryDTO> maintenanceCardDetailStatusHistories;
+
+    public MaintenanceCardDTO() { }
+
+    public MaintenanceCardDTO(String message) {
+        this.message = message;
+    }
 }

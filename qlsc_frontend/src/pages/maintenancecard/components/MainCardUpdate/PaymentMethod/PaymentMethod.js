@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import React from "react";
 import { connect } from "react-redux";
 import "./styles.scss";
@@ -39,10 +38,8 @@ function PaymentMethod(props) {
                   style={{ justifyContent: "space-between" }}
                 >
                   <div>
-                    <span style={{ fontWeight: "bold" }}>
-                      Đã thanh toán :
-                    </span>
-                    <p>{payment.paymentMethod.name || 'Tiền mặt'}</p>
+                    <span style={{ fontWeight: "bold" }}>Đã thanh toán :</span>
+                    <p>{payment.paymentMethod.name || "Tiền mặt"}</p>
                   </div>
                   <div>
                     <span style={{ fontWeight: "bold" }}>
@@ -57,7 +54,6 @@ function PaymentMethod(props) {
         );
       });
     }
-
     return result;
   };
   return (
@@ -74,13 +70,15 @@ function PaymentMethod(props) {
           }}
         >
           <div className="header-title">
-            <div style={{ fontSize: "20px" }}>Thanh toán</div>
+            <div>Thanh toán</div>
             <div className="text">
               Đã thanh toán: {moneyFormat(props.totalAfterPayment())} đ
             </div>
           </div>
           <div className="header-action">
-            {workStatus === 2 && props.user.role === 3 && mainCard.payStatus === 0 ? (
+            {workStatus === 2 &&
+            props.user.role === 3 &&
+            mainCard.payStatus === 0 ? (
               <button
                 className="d-flex align-items-center justify-content-between btn btn-create"
                 type="button"
@@ -116,9 +114,11 @@ function PaymentMethod(props) {
 }
 PaymentMethod.defaultProps = {};
 const mapStateToProps = (state, ownProps) => {
-  const { auth : {user } } = state;
+  const {
+    auth: { user },
+  } = state;
   return {
-    user
-  }
-}
+    user,
+  };
+};
 export default React.memo(connect(mapStateToProps, null)(PaymentMethod));

@@ -37,7 +37,7 @@ public class MaintenanceCardDetailServiceImpl implements MaintenanceCardDetailSe
         }
         MaintenanceCard maintenanceCard = maintenanceCardDetail.getMaintenanceCard();
         if (maintenanceCard.getRepairmanEmail() == null || !maintenanceCard.getRepairmanEmail().equals(email)) {
-            throw new NotFoundException("Không tìm thấy chi tiết phiếu");
+            return new MaintenanceCardDTO("Tài khoản không có quyền thay đổi trạng thái!");
         }
         byte status = 1;
         boolean checkToSetWorkStatus = true;

@@ -143,13 +143,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse multiDelete(List<Long> ids) {
-        Product pro =new Product();
+        Product product = new Product();
         try {
             ids.forEach(productRepository::updateStatusProduct);
-            return new ProductResponse(Boolean.TRUE, pro);
+            return new ProductResponse(Boolean.TRUE, product);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ProductResponse(Boolean.FALSE, pro);
+            return new ProductResponse(Boolean.FALSE, product);
         }
     }
 
@@ -256,4 +256,5 @@ public class ProductServiceImpl implements ProductService {
         }
         return new Byte[]{1, 2};
     }
+
 }

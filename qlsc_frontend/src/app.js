@@ -70,6 +70,7 @@ function App(props) {
         debug={false}
       />
       <ToastContainer
+        className='toast-custom'
         position="top-center"
         autoClose={2000}
         hideProgressBar

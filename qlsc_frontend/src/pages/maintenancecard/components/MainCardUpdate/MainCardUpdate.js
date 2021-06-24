@@ -21,16 +21,8 @@ import { useHistory, useParams, withRouter } from "react-router-dom";
 import PaymentMethod from "./PaymentMethod/PaymentMethod";
 import HistoryAction from "./HistoryAction/HistoryAction";
 import Payment from "./Modal/Payment/Payment";
-const initialStateCustomer = {
-  name: null,
-  code: null,
-  phone: null,
-  email: null,
-  address: null,
-  city: null,
-  ward: null,
-  description: null,
-};
+import Guarantee from "./Guarantee/Guarantee";
+
 const initialStateProduct = {
   name: null,
   code: null,
@@ -117,6 +109,7 @@ function MainCardUpdate(props) {
 
   const onGetDataFromId = (id) => {
     getMainCardById(id).then((json) => {
+      if (!json) return;
       setMainCard(json);
       setMoney(json.price);
       setCustomer(json.customer);
@@ -151,18 +144,22 @@ function MainCardUpdate(props) {
 
   const onUpdateStatusMaintenanceCardDetail = (id) => {
     updateStatusMaintenanceCardDetail(id).then((json) => {
-      if (json) {
-        setMainCard({
-          ...mainCard,
-          maintenanceCardDetails: json.maintenanceCardDetails,
-          maintenanceCardDetailStatusHistories:
-            json.maintenanceCardDetailStatusHistories,
-          workStatus: json.workStatus,
-        });
-        toastSuccess("Cập nhật trạng thái thành công");
-      } else {
+      if (!json) {
         toastError("Có lỗi xảy ra khi cập nhật trạng thái");
+        return;
       }
+      if (json.message) {
+        toastError(json.message);
+        return;
+      }
+      setMainCard({
+        ...mainCard,
+        maintenanceCardDetails: json.maintenanceCardDetails,
+        maintenanceCardDetailStatusHistories:
+          json.maintenanceCardDetailStatusHistories,
+        workStatus: json.workStatus,
+      });
+      toastSuccess("Cập nhật trạng thái thành công");
     });
   };
   const onMainCardPaymentHistory = () => {
@@ -354,6 +351,7 @@ function MainCardUpdate(props) {
               totalAfterPayment={totalAfterPayment}
               mainCard={mainCard}
             />
+            <Guarantee mainCard={mainCard}/>
           </div>
           <div className="content-right">
             <InfoMainCard

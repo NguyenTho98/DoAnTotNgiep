@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { moneyFormat } from "utils/moneyFormat";
+import ReactTooltip from "react-tooltip";
 import "../styles.scss";
 const listStatus = [
   {
@@ -41,8 +42,22 @@ function Item(props) {
       <div className="order text-ellipsis" style={{ color: "#0088FF" }}>
         {product.product.code || ""}
       </div>
-      <div className="text-ellipsis track-code" style={{ color: "#0088FF" }}>
+      <div
+        className="text-ellipsis track-code"
+        style={{ color: "#0088FF" }}
+        data-tip
+        data-for={`order_collation_number_id_${product.product.name}`}
+      >
         {product.product.name || ""}
+        <ReactTooltip
+          place="top"
+          type="dark"
+          effect="solid"
+          isMultiline
+          id={`order_collation_number_id_${product.product.name}`}
+        >
+          {product.product.name || ""}
+        </ReactTooltip>
       </div>
       <div className="tenant text-ellipsis">
         {product.product.type === 1 ? "Linh kiện" : "Dịch vụ"}

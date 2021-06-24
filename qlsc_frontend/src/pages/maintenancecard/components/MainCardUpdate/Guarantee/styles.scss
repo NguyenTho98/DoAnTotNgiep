@@ -1,0 +1,32 @@
+.main-card-guarantee {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #d3d3d3;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding-bottom: 15px;
+    .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #212b35;
+        border-bottom: 0px solid #e3e3e3;
+        margin-left: -16px;
+        margin-right: -16px;
+        padding-left: 16px;
+        padding-bottom: 17px;
+        padding-right: 16px;
+    }
+    .wrapper {
+        margin-left: 20px;
+        .item {
+            margin-bottom: 6px;
+        }
+        .name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 200px;
+        }
+    }
+}

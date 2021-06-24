@@ -1,4 +1,3 @@
-import { forEach } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import Item from '../Item/Item';

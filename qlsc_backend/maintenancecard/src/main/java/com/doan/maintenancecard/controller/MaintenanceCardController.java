@@ -138,8 +138,9 @@ public class MaintenanceCardController {
         }
         return new ResponseEntity<>(maintenanceCardDTOs, HttpStatus.OK);
     }
-
+    
     // Cập nhật trạng thái của chi tiết phiếu
+    // Cập nhật tinh hình làm việc
     // Một chi tiết phiếu
     // Kiem tra quyen : NV sua chua
     @PutMapping("maintenanceCardDetails/status/{id}")

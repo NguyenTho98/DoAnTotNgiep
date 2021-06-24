@@ -29,7 +29,7 @@ export const fetchMainCard = (_filterInfo, page) => (dispatch, getState) => {
       }
     })
     .catch((e) => {
-      toastError("Có lỗi xảy ra khi lấy danh sách khách hàng");
+      toastError("Có lỗi xảy ra khi lấy danh sách phiếu");
       return;
     });
 };

@@ -4,6 +4,8 @@ import * as Icons from "./Icons";
 import { API_USER } from "constants/api";
 import callApi from "utils/callApi";
 import history from '../../utils/history';
+import pushstate from "../../utils/pushstate";
+import { toastError, toastSuccess } from "../../utils/toast";
 
 function RegisterPage() {
   const [tenant, setTenant] = useState({
@@ -11,15 +13,36 @@ function RegisterPage() {
     full_name: "",
     name_tenant: "",
     phone_number: "",
-    address: "",
     password: "",
   });
+  const [messageError, setMessageError] = useState('')
   const onChangeTenant = () => {
     const { name, value } = event.target;
     setTenant({ ...tenant, [name]: value });
   };
 
   const onSummit = () => {
+    if(!tenant.full_name) {
+      toastError("Vui lòng nhập Họ và tên");
+      return;
+    }
+    if(!tenant.email) {
+      toastError("Vui lòng nhập email");
+      return;
+    }
+    if(!tenant.name_tenant) {
+      toastError("Vui lòng nhập Tên cửa hàng");
+      return;
+    }
+    if(!tenant.phone_number) {
+      toastError("Vui lòng nhập Số điện thoại");
+      return;
+    }
+    if(!tenant.password) {
+      toastError("Vui lòng nhập email");
+      return;
+    }
+   
     const options = {
       method: "POST",
       data: tenant,
@@ -27,15 +50,20 @@ function RegisterPage() {
     const url = API_USER + "/tenant";
     callApi(url, options)
       .then((res) => {
-        if (res && res.status === 200) {
-          //
+        console.log("res", res);
+        if (res?.data?.success) {
+          toastSuccess("Đăng ký cửa hàng thành công");
+          pushstate(history, '/login')
+        } else{
+          setMessageError()
+          toastError(res.data.message || 'Có lỗi xảy ra khi đăng ký cửa hàng');
         }
       })
       .catch((err) => {
         return err;
       });
   };
-
+  console.log("messageError", messageError);
   return (
     <div className="register-wapper">
       <div className="go-back back-login">
@@ -154,7 +182,7 @@ function RegisterPage() {
                 </div>
               </div>
               <div className="row btn-btn">
-                <div className="btn-register" onClick={onSummit}>
+                <div className="btn-register-tenant" onClick={onSummit}>
                   <div className="text">Đăng ký tài khoản</div>
                 </div>
               </div>

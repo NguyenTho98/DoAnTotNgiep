@@ -87,18 +87,48 @@
     }
 
     .preview-image {
-        padding-top: 10px;
+        display: flex;
+        padding-top: 56px;
+        overflow: auto;
+        &::-webkit-scrollbar {
+            height: 5px;
+            background: #fff;
+            width: 7px;
+            cursor: pointer;
+            //border-radius: 5px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: #c4c4c4;
+            border-radius: 5px;
+            width: 5px;
+            cursor: pointer;
+          }
         .image:first-child {
             width: 100px;
             height: 100px;
         }
         .image {
-            width: 85px;
-            height: 85px;
+            width: 100px;
+            height: 100px;
             padding: 5px;
         }
+        .add-upload{
+            min-width: 50px;
+            width: 100px;
+            height: 100px;
+            background: #e6f5ff;
+            border: 1px dashed #0089ff;
+            box-sizing: border-box;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            align-items: center;
+            padding-top: 33px;
+        }
+        .image-input{
+            width: 100px;
+        }
     }
-
     .content-image {
         width: 140px;
         height: 110px;

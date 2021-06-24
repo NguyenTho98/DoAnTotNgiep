@@ -54,7 +54,6 @@
                 border: 1px solid #c4cdd5;
                 border-radius: 27px !important;
                 outline-color: #0088ff;
-                margin-bottom: 30px;
 
                 &:focus-visible {
                     outline: none;
@@ -67,7 +66,7 @@
                 justify-content: center;
                 margin-top: 20px;
 
-                .btn-register {
+                .btn-register-tenant {
                     width: 200px;
                     height: 50px;
                     cursor: pointer;
@@ -89,5 +88,8 @@
         width: 100%;
         position: fixed;
         bottom: 0px;
+    }
+    .form-group{
+        margin-bottom: 30px;
     }
 }

@@ -109,6 +109,14 @@ function MainCardCreate(props) {
 
   //customer
   const saveCustomer = () => {
+    if(!createCustomer.name){
+      toastError("Vui nhập tên khách hàng")
+      return;
+    }
+    if(!createCustomer.name){
+      toastError("Vui nhập số điện thoại")
+      return;
+    }
     onSaveCustomer(createCustomer).then((json) => {
       if (json && json.success) {
         setCreateCustomer(initialStateCustomer);

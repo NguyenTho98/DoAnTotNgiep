@@ -182,6 +182,7 @@ function MainCardUpdate(props) {
           ...mainCard,
           paymentHistories: json.paymentHistories,
           payStatus: json.payStatus,
+          returnDate: json.returnDate
         });
       } else {
         toastError("Có lỗi xảy ra khi thanh toán");

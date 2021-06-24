@@ -9,15 +9,24 @@ import { getWard } from "../../../../../customer/actions/locationActions";
 import SelectWards from "./SelectWards";
 
 function CustomerModal(props) {
-    const { customer, showModalCustomer,
-      setShowModalCustomer, onChangeCustomer, saveCustomer, cities , wards ,onGetWard,
-      setCreateCustomer,
-      initialStateCustomer,
-    } = props;
-    const handleClose = () => {
-      setCreateCustomer(initialStateCustomer)
-      setShowModalCustomer(false)
-    };
+  const {
+    customer,
+    showModalCustomer,
+    setShowModalCustomer,
+    onChangeCustomer,
+    saveCustomer,
+    cities,
+    wards,
+    onGetWard,
+    setCreateCustomer,
+    initialStateCustomer,
+  } = props;
+  const [zoom, setZoom] = useState(false);
+  const handleClose = () => {
+    setCreateCustomer(initialStateCustomer);
+    setShowModalCustomer(false);
+    setZoom(false);
+  };
   const onChangeSelectDistrict = (id) => {
     if (id) {
       const district = Object.values(cities).find(
@@ -37,9 +46,10 @@ function CustomerModal(props) {
       );
       if (ward) onChangeCustomer("ward", ward);
     }
-  }
+  };
   const onConfirm = () => {
     saveCustomer();
+    setZoom(false);
   };
   return (
     <Modal
@@ -67,7 +77,7 @@ function CustomerModal(props) {
                       data-tip=""
                       data-for="_extends_popup_error"
                       name="name"
-                      value={customer.name || ''}
+                      value={customer.name || ""}
                       onChange={(e) => onChangeCustomer("name", e.target.value)}
                       placeholder="Nhập tên khách hàng"
                     />
@@ -76,6 +86,7 @@ function CustomerModal(props) {
               </div>
               <div className="col-md-6">
                 <div className="field form-group">
+                  <span style={{ color: "red", marginRight: "4px" }}>*</span>
                   <label className="control-label">Số điện thoại</label>
                   <div className="controls">
                     <input
@@ -83,57 +94,17 @@ function CustomerModal(props) {
                       data-tip=""
                       data-for="_extends_popup_error"
                       name="phone"
-                      value={customer.phone || ''}
-                      onChange={(e) => onChangeCustomer("phone", e.target.value)}
+                      value={customer.phone || ""}
+                      onChange={(e) =>
+                        onChangeCustomer("phone", e.target.value)
+                      }
                       placeholder="Nhập số điện thoại"
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="field form-group">
-                  <label className="control-label">Địa chỉ</label>
-                  <div className="controls">
-                    <input
-                      className="input"
-                      data-tip=""
-                      data-for="_extends_popup_error"
-                      name="address"
-                      value={customer.address || ''}
-                      onChange={(e) => onChangeCustomer("address", e.target.value)}
-                      placeholder="Nhập địa chỉ"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="field form-group">
-                  <label className="control-label">Khu vực</label>
-                  <div className="controls">
-                    <SelectDistricts
-                      city={customer.city}
-                      onSelect={(e) => onChangeSelectDistrict(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="field form-group">
-                  <label className="control-label">Phường xã</label>
-                  <div className="controls">
-                    <SelectWards
-                      city={customer.city}
-                      ward={customer.ward}
-                      onSelect={(e) => onChangeSelectWard(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <div className="row">
               <div className="col-md-6">
                 <div className="field form-group">
@@ -144,7 +115,7 @@ function CustomerModal(props) {
                       data-tip=""
                       data-for="_extends_popup_error"
                       name="code"
-                      value={customer.code || ''}
+                      value={customer.code || ""}
                       onChange={(e) => onChangeCustomer("code", e.target.value)}
                       placeholder="Nhập tên khách hàng"
                     />
@@ -160,8 +131,10 @@ function CustomerModal(props) {
                       data-tip=""
                       data-for="_extends_popup_error"
                       name="email"
-                      value={customer.email || ''}
-                      onChange={(e) => onChangeCustomer("email", e.target.value)}
+                      value={customer.email || ""}
+                      onChange={(e) =>
+                        onChangeCustomer("email", e.target.value)
+                      }
                       placeholder="Nhập Email"
                     />
                   </div>
@@ -169,7 +142,62 @@ function CustomerModal(props) {
               </div>
             </div>
 
-
+            <div className="action">
+              <div className="title" onClick={() => setZoom(!zoom)}>{zoom ? "- Thu gọn" : "- Mở rộng"}</div>
+            </div>
+            {zoom ? (
+              <React.Fragment>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="field form-group">
+                      <label className="control-label">Địa chỉ</label>
+                      <div className="controls">
+                        <input
+                          className="input"
+                          data-tip=""
+                          data-for="_extends_popup_error"
+                          name="address"
+                          value={customer.address || ""}
+                          onChange={(e) =>
+                            onChangeCustomer("address", e.target.value)
+                          }
+                          placeholder="Nhập địa chỉ"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="field form-group">
+                      <label className="control-label">Khu vực</label>
+                      <div className="controls">
+                        <SelectDistricts
+                          city={customer.city}
+                          onSelect={(e) =>
+                            onChangeSelectDistrict(e.target.value)
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="field form-group">
+                      <label className="control-label">Phường xã</label>
+                      <div className="controls">
+                        <SelectWards
+                          city={customer.city}
+                          ward={customer.ward}
+                          onSelect={(e) => onChangeSelectWard(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </React.Fragment>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </Modal.Body>

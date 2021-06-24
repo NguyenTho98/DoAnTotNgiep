@@ -10,6 +10,7 @@ function LoginPage(props) {
     email: "",
     password: "",
   });
+  const [checkLogin, setCheckLogin] = useState(false)
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
@@ -23,6 +24,8 @@ function LoginPage(props) {
         props.onCheckInfoUser(res).then((json) => {
           if (json) pushstate(props.history, "/maintenance-cards");
         });
+      }else{
+        setCheckLogin(true)
       }
     });
   };
@@ -54,12 +57,25 @@ function LoginPage(props) {
                     name="password"
                     style={{ width: "100%", margin: "20px 0px", borderRadius: 3 }}
                   />
+                  {
+                    <div style={{color:'#a94442'}}>
+                      {checkLogin ? '* Thông tin đăng nhập không chính xác': ''}
+                    </div>
+                  }
                   <div
                     className="div-action-login"
                     onClick={() => handleSubmit()}
                   >
                     <button className="btn btn-login" type="submit">
                       Đăng nhập
+                    </button>
+                  </div>
+                  <div
+                    className="div-action-register"
+                    onClick={() => pushstate(props.history, '/register')}
+                  >
+                    <button className="btn btn-register" type="submit">
+                      Đăng ký
                     </button>
                   </div>
                   {/* <div style={{ textAlign: "center", marginTop: 15 }}>

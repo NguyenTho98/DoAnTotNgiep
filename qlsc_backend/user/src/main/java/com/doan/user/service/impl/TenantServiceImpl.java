@@ -22,6 +22,7 @@ public class TenantServiceImpl implements TenantService {
 
     private final TenantRepository tenantRepository;
     private final UserRepository userRepository;
+    private final UserServiceImpl userServiceImpl;
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Override
@@ -31,6 +32,12 @@ public class TenantServiceImpl implements TenantService {
         tenant.setPhoneNumber(request.getPhoneNumber());
         tenant.setEmail(request.getEmail());
         tenant.setAddress(request.getAddress());
+        if (StringUtils.isNotEmpty(request.getNameTenant())) {
+            Tenant existedCode = tenantRepository.findOneByNameTenant(request.getNameTenant());
+            if (existedCode != null) {
+                return new UserResponse(Boolean.FALSE, "Tên cửa hàng đã tồn tại", request.getNameTenant());
+            }
+        }
         tenant.setNameTenant(request.getNameTenant());
         tenant.setCreatedDate(new Date());
         tenant.setModifiedDate(new Date());
@@ -44,7 +51,7 @@ public class TenantServiceImpl implements TenantService {
         user.setRole((byte) 3);
         user.setCreatedDate(new Date());
         user.setModifiedDate(new Date());
-        user.setCode("NV001");
+        user.setCode(userServiceImpl.generateCode());
         user.setStatus((byte) 1);
         if (StringUtils.isNotBlank(encoder.encode(request.getPassword()))) {
             user.setPassword(encoder.encode("123456"));

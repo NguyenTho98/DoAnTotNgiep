@@ -68,7 +68,7 @@ function Accessories(props) {
               </div>
             </div>
             <div className="row">
-            <div className="col-md-6">
+              <div className="col-md-6">
                 <div className="card-main-info-product-right">
                   <div className="card-main info-product-right-01">
                     {product.images && !product.images.length ? (
@@ -97,8 +97,7 @@ function Accessories(props) {
                     ) : (
                       <div className="preview-image">
                         <div
-                          className="image"
-                          style={{ background: "red" }}
+                          className="image-input"
                           onClick={() => onOpenFile()}
                         >
                           <input
@@ -109,15 +108,27 @@ function Accessories(props) {
                             onChange={(e) => uploadFile(e)}
                             multiple
                           />
+                          <div className="add-upload">
+                            <Icons.addImgIcon />
+                          </div>
                         </div>
                         {product.images.map((image, index) => {
                           return (
-                            <img
-                              key={index}
-                              className="image"
-                              src={image}
-                              alt={image}
-                            />
+                            <div className="div-send-img-file" key={index}>
+                              <div className="div_send_img">
+                                <button type="button" className="remove_image">
+                                  <span onClick={() => removeImage(index)}>
+                                    &times;
+                                  </span>
+                                </button>
+                                <img
+                                  className="img-file"
+                                  id={`img-${index}`}
+                                  alt="ảnh"
+                                  src={image}
+                                />
+                              </div>
+                            </div>
                           );
                         })}
                       </div>
@@ -175,8 +186,6 @@ function Accessories(props) {
                   </div>
                 </div>
               </div>
-
-
             </div>
             <div className="row">
               <div className="col-md-12">

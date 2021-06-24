@@ -53,7 +53,7 @@ function Action(props) {
         <Icons.dropdownIcon />
       </div>
       {show ? (
-        <div className="position-absolute select-time-type">
+        <div className="position-absolute select-time-type-main-card">
           {arr.map((item, index) => {
             return (
               <div

@@ -81,6 +81,27 @@ $bg-img2: url("../../../asset/resource/login-background.png");
   margin: 25px 0 10px;
   color: #fff;
 }
+.div-action-register{
+  text-align: center;
+  margin: 25px 0 10px;
+  color: #4697fe;
+ 
+}
+.btn-register {
+  background: linear-gradient(180deg, #fff, #fff);
+  color: #08f !important;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  height: 45px;
+  line-height: 40px;
+  z-index: 999;
+  padding: 0 93px;
+  text-transform: inherit;
+  width: 75%;
+  border: 1px solid #08f !important;
+
+}
 .tit {
   display: block;
   position: relative;

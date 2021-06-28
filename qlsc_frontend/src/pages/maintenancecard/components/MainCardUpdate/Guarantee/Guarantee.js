@@ -5,8 +5,8 @@ function Guarantee(props) {
   const { mainCard } = props;
   const { maintenanceCardDetails } = mainCard;
 
-  console.log('check mainCard', mainCard);
   const time = (time) => {
+    if (!time) return null;
     const { number, type } = detectTime(time);
     var date = new Date(mainCard.createdDate);
     if (type === 1) {

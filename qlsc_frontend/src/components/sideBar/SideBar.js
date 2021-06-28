@@ -92,7 +92,7 @@ function SideBar(props) {
             >
               {user && user.name && user.name.substring(0, 1)}
             </span>
-            <span>{(user && user.name) || "Nhân viên"}</span>
+            {!showMenu && <span>{(user && user.name) || "Nhân viên"}</span>}
           </a>
           <div className="dropdown-menu">
             <div className="info d-flex align-items-center">

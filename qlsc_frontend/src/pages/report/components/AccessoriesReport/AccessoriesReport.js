@@ -1,5 +1,6 @@
 import React from "react";
 import ReportProduct from "../Report/Report";
+import ReactTooltip from "react-tooltip";
 import { moneyFormat } from "../../../../utils/moneyFormat";
 import "./styles.scss";
 
@@ -32,7 +33,9 @@ function AccessoriesReport(props) {
     <div className="report-content-container">
       <div className="revenue-role-accessories-chart">
         <div className="revenue-main report-border">
-          <div className="report-title">Top { accessories && accessories.length } linh kiện</div>
+          <div className="report-title">
+            Top {accessories && accessories.length} linh kiện
+          </div>
           <ReportProduct data={accessories} />
         </div>
       </div>
@@ -116,20 +119,31 @@ function AccessoriesReport(props) {
                       <div
                         className="tbl-col"
                         style={{ width: "15%", textAlign: "right" }}
+                        data-tip
+                        data-for={`id_${item.name}`}
                       >
                         {item.name || ""}
+                        <ReactTooltip
+                          place="top"
+                          type="dark"
+                          effect="solid"
+                          isMultiline
+                          id={`id_${item.name}`}
+                        >
+                          {item.name || ""}
+                        </ReactTooltip>
                       </div>
                       <div
                         className="tbl-col"
                         style={{ width: "25%", textAlign: "right" }}
                       >
-                        {item.quantity || 0}
+                        {item.quantity || 0} cái/chiếc
                       </div>
                       <div
                         className="tbl-col"
                         style={{ width: "27%", textAlign: "right" }}
                       >
-                        {item.countProduct || 0}
+                        {item.countProduct || 0} cái/chiếc
                       </div>
                       <div
                         className="tbl-col"

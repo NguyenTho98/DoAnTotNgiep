@@ -5,7 +5,8 @@ const initState = {
   totalItems: 0,
   totalPages: 0,
 };
-
+let lastPlay = Date.now();
+const audio = new Audio('https://s3-ap-southeast-1.amazonaws.com/fbm.dktcdn.net/fpage/static/audio/noti.mp3');
 export default (state = initState, action) => {
   switch (action.type) {
     case "RECEIVE_MESSAGES":
@@ -37,6 +38,7 @@ export default (state = initState, action) => {
         action.notification.user &&
         action.user.id === action.notification.user.id
       ) {
+        playNotiSoundIfNeed();
         return {
           ...state,
           totalItems: totalItems + 1,
@@ -74,5 +76,15 @@ export default (state = initState, action) => {
       };
     default:
       return state;
+  }
+};
+
+
+const playNotiSoundIfNeed = () => {
+  const now = Date.now();
+  const thresold = 2000;
+  if (now - lastPlay > thresold) {
+    audio.play();
+    lastPlay = now;
   }
 };

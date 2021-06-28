@@ -114,7 +114,7 @@ public class BusinessInformationCustomImpl implements BusinessInformationCustom 
     @Override
     public List<StatisticRepairman> getTopRepairMan(String from, String to, Long tenantId) {
         String sql = "SELECT m.repairman_name as name, " +
-            "(select sum(p.money) from payment_histories as p where p.maintenance_card_id = m.id) as money, " +
+            "sum(m.price) as money, " +
             "count(m.repairman_id) as total " +
             "FROM maintenance_cards as m  \n" +
             "where m.work_status = 2\n" +

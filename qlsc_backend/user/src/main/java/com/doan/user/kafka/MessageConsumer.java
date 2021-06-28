@@ -38,9 +38,8 @@ public class MessageConsumer {
     @Transactional
     public void consume(@Payload String message, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key) {
         try {
-            var messageModel = new ObjectMapper().readValue(message, MessageModel.class);
-            var aaa = new ObjectMapper().readValue(messageModel.getMaintenanceCard(),
-                MaintenanceCard.class);
+            var messageModel = json.readValue(message, MessageModel.class);
+            var maintenanceCard = json.readValue(messageModel.getMaintenanceCard(), MaintenanceCard.class);
             if (messageModel.getType() == 2) {
                 List<User> users = userRepository.getAllManager();
                 if (users.isEmpty()) return;
@@ -48,8 +47,7 @@ public class MessageConsumer {
                     if (!user.getEmail().equals(messageModel.getAuthor())) {
                         String title = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đang chờ thanh toán";
                         String content = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đã hoàn thành sửa chữa và đang chờ thanh toán";
-                        MessageTmp newMessage = setMessage(key, user, title, content,
-                            aaa);
+                        MessageTmp newMessage = setMessage(key, user, title, content, maintenanceCard);
                         sendToClient(newMessage);
                     }
                 });
@@ -60,14 +58,14 @@ public class MessageConsumer {
                 if (ObjectUtils.isEmpty(user)) return;
                 String title = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đã được tạo mới";
                 String content = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " đã được tạo mới. Hãy bắt đầu tiến hành sửa chữa";
-                MessageTmp newMessage = setMessage(key, user, title, content, aaa);
+                MessageTmp newMessage = setMessage(key, user, title, content, maintenanceCard);
                 sendToClient(newMessage);
             } else if (messageModel.getType() == 3) {
                 User coordinator = userRepository.checkExistEmail(messageModel.getCoordinatorEmail());
                 if (ObjectUtils.isEmpty(coordinator)) return;
                 String title = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " vừa được cập nhật";
                 String content = MC + messageModel.getMaintenanceCardCode().toUpperCase() + " vừa được cập nhật";
-                MessageTmp newMessage = setMessage(key, coordinator, title, content, aaa);
+                MessageTmp newMessage = setMessage(key, coordinator, title, content, maintenanceCard);
                 sendToClient(newMessage);
             }
         } catch (Exception e) {
@@ -96,7 +94,8 @@ public class MessageConsumer {
         newMessage.setUnRead((byte) 1);
         newMessage.setCreatedDate(new Date());
         newMessage.setModifiedDate(new Date());
-        messageRepository.save(newMessage);
+        Message message = messageRepository.save(newMessage);
+        newMessageTmp.setId(message.getId());
         newMessageTmp.setMaintenanceCard(messageConverter.getMaintenanceCardsModel(maintenanceCard));
         convertToMessageTmp(newMessage, newMessageTmp);
         return newMessageTmp;
